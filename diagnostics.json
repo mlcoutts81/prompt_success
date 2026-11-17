@@ -1,0 +1,31 @@
+[
+  {
+    "id": "diag-01",
+    "title": "The One-Line Worksheet Request",
+    "phase": "Primary",
+    "flawedPrompt": "Make a worksheet on fractions.",
+    "presentElements": ["act", "theme"],
+    "missingElements": ["persona", "recipient", "structure"],
+    "diagnosticHint": "It names an action (make a worksheet) and a broad topic (fractions), but the AI has no idea if this is for Primary 2 halves or Higher algebraic fractions, nor how the page should be laid out.",
+    "explanation": {
+      "persona": "Missing: No pedagogical perspective or teaching style is set.",
+      "recipient": "Missing: No stage, Curriculum for Excellence level, or learner support needs are mentioned.",
+      "structure": "Missing: 'A worksheet' is too vague—specifying sections, visual scaffolds, and an answer key transforms the output."
+    },
+    "upgradedPrompt": "Act as an experienced Scottish Primary teacher specialising in concrete-pictorial-abstract numeracy. Create a classroom practice activity on equivalent halves, quarters, and eighths using everyday food-sharing examples for a mixed-ability Primary 4 class working at CfE First Level. Structure it into three progressive sections (Mild, Spicy, Extra Hot) with child-friendly instructions, plus a quick teacher answer key at the bottom.",
+    "upgradedParts": {
+      "persona": "Act as an experienced Scottish Primary teacher specialising in concrete-pictorial-abstract numeracy.",
+      "act": "Create a classroom practice activity",
+      "recipient": "for a mixed-ability Primary 4 class working at CfE First Level",
+      "theme": "on equivalent halves, quarters, and eighths using everyday food-sharing examples.",
+      "structure": "Structure it into three progressive sections (Mild, Spicy, Extra Hot) with child-friendly instructions, plus a quick teacher answer key at the bottom."
+    }
+  },
+  {
+    "id": "diag-02",
+    "title": "The Actionless Topic Dump",
+    "phase": "BGE (S1-S3)",
+    "flawedPrompt": "S2 Computing Science cyber security and phishing emails.",
+    "presentElements": ["recipient", "theme"],
+    "missingElements": ["persona", "act", "structure"],
+    "diagnosticHint": "This prompt reads like a search engine query—
