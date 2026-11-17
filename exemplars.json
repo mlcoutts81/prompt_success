@@ -1,0 +1,142 @@
+[
+  {
+    "id": "parts-01",
+    "title": "Visualising Equivalent Fractions",
+    "phase": "Primary",
+    "level": "First Level (P2-P4)",
+    "subject": "Numeracy and Mathematics",
+    "parts": {
+      "persona": "Act as an experienced Scottish Primary teacher specialising in concrete-pictorial-abstract numeracy approaches.",
+      "act": "Create three hands-on classroom station activities and a teacher questioning script",
+      "recipient": "for a mixed-ability Primary 4 class working at Curriculum for Excellence First Level, including pupils who benefit from visual scaffolds",
+      "theme": "exploring equivalent halves, quarters, and eighths using everyday classroom and food-sharing contexts.",
+      "structure": "Present the output as a clear table with columns for Station Name, Equipment Needed, Pupil Instructions (in child-friendly language), and two Hinge Questions to check understanding."
+    }
+  },
+  {
+    "id": "parts-02",
+    "title": "Sensory Story Starters & Vocabulary",
+    "phase": "Primary",
+    "level": "First/Second Level (P4-P5)",
+    "subject": "Literacy and English",
+    "parts": {
+      "persona": "Act as a Primary Literacy Coordinator skilled in inclusive writing pedagogy.",
+      "act": "Generate an imaginative story starter alongside a tiered vocabulary word bank",
+      "recipient": "for Primary 5 pupils transitioning from First to Second Level, including reluctant writers who struggle to start a paragraph",
+      "theme": "set around discovering a hidden sea cave along the Scottish coastline during a storm.",
+      "structure": "Provide a 60-word atmospheric opening hook, followed by three bulleted lists of sensory words (Sight, Sound, Movement) and three sentence stems to help pupils write the next paragraph."
+    }
+  },
+  {
+    "id": "parts-03",
+    "title": "Scottish Renewable Energy Debate Pack",
+    "phase": "Primary",
+    "level": "Second Level (P6-P7)",
+    "subject": "Social Studies & Sciences (IDL)",
+    "parts": {
+      "persona": "Act as a Curriculum for Excellence Interdisciplinary Learning (IDL) specialist.",
+      "act": "Design a structured classroom role-play debate resource",
+      "recipient": "for Primary 7 pupils working securely at Second Level",
+      "theme": "evaluating a proposal to build an offshore wind farm near a coastal Scottish fishing and tourism community.",
+      "structure": "Organise into four stakeholder role cards (Local Fisherman, Renewable Engineer, Marine Conservationist, Community Councillor), each containing three key arguments and one question to ask another group."
+    }
+  },
+  {
+    "id": "parts-04",
+    "title": "Debugging Broken Scratch & Python Logic",
+    "phase": "BGE (S1-S3)",
+    "level": "Third Level (S1-S2)",
+    "subject": "Computing Science",
+    "parts": {
+      "persona": "Act as a Scottish secondary Computing Science teacher focused on computational thinking and resilience.",
+      "act": "Write three short pseudocode scenarios containing deliberate logical errors",
+      "recipient": "for S2 pupils working at Third Level who understand basic loops and selection (`if/else`) statements",
+      "theme": "based on score-tracking and collision detection in a simple retro arcade game.",
+      "structure": "For each challenge, display the flawed pseudocode block, a subtle pupil hint that avoids giving away the answer, and a collapsible teacher solution explaining the bug."
+    }
+  },
+  {
+    "id": "parts-05",
+    "title": "Differentiated Historical Source Passage",
+    "phase": "BGE (S1-S3)",
+    "level": "Third/Fourth Level (S2-S3)",
+    "subject": "Social Studies (History)",
+    "parts": {
+      "persona": "Act as a secondary History teacher experienced in literacy differentiation across mixed-attainment classes.",
+      "act": "Write an informative reading passage in two differentiated reading tiers, accompanied by comprehension questions",
+      "recipient": "for an S3 History class spanning Third Level and Fourth Level literacy skills",
+      "theme": "explaining living and working conditions in 19th-century Scottish industrial tenements.",
+      "structure": "Provide Version A (accessible sentences with a 5-word glossary in a two-column table) and Version B (incorporating advanced historical vocabulary), followed by three stepped questions covering literal, inferential, and evaluative skills."
+    }
+  },
+  {
+    "id": "parts-06",
+    "title": "Enzyme Activity Inquiry & Exit Ticket",
+    "phase": "BGE (S1-S3)",
+    "level": "Fourth Level (S3)",
+    "subject": "Sciences (Biology)",
+    "parts": {
+      "persona": "Act as a secondary Biology teacher specialising in practical scientific inquiry.",
+      "act": "Draft a pre-lab prediction starter and a post-lab formative exit ticket",
+      "recipient": "for S3 Biology pupils working at Fourth Level preparing to transition into Senior Phase",
+      "theme": "investigating the effect of temperature on catalase enzyme activity using potato tissue and hydrogen peroxide.",
+      "structure": "Format as a 5-minute starter prompt asking pupils to identify independent, dependent, and control variables, followed by a 3-question Claim-Evidence-Reasoning (CER) exit ticket."
+    }
+  },
+  {
+    "id": "parts-07",
+    "title": "Personal Finance & Payslip Problem Set",
+    "phase": "National 5",
+    "level": "Qualifications Scotland National 5",
+    "subject": "Applications of Mathematics",
+    "parts": {
+      "persona": "Act as a Qualifications Scotland National 5 Applications of Mathematics assessor and classroom practitioner.",
+      "act": "Create three realistic multi-step numeracy context questions with worked marking guidance",
+      "recipient": "for S4 and S5 pupils revising for their National 5 Applications of Mathematics exam",
+      "theme": "calculating gross pay, overtime rates, National Insurance deductions, and monthly savings goals from a part-time retail job.",
+      "structure": "Present each question with realistic data tables, mark allocations in brackets, and a step-by-step worked solution highlighting where method marks are awarded."
+    }
+  },
+  {
+    "id": "parts-08",
+    "title": "RUAE Word Choice & Imagery Practice",
+    "phase": "National 5",
+    "level": "Qualifications Scotland National 5",
+    "subject": "English",
+    "parts": {
+      "persona": "Act as a Scottish secondary English teacher experienced in Senior Phase close reading skills.",
+      "act": "Write an original non-fiction persuasive extract and four analysis questions",
+      "recipient": "for S4 pupils practising National 5 Reading for Understanding, Analysis and Evaluation (RUAE)",
+      "theme": "exploring the impact of smartphone habits on teenage sleep and attention spans.",
+      "structure": "Provide a 250-word journalism-style passage with numbered paragraphs, four 'Explain how the writer's language...' questions (2 to 4 marks each), and a bulleted 'Quote + Comment' marking guide."
+    }
+  },
+  {
+    "id": "parts-09",
+    "title": "Software Development Retrieval Quiz",
+    "phase": "Higher",
+    "level": "Qualifications Scotland Higher",
+    "subject": "Computing Science",
+    "parts": {
+      "persona": "Act as a Qualifications Scotland Higher Computing Science teacher.",
+      "act": "Develop a low-stakes diagnostic retrieval quiz covering common exam misconceptions",
+      "recipient": "for S5 and S6 Higher Computing Science candidates revising Software Design and Development",
+      "theme": "focusing on parameter passing (by value vs by reference), local and global variables, and standard algorithms (linear search, find minimum/maximum, count occurrences).",
+      "structure": "Create 6 short-answer and code-tracing questions, followed by a concise marking key that explicitly flags typical candidate pitfalls."
+    }
+  },
+  {
+    "id": "parts-10",
+    "title": "Historiography & Essay Structure Scaffold",
+    "phase": "Higher",
+    "level": "Qualifications Scotland Higher",
+    "subject": "History",
+    "parts": {
+      "persona": "Act as a Scottish Higher History specialist focusing on analytical essay writing.",
+      "act": "Produce an essay planning scaffold that contrasts isolated factor descriptions with sustained analytical evaluation",
+      "recipient": "for S5 and S6 pupils aiming to move from descriptive paragraphs to Higher-standard evaluation",
+      "theme": "assessing the relative importance of factors leading to the outbreak of the First World War (alliances, naval rivalry, imperialism, and domestic tensions).",
+      "structure": "Format as a side-by-side comparison showing one weak narrative paragraph versus one high-scoring analytical paragraph, followed by four reusable evaluative linking phrases."
+    }
+  }
+]
