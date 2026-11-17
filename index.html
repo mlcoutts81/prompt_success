@@ -254,6 +254,11 @@
       outline-offset: 2px;
     }
 
+    /* Ensure author display rules (flex/grid) never override the HTML [hidden] attribute */
+    [hidden] {
+      display: none !important;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -1403,10 +1408,14 @@
       padding: 2.5rem 1.25rem;
       background: var(--bg-subtle);
       border: 1px dashed var(--border-color);
-      border-radius: var(--radius-md);
+      border-radius: 0.75rem;
       color: var(--text-secondary);
       font-size: 0.9rem;
       font-weight: 600;
+    }
+
+    .exemplar-loading[hidden] {
+      display: none !important;
     }
 
     .loading-spinner {
@@ -4567,9 +4576,13 @@
         const fallbackBanner = document.getElementById('diagnostics-fallback-banner');
         const fallbackText = document.getElementById('diagnostics-fallback-text');
 
+        if (!shell || !loadingEl || !cardBody) return;
+
         shell.setAttribute('aria-busy', 'true');
         loadingEl.hidden = false;
+        loadingEl.style.display = 'flex';
         cardBody.hidden = true;
+        cardBody.style.display = 'none';
 
         try {
           const response = await fetch('./diagnostics.json');
@@ -4582,30 +4595,46 @@
           }
 
           state.diagnostics = data;
-          fallbackBanner.hidden = true;
+          if (fallbackBanner) fallbackBanner.hidden = true;
         } catch (err) {
           console.warn('Live fetch of ./diagnostics.json fell back to built-in copy:', err);
           state.diagnostics = FALLBACK_DIAGNOSTICS;
 
-          const isFileProtocol = window.location && window.location.protocol === 'file:';
-          if (isFileProtocol) {
-            fallbackText.innerHTML =
-              '<strong>Local file preview detected (<code>file://</code>):</strong> Browsers block direct JSON requests without a web server, so the built-in 5 diagnostic challenges are shown below. On <strong>GitHub Pages</strong> (or a local server), <code>./diagnostics.json</code> loads dynamically.';
-          } else {
-            fallbackText.innerHTML =
-              '<strong>Offline fallback active:</strong> Could not fetch <code>./diagnostics.json</code> right now, so the built-in diagnostic challenges are loaded below.';
+          if (fallbackBanner && fallbackText) {
+            const isFileProtocol = window.location && window.location.protocol === 'file:';
+            const totalFallback = state.diagnostics.length;
+            if (isFileProtocol) {
+              fallbackText.innerHTML =
+                '<strong>Local file preview detected (<code>file://</code>):</strong> Browsers block direct JSON requests without a web server, so the built-in ' +
+                totalFallback +
+                ' diagnostic challenges are shown below. On <strong>GitHub Pages</strong> (or a local server), <code>./diagnostics.json</code> loads dynamically.';
+            } else {
+              fallbackText.innerHTML =
+                '<strong>Offline fallback active:</strong> Could not fetch <code>./diagnostics.json</code> right now, so the built-in diagnostic challenges are loaded below.';
+            }
+            fallbackBanner.hidden = false;
           }
-          fallbackBanner.hidden = false;
-        }
+        } finally {
+          if (!Array.isArray(state.diagnostics) || state.diagnostics.length === 0) {
+            state.diagnostics = FALLBACK_DIAGNOSTICS;
+          }
+          if (state.activeChallengeIdx >= state.diagnostics.length) {
+            state.activeChallengeIdx = 0;
+          }
 
-        if (state.activeChallengeIdx >= state.diagnostics.length) {
-          state.activeChallengeIdx = 0;
-        }
+          // Explicitly hide Loading state via both [hidden] and inline display
+          loadingEl.hidden = true;
+          loadingEl.style.display = 'none';
+          cardBody.hidden = false;
+          cardBody.style.display = '';
+          shell.setAttribute('aria-busy', 'false');
 
-        loadingEl.hidden = true;
-        cardBody.hidden = false;
-        shell.setAttribute('aria-busy', 'false');
-        renderChallenge(null);
+          try {
+            renderChallenge(null);
+          } catch (renderErr) {
+            console.error('Failed to render Step 4 challenge card:', renderErr);
+          }
+        }
       }
 
       function initChallenges() {
@@ -4668,13 +4697,31 @@
       }
 
       /* ----------------------------------------------------------------------
-         12. INITIALISE ALL MODULES ON DOM READY
+         12. INITIALISE ALL MODULES INDEPENDENTLY ON DOMCONTENTLOADED
          ---------------------------------------------------------------------- */
-      initTheme();
-      initExplorer();
-      initBuilder();
-      initExemplars();
-      initChallenges();
+      function bootToolkit() {
+        const modules = [
+          ['Theme', initTheme],
+          ['Explorer', initExplorer],
+          ['Builder', initBuilder],
+          ['Exemplars', initExemplars],
+          ['Diagnostics', initChallenges]
+        ];
+
+        modules.forEach(([name, fn]) => {
+          try {
+            fn();
+          } catch (err) {
+            console.error('Module initialisation error in ' + name + ':', err);
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootToolkit);
+      } else {
+        bootToolkit();
+      }
     })();
   </script>
 </body>
