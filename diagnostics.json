@@ -106,5 +106,26 @@
       "theme": "explaining relief rainfall in the Scottish Highlands in an age-appropriate, engaging tone.",
       "structure": "Structure it as three short numbered paragraphs preceded by a 5-word key vocabulary table and followed by two quick check questions."
     }
+  },
+  {
+    "id": "diag-06",
+    "title": "The Vague In-Service Presentation Request",
+    "phase": "Staff CLPL & Leadership",
+    "flawedPrompt": "Make a presentation on using AI for our staff in-service day.",
+    "presentElements": ["act", "recipient", "theme"],
+    "missingElements": ["persona", "structure"],
+    "diagnosticHint": "It names an action (make a presentation), an audience (staff at an in-service day), and a broad topic (using AI)—but whose coaching voice is leading it, and how should the slides, speaker notes, and hands-on activity be structured?",
+    "explanation": {
+      "persona": "Missing: Setting a pragmatic Scottish Digital Lead / EdTech Coach persona keeps the tone reassuring, inclusive, and grounded in classroom reality.",
+      "structure": "Missing: 'A presentation' is too vague—specifying slide count, 3-bullet slide limits, speaker notes, and a short sandbox task makes it ready to deliver."
+    },
+    "upgradedPrompt": "Act as a pragmatic Scottish Digital Lead and Education Technology Coach focused on low-barrier, high-impact workflows. Create a 6-slide presentation outline on safe, practical ways to use AI in Glow (with strict zero-pupil-PII guardrails) for mixed-confidence teaching staff attending our whole-school in-service day. Structure each slide with a clear title, three concise visual bullets, natural presenter talking points, and a 10-minute hands-on sandbox activity on the final slide.",
+    "upgradedParts": {
+      "persona": "Act as a pragmatic Scottish Digital Lead and Education Technology Coach focused on low-barrier, high-impact workflows.",
+      "act": "Create a 6-slide presentation outline",
+      "recipient": "for mixed-confidence teaching staff attending our whole-school in-service day",
+      "theme": "on safe, practical ways to use AI in Glow (with strict zero-pupil-PII guardrails) to save planning time.",
+      "structure": "Structure each slide with a clear title, three concise visual bullets, natural presenter talking points, and a 10-minute hands-on sandbox activity on the final slide."
+    }
   }
 ]

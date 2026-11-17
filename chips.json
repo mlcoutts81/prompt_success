@@ -19,6 +19,18 @@
     {
       "label": "ASN Support Specialist",
       "text": "Act as a supportive Scottish Support for Learning (ASN) and inclusive literacy specialist."
+    },
+    {
+      "label": "Digital Lead / EdTech Coach",
+      "text": "Act as an experienced Scottish Digital Lead and Education Technology Coach focused on pragmatic, low-barrier workflows, digital equity, and building staff confidence."
+    },
+    {
+      "label": "CLPL Facilitator & Trainer",
+      "text": "Act as an engaging CLPL facilitator and trainer who designs jargon-free staff training with practical, ready-to-use takeaways."
+    },
+    {
+      "label": "School Improvement Lead",
+      "text": "Act as a Scottish School Improvement Lead aligning digital pedagogy with How Good Is Our School? (HGIOS4) and the Curriculum Improvement Cycle."
     }
   ],
   "act": [
@@ -41,6 +53,22 @@
     {
       "label": "Two Stars & a Wish",
       "text": "Provide encouraging Two Stars and a Wish formative feedback on [insert writing focus] without rewriting the pupil's work"
+    },
+    {
+      "label": "Twilight CLPL Session Plan",
+      "text": "Design a 45-minute practical twilight CLPL workshop on [insert workshop focus] featuring a live demo and a hands-on staff sandbox task"
+    },
+    {
+      "label": "Slide Deck & Speaker Notes",
+      "text": "Create a concise slide deck outline on [insert presentation topic] complete with presenter talking points and interactive check-ins"
+    },
+    {
+      "label": "1-Page Staff Quick-Start Guide",
+      "text": "Draft a reassuring 1-page staff quick-start cheat sheet on [insert tool or workflow] with copy-paste workflows and common pitfalls to avoid"
+    },
+    {
+      "label": "Parent / Carer Comms",
+      "text": "Write a warm, jargon-free update for parents and carers explaining [insert digital learning focus] alongside our online safety guardrails"
     }
   ],
   "recipient": [
@@ -63,6 +91,18 @@
     {
       "label": "ASN & Dyslexia Scaffolds",
       "text": "for a mixed-ability class including chunked instructions and a 5-word glossary for learners with dyslexia or literacy barriers"
+    },
+    {
+      "label": "Mixed-Confidence Teaching Staff",
+      "text": "for mixed-confidence teaching staff ranging from hesitant AI beginners to confident early adopters"
+    },
+    {
+      "label": "Department / Faculty Colleagues",
+      "text": "for department and faculty colleagues aiming to streamline workload and feedback without losing authentic teacher voice"
+    },
+    {
+      "label": "SLT & Improvement Working Group",
+      "text": "for the Senior Leadership Team (SLT) and Digital Improvement Working Group planning sustainable whole-school adoption"
     }
   ],
   "theme": [
@@ -85,6 +125,22 @@
     {
       "label": "DYW Career Link",
       "text": "connecting the topic to Scottish workplaces and Developing the Young Workforce (DYW) skills."
+    },
+    {
+      "label": "Safe & Ethical AI Workflows",
+      "text": "establishing safe, GDPR-aware AI habits (no pupil PII) focused on [insert workflow, e.g. differentiation or lesson prep]."
+    },
+    {
+      "label": "Shifting Passive to Active Pedagogy",
+      "text": "moving digital tool use from passive content generation towards active learning and accessibility in [insert area]."
+    },
+    {
+      "label": "Accessibility & Inclusive Tools",
+      "text": "embedding built-in accessibility features (voice, read-aloud, chunking) across [insert devices or platform]."
+    },
+    {
+      "label": "Digital Strategy & Rollout",
+      "text": "building a realistic, phased whole-school rollout plan for [insert digital initiative]."
     }
   ],
   "structure": [
@@ -107,6 +163,22 @@
     {
       "label": "Printable Station Cards",
       "text": "Organise into [insert number, e.g. 4] concise printable station cards with pupil instructions and hinge questions."
+    },
+    {
+      "label": "Timed Run-of-Show Agenda",
+      "text": "Format as a minute-by-minute run-of-show agenda table with columns for Timing, Activity, Facilitator Prompt, and Staff Action."
+    },
+    {
+      "label": "Slide-by-Slide + Presenter Notes",
+      "text": "Organise slide-by-slide with a clear heading, 3 concise visual bullets per slide, and a natural presenter script underneath."
+    },
+    {
+      "label": "1-Page Staff Cheat Sheet",
+      "text": "Format as a scannable 1-page staff cheat sheet structured into '3 Quick Wins', '2 Guardrails', and '1 Try-Tomorrow Task'."
+    },
+    {
+      "label": "Now / Next / Later Roadmap",
+      "text": "Present as a phased Now / Next / Later roadmap table linking realistic implementation milestones to observable impact measures."
     }
   ]
 }

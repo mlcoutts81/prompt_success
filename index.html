@@ -97,6 +97,11 @@
       --strong-border: #6ee7b7;
       --strong-text: #064e3b;
 
+      /* Staff CLPL & Leadership Phase Badge (Plum/Purple — WCAG AA > 9.5:1) */
+      --clpl-bg: #f3e8ff;
+      --clpl-border: #d8b4fe;
+      --clpl-text: #581c87;
+
       --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
       --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
       --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
@@ -173,6 +178,10 @@
       --strong-surface: rgba(5, 150, 105, 0.14);
       --strong-border: #10b981;
       --strong-text: #a7f3d0;
+
+      --clpl-bg: rgba(168, 85, 247, 0.26);
+      --clpl-border: #a855f7;
+      --clpl-text: #f3e8ff;
 
       --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
       --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
@@ -1468,6 +1477,7 @@
     .stage-pill.bge { background: var(--p-bg); color: var(--p-text); border-color: var(--p-border); }
     .stage-pill.n5 { background: var(--r-bg); color: var(--r-text); border-color: var(--r-border); }
     .stage-pill.higher { background: var(--a-bg); color: var(--a-text); border-color: var(--a-border); }
+    .stage-pill.clpl { background: var(--clpl-bg); color: var(--clpl-text); border-color: var(--clpl-border); }
     .stage-pill.other { background: var(--t-bg); color: var(--t-text); border-color: var(--t-border); }
 
     .subject-pill {
@@ -2439,12 +2449,12 @@
     <header class="hero-header">
       <div class="hero-inner">
         <div>
-          <p class="hero-eyebrow">Microsoft Copilot in Glow • Interactive Educator Toolkit</p>
+          <p class="hero-eyebrow">Microsoft Copilot in Glow • Classroom &amp; Digital Leadership Toolkit</p>
           <h1 class="hero-title">
             The <span class="accent">P.A.R.T.S.</span> Prompting Framework
           </h1>
           <p class="hero-subtitle">
-            Build clear, classroom-ready prompts for Primary, Curriculum for Excellence (BGE), &amp; Qualifications Scotland (National 5 &amp; Higher) in under two minutes.
+            Build clear, ready-to-use prompts for classroom lessons &amp; differentiation (Primary, BGE, National 5 &amp; Higher) as well as staff CLPL workshops, presentations, and whole-school digital development.
           </p>
         </div>
 
@@ -2598,7 +2608,7 @@
             <p class="section-kicker">Step 2 • Craft &amp; Customise</p>
             <h2 id="builder-heading" class="section-title">Live Colour-Coded Prompt Builder</h2>
             <p class="section-desc">
-              Type into the five boxes or click the quick-insert chips to assemble a tailored prompt in seconds. Leave any box blank if you don't need it yet.
+              Type into the five boxes or click the quick-insert chips to craft prompts for classroom lessons, differentiation, staff CLPL workshops, slide decks, or whole-school development.
             </p>
           </div>
         </div>
@@ -2751,7 +2761,7 @@
             <p class="section-kicker">Step 3 • Ready-to-Remix Scenarios</p>
             <h2 id="exemplars-heading" class="section-title">Ready-to-Remix Exemplar Library</h2>
             <p class="section-desc">
-              Filter across Primary, Broad General Education (S1–S3), and Senior Phase (National 5 &amp; Higher, aligned to Qualifications Scotland terminology). Click <strong>Load into Builder</strong> to customise immediately.
+              Filter across Primary, Broad General Education (S1–S3), Senior Phase (National 5 &amp; Higher), and Staff CLPL &amp; Leadership. Click <strong>Load into Builder</strong> to customise immediately.
             </p>
           </div>
         </div>
@@ -2800,7 +2810,7 @@
             <p class="section-kicker">Step 4 • Interactive Practice Activity</p>
             <h2 id="challenge-heading" class="section-title">Prompt Diagnostic Challenge: "Fix the Prompt"</h2>
             <p class="section-desc">
-              Step through real-world flawed teacher prompts. Identify which P.A.R.T.S. elements are <strong>missing</strong>, check your answer, and load the upgraded prompt straight into the Builder.
+              Step through real-world flawed classroom and staff CLPL prompts. Identify which P.A.R.T.S. elements are <strong>missing</strong>, check your answer, and load the upgraded prompt straight into the Builder.
             </p>
           </div>
         </div>
@@ -2829,8 +2839,8 @@
           <div id="ch-card-body" hidden>
             <div class="challenge-stepper-bar">
               <div class="stepper-left">
-                <span id="ch-step-counter" class="stepper-count-label">Challenge 1 of 5</span>
-                <span id="challenge-progress-badge" class="challenge-score-pill">0 / 5 Diagnosed</span>
+                <span id="ch-step-counter" class="stepper-count-label">Challenge 1 of 6</span>
+                <span id="challenge-progress-badge" class="challenge-score-pill">0 / 6 Diagnosed</span>
               </div>
 
               <div id="ch-progress-pills" class="progress-pills-row" role="group" aria-label="Jump to diagnostic challenge"></div>
@@ -3230,6 +3240,34 @@
             theme: 'assessing the relative importance of factors leading to the outbreak of the First World War (alliances, naval rivalry, imperialism, and domestic tensions).',
             structure: 'Format as a side-by-side comparison showing one weak narrative paragraph versus one high-scoring analytical paragraph, followed by four reusable evaluative linking phrases.'
           }
+        },
+        {
+          id: 'parts-11',
+          title: '45-Minute Staff Twilight AI Workshop',
+          phase: 'Staff CLPL & Leadership',
+          level: 'Whole-School / In-Service CLPL',
+          subject: 'Digital Pedagogy & Workload',
+          parts: {
+            persona: 'Act as an experienced Scottish Digital Lead and Education Technology Coach focused on pragmatic, confidence-building staff training.',
+            act: 'Design an interactive 45-minute twilight CLPL workshop',
+            recipient: 'for mixed-confidence Primary and Secondary teaching staff working on Glow Chromebooks and laptops',
+            theme: 'demonstrating how to differentiate classroom reading resources safely with AI while keeping strict GDPR and zero-pupil-PII guardrails.',
+            structure: "Format as a timed run-of-show table (Timing, Facilitator Demo, Hands-On Sandbox Task, Confidence Check-In) followed by a reassuring 'Try This Tomorrow' takeaway box."
+          }
+        },
+        {
+          id: 'parts-12',
+          title: 'Department Digital Strategy & Slide Outline',
+          phase: 'Staff CLPL & Leadership',
+          level: 'Faculty / Whole-School Development',
+          subject: 'School Improvement & Leadership',
+          parts: {
+            persona: 'Act as an Education Technology Coach and School Improvement Lead experienced in sustainable whole-school digital adoption.',
+            act: 'Create a 6-slide presentation outline with concise presenter speaker notes',
+            recipient: 'for the Senior Leadership Team (SLT) and faculty Digital Champions',
+            theme: 'moving from isolated pockets of enthusiasm to consistent, accessible digital workflows aligned with HGIOS4.',
+            structure: 'Organise slide-by-slide with 3 clear visual bullets and natural speaker talking points per slide, ending with a phased Now / Next / Later implementation table.'
+          }
         }
       ];
 
@@ -3344,6 +3382,27 @@
             recipient: 'for S1 pupils who benefit from dyslexia-friendly scaffolding and a reading age of 9',
             theme: 'explaining relief rainfall in the Scottish Highlands in an age-appropriate, engaging tone.',
             structure: 'Structure it as three short numbered paragraphs preceded by a 5-word key vocabulary table and followed by two quick check questions.'
+          }
+        },
+        {
+          id: 'diag-06',
+          title: 'The Vague In-Service Presentation Request',
+          phase: 'Staff CLPL & Leadership',
+          flawedPrompt: 'Make a presentation on using AI for our staff in-service day.',
+          presentElements: ['act', 'recipient', 'theme'],
+          missingElements: ['persona', 'structure'],
+          diagnosticHint: 'It names an action (make a presentation), an audience (staff at an in-service day), and a broad topic (using AI)—but whose coaching voice is leading it, and how should the slides, speaker notes, and hands-on activity be structured?',
+          explanation: {
+            persona: 'Missing: Setting a pragmatic Scottish Digital Lead / EdTech Coach persona keeps the tone reassuring, inclusive, and grounded in classroom reality.',
+            structure: "Missing: 'A presentation' is too vague—specifying slide count, 3-bullet slide limits, speaker notes, and a short sandbox task makes it ready to deliver."
+          },
+          upgradedPrompt: 'Act as a pragmatic Scottish Digital Lead and Education Technology Coach focused on low-barrier, high-impact workflows. Create a 6-slide presentation outline on safe, practical ways to use AI in Glow (with strict zero-pupil-PII guardrails) for mixed-confidence teaching staff attending our whole-school in-service day. Structure each slide with a clear title, three concise visual bullets, natural presenter talking points, and a 10-minute hands-on sandbox activity on the final slide.',
+          upgradedParts: {
+            persona: 'Act as a pragmatic Scottish Digital Lead and Education Technology Coach focused on low-barrier, high-impact workflows.',
+            act: 'Create a 6-slide presentation outline',
+            recipient: 'for mixed-confidence teaching staff attending our whole-school in-service day',
+            theme: 'on safe, practical ways to use AI in Glow (with strict zero-pupil-PII guardrails) to save planning time.',
+            structure: 'Structure each slide with a clear title, three concise visual bullets, natural presenter talking points, and a 10-minute hands-on sandbox activity on the final slide.'
           }
         }
       ];
@@ -4037,6 +4096,7 @@
         if (p.includes('bge')) return 'bge';
         if (p.includes('national 5') || p.includes('nat 5')) return 'n5';
         if (p.includes('higher')) return 'higher';
+        if (p.includes('clpl') || p.includes('leadership') || p.includes('staff')) return 'clpl';
         return 'other';
       }
 

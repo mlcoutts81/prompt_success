@@ -138,5 +138,33 @@
       "theme": "assessing the relative importance of factors leading to the outbreak of the First World War (alliances, naval rivalry, imperialism, and domestic tensions).",
       "structure": "Format as a side-by-side comparison showing one weak narrative paragraph versus one high-scoring analytical paragraph, followed by four reusable evaluative linking phrases."
     }
+  },
+  {
+    "id": "parts-11",
+    "title": "45-Minute Staff Twilight AI Workshop",
+    "phase": "Staff CLPL & Leadership",
+    "level": "Whole-School / In-Service CLPL",
+    "subject": "Digital Pedagogy & Workload",
+    "parts": {
+      "persona": "Act as an experienced Scottish Digital Lead and Education Technology Coach focused on pragmatic, confidence-building staff training.",
+      "act": "Design an interactive 45-minute twilight CLPL workshop",
+      "recipient": "for mixed-confidence Primary and Secondary teaching staff working on Glow Chromebooks and laptops",
+      "theme": "demonstrating how to differentiate classroom reading resources safely with AI while keeping strict GDPR and zero-pupil-PII guardrails.",
+      "structure": "Format as a timed run-of-show table (Timing, Facilitator Demo, Hands-On Sandbox Task, Confidence Check-In) followed by a reassuring 'Try This Tomorrow' takeaway box."
+    }
+  },
+  {
+    "id": "parts-12",
+    "title": "Department Digital Strategy & Slide Outline",
+    "phase": "Staff CLPL & Leadership",
+    "level": "Faculty / Whole-School Development",
+    "subject": "School Improvement & Leadership",
+    "parts": {
+      "persona": "Act as an Education Technology Coach and School Improvement Lead experienced in sustainable whole-school digital adoption.",
+      "act": "Create a 6-slide presentation outline with concise presenter speaker notes",
+      "recipient": "for the Senior Leadership Team (SLT) and faculty Digital Champions",
+      "theme": "moving from isolated pockets of enthusiasm to consistent, accessible digital workflows aligned with HGIOS4.",
+      "structure": "Organise slide-by-slide with 3 clear visual bullets and natural speaker talking points per slide, ending with a phased Now / Next / Later implementation table."
+    }
   }
 ]
