@@ -28,4 +28,83 @@
     "flawedPrompt": "S2 Computing Science cyber security and phishing emails.",
     "presentElements": ["recipient", "theme"],
     "missingElements": ["persona", "act", "structure"],
-    "diagnosticHint": "This prompt reads like a search engine query—
+    "diagnosticHint": "This prompt reads like a search engine query—it mentions the year group and topic, but never actually tells the AI who to act as, what classroom resource to build, or how to format it.",
+    "explanation": {
+      "persona": "Missing: No Scottish Computing Science educator role or pedagogical approach is specified.",
+      "act": "Missing: There is no verb or task—should the AI write a lesson plan, scenario cards, or a quiz?",
+      "structure": "Missing: Without an output format, the AI will return a generic wall of explanatory paragraphs."
+    },
+    "upgradedPrompt": "Act as a Scottish secondary Computing Science teacher focused on cyber resilience. Create four fictional message scenarios (two genuine, two phishing scams) for S2 pupils working at CfE Third Level exploring cyber security and phishing emails. Present as numbered detective cards with a subtle pupil hint on each card and a concise teacher debrief key underneath.",
+    "upgradedParts": {
+      "persona": "Act as a Scottish secondary Computing Science teacher focused on cyber resilience.",
+      "act": "Create four fictional message scenarios (two genuine, two phishing scams)",
+      "recipient": "for S2 pupils working at CfE Third Level",
+      "theme": "exploring cyber security and phishing emails.",
+      "structure": "Present as numbered detective cards with a subtle pupil hint on each card and a concise teacher debrief key underneath."
+    }
+  },
+  {
+    "id": "diag-03",
+    "title": "The Audience-Free Revision Quiz",
+    "phase": "National 5",
+    "flawedPrompt": "Act as a Biology teacher and write 6 multiple-choice questions in a numbered list.",
+    "presentElements": ["persona", "act", "structure"],
+    "missingElements": ["recipient", "theme"],
+    "diagnosticHint": "Look closely: it sets a teacher role, an action, and a numbered format—but what Biology topic or tone is it covering, and which exam level are the pupils sitting?",
+    "explanation": {
+      "recipient": "Missing: Doesn't specify S4 National 5 learners or the reading/assessment pitch required.",
+      "theme": "Missing: Fails to name the Biology topic (e.g., cell transport and osmosis) or align to Qualifications Scotland exam style."
+    },
+    "upgradedPrompt": "Act as an experienced Scottish Biology teacher. Write 6 diagnostic multiple-choice retrieval questions for S4 pupils revising for Qualifications Scotland National 5 Biology focusing on diffusion, osmosis, and active transport across cell membranes. Format as a numbered list with options A–D, followed by an answer key explaining why common distractors are incorrect.",
+    "upgradedParts": {
+      "persona": "Act as an experienced Scottish Biology teacher.",
+      "act": "Write 6 diagnostic multiple-choice retrieval questions",
+      "recipient": "for S4 pupils revising for Qualifications Scotland National 5 Biology",
+      "theme": "focusing on diffusion, osmosis, and active transport across cell membranes.",
+      "structure": "Format as a numbered list with options A–D, followed by an answer key explaining why common distractors are incorrect."
+    }
+  },
+  {
+    "id": "diag-04",
+    "title": "The Unstructured Higher Essay Request",
+    "phase": "Higher",
+    "flawedPrompt": "Create essay planning notes for S5 Higher History pupils evaluating why women won the vote in Britain in 1918.",
+    "presentElements": ["act", "recipient", "theme"],
+    "missingElements": ["persona", "structure"],
+    "diagnosticHint": "This is already a solid mid-confidence prompt with a task, S5 Higher audience, and clear historical focus—only two framing blocks are missing to make it immediately classroom-ready.",
+    "explanation": {
+      "persona": "Missing: Setting a Qualifications Scotland Higher History specialist persona sharpens historiographical and evaluative depth.",
+      "structure": "Missing: 'Planning notes' could return sprawling prose instead of a structured factor-evaluation organiser."
+    },
+    "upgradedPrompt": "Act as a Scottish Higher History specialist focusing on analytical essay skills. Create structured essay planning notes for S5 Higher History pupils evaluating why women won the vote in Britain in 1918 (Suffragists, Suffragettes, wartime work, and changing attitudes). Format as a 4-column table (Factor, Key Knowledge, Analytical Argument, Historiography/Evaluation) plus three model linking sentences.",
+    "upgradedParts": {
+      "persona": "Act as a Scottish Higher History specialist focusing on analytical essay skills.",
+      "act": "Create structured essay planning notes",
+      "recipient": "for S5 Higher History pupils",
+      "theme": "evaluating why women won the vote in Britain in 1918 (Suffragists, Suffragettes, wartime work, and changing attitudes).",
+      "structure": "Format as a 4-column table (Factor, Key Knowledge, Analytical Argument, Historiography/Evaluation) plus three model linking sentences."
+    }
+  },
+  {
+    "id": "diag-05",
+    "title": "The Vague Differentiation Plea",
+    "phase": "BGE (S1-S3)",
+    "flawedPrompt": "Simplify this text about Scottish weather.",
+    "presentElements": ["act", "theme"],
+    "missingElements": ["persona", "recipient", "structure"],
+    "diagnosticHint": "It asks to simplify a topic, but 'simplify' means very different things for EAL learners, dyslexic readers, or S1 Geography pupils—and there is no layout or glossary guidance.",
+    "explanation": {
+      "persona": "Missing: Adding an inclusive Support for Learning (ASN) specialist lens prevents patronising tone while lowering reading barriers.",
+      "recipient": "Missing: Doesn't state the learner stage (e.g., S1 BGE), target reading age, or specific literacy barriers.",
+      "structure": "Missing: Doesn't request chunked paragraphs, bolded key terms, a vocabulary box, or comprehension check questions."
+    },
+    "upgradedPrompt": "Act as a supportive Scottish Support for Learning (ASN) and BGE Geography teacher. Rewrite an introductory passage explaining relief rainfall in the Scottish Highlands for S1 pupils who benefit from dyslexia-friendly scaffolding and a reading age of 9. Keep the tone age-appropriate and engaging, and structure it as three short numbered paragraphs preceded by a 5-word key vocabulary table and followed by two quick check questions.",
+    "upgradedParts": {
+      "persona": "Act as a supportive Scottish Support for Learning (ASN) and BGE Geography teacher.",
+      "act": "Rewrite an introductory passage",
+      "recipient": "for S1 pupils who benefit from dyslexia-friendly scaffolding and a reading age of 9",
+      "theme": "explaining relief rainfall in the Scottish Highlands in an age-appropriate, engaging tone.",
+      "structure": "Structure it as three short numbered paragraphs preceded by a 5-word key vocabulary table and followed by two quick check questions."
+    }
+  }
+]

@@ -959,37 +959,92 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.38rem;
+      gap: 0.42rem;
       margin-top: 0.55rem;
     }
 
+    .chips-row[hidden],
+    .chips-row:empty {
+      display: none !important;
+      margin: 0 !important;
+    }
+
     .chips-prefix {
-      font-size: 0.73rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: var(--text-muted);
       margin-right: 0.15rem;
     }
 
     .chip-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.25rem;
       border: 1px solid var(--border-color);
       background: var(--bg-surface);
       color: var(--text-secondary);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      padding: 0.26rem 0.6rem;
+      line-height: 1.25;
+      padding: 0.38rem 0.78rem;
       border-radius: 999px;
-      transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+      transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
     }
 
     .chip-btn:hover {
       background: var(--bg-muted);
       color: var(--text-primary);
+      border-color: var(--text-muted);
     }
 
+    .chip-btn:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    /* Subtle WCAG AA active state per P.A.R.T.S. field (and neutral fallback) */
+    .chip-btn.is-active,
     .chip-btn[aria-pressed="true"] {
-      background: var(--btn-primary-bg);
-      color: var(--btn-primary-text);
-      border-color: transparent;
+      background: var(--p-bg);
+      color: var(--p-text);
+      border-color: var(--p-badge);
+      font-weight: 700;
+    }
+
+    .part-P .chip-btn.is-active,
+    .part-P .chip-btn[aria-pressed="true"] {
+      background: var(--p-bg);
+      color: var(--p-text);
+      border-color: var(--p-badge);
+    }
+
+    .part-A .chip-btn.is-active,
+    .part-A .chip-btn[aria-pressed="true"] {
+      background: var(--a-bg);
+      color: var(--a-text);
+      border-color: var(--a-badge);
+    }
+
+    .part-R .chip-btn.is-active,
+    .part-R .chip-btn[aria-pressed="true"] {
+      background: var(--r-bg);
+      color: var(--r-text);
+      border-color: var(--r-badge);
+    }
+
+    .part-T .chip-btn.is-active,
+    .part-T .chip-btn[aria-pressed="true"] {
+      background: var(--t-bg);
+      color: var(--t-text);
+      border-color: var(--t-badge);
+    }
+
+    .part-S .chip-btn.is-active,
+    .part-S .chip-btn[aria-pressed="true"] {
+      background: var(--s-bg);
+      color: var(--s-text);
+      border-color: var(--s-badge);
     }
 
     /* Sticky Live Preview Column */
@@ -1545,68 +1600,150 @@
       }
     }
 
-    .challenge-tabs-row {
+    /* Stepper Top Bar: "Challenge 1 of 5", Progress Pills & Prev/Next */
+    .challenge-stepper-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 0.75rem;
+      padding-bottom: 1rem;
       margin-bottom: 1.15rem;
+      border-bottom: 1px solid var(--border-color);
     }
 
-    .challenge-tab-list {
+    .stepper-left {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-
-    .challenge-tab {
-      display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
-      padding: 0.48rem 0.9rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      background: var(--bg-surface);
-      color: var(--text-secondary);
-      font-size: 0.83rem;
-      font-weight: 700;
+      gap: 0.6rem;
     }
 
-    .challenge-tab[aria-selected="true"] {
-      background: var(--btn-primary-bg);
-      color: var(--btn-primary-text);
-      border-color: transparent;
+    .stepper-count-label {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-primary);
     }
 
     .challenge-score-pill {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      padding: 0.35rem 0.75rem;
+      padding: 0.3rem 0.7rem;
       border-radius: 999px;
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
       color: var(--text-secondary);
     }
 
+    .progress-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 0.38rem;
+      flex-wrap: wrap;
+    }
+
+    .step-pill-btn {
+      min-width: 2.35rem;
+      min-height: 2.35rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.22rem;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .step-pill-btn:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .step-pill-btn.is-done {
+      border-color: var(--s-badge);
+      color: var(--s-text);
+      background: var(--s-surface);
+    }
+
+    .step-pill-btn[aria-current="step"] {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: transparent;
+      font-weight: 800;
+    }
+
+    .stepper-nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .btn-step-nav {
+      min-height: 2.6rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-step-nav:hover:not(:disabled) {
+      background: var(--bg-muted);
+    }
+
+    .btn-step-nav:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* Challenge Card Meta Header */
+    .challenge-meta-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .challenge-card-title {
+      margin: 0;
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* Flawed Prompt Quote Callout */
     .vague-prompt-banner {
+      margin: 0 0 1rem;
       background: var(--weak-surface);
       border: 1px solid var(--weak-border);
+      border-left: 4px solid #e11d48;
       border-radius: var(--radius-md);
       padding: 1rem 1.15rem;
-      margin-bottom: 1.1rem;
     }
 
     .vague-prompt-label {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.38rem;
       font-size: 0.75rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--weak-text);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.38rem;
     }
 
     .vague-prompt-quote {
@@ -1614,11 +1751,64 @@
       font-size: 1.02rem;
       font-weight: 600;
       color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    /* Optional "Need a Hint?" Toggle */
+    .hint-toggle-wrap {
+      margin-bottom: 1.1rem;
+    }
+
+    .btn-hint-toggle {
+      min-height: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.42rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.81rem;
+      font-weight: 700;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-hint-toggle:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .btn-hint-toggle[aria-expanded="true"] {
+      background: var(--r-surface);
+      color: var(--r-text);
+      border-color: var(--r-badge);
+    }
+
+    .hint-callout-box {
+      margin-top: 0.55rem;
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-md);
+      background: var(--r-surface);
+      border: 1px solid var(--r-border);
+      color: var(--r-text);
+      font-size: 0.85rem;
+      line-height: 1.55;
+      animation: hintSlideFade 0.18s ease-out;
+    }
+
+    .hint-callout-box[hidden] {
+      display: none;
+    }
+
+    @keyframes hintSlideFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .diagnostic-instruction {
       margin: 0 0 0.75rem;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--text-primary);
     }
@@ -1626,11 +1816,11 @@
     .checkbox-cards-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.6rem;
-      margin-bottom: 1.1rem;
+      gap: 0.65rem;
+      margin-bottom: 1.15rem;
     }
 
-    @media (min-width: 720px) {
+    @media (min-width: 760px) {
       .checkbox-cards-grid {
         grid-template-columns: repeat(5, minmax(0, 1fr));
       }
@@ -1638,20 +1828,27 @@
 
     .diag-check-label {
       position: relative;
+      min-height: 5.4rem;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      padding: 0.8rem;
+      justify-content: space-between;
+      gap: 0.4rem;
+      padding: 0.85rem;
       border-radius: var(--radius-md);
       border: 2px solid var(--border-color);
       background: var(--bg-surface);
       cursor: pointer;
       user-select: none;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
+      transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .diag-check-label:hover {
       border-color: var(--text-muted);
+    }
+
+    .diag-check-label:has(.diag-check-input:focus-visible) {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
     }
 
     .diag-check-input {
@@ -1662,14 +1859,36 @@
     }
 
     .diag-check-input:focus-visible + .diag-check-top {
-      outline: 3px solid var(--focus-ring);
-      outline-offset: 4px;
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 3px;
       border-radius: 0.35rem;
     }
 
     .diag-check-label.is-checked {
       border-color: var(--r-badge);
       background: var(--r-surface);
+    }
+
+    /* Post-Check Visual & Non-Colour-Only Feedback States */
+    .diag-check-label.eval-hit {
+      border-color: var(--s-badge);
+      background: var(--strong-surface);
+    }
+
+    .diag-check-label.eval-missed {
+      border-color: var(--r-badge);
+      background: var(--r-surface);
+      border-style: dashed;
+    }
+
+    .diag-check-label.eval-extra {
+      border-color: #e11d48;
+      background: var(--weak-surface);
+    }
+
+    .diag-check-label.eval-present-ok {
+      border-color: var(--border-color);
+      background: var(--bg-surface);
     }
 
     .diag-check-top {
@@ -1680,16 +1899,17 @@
     }
 
     .custom-box {
-      width: 1.25rem;
-      height: 1.25rem;
-      border-radius: 0.3rem;
+      width: 1.35rem;
+      height: 1.35rem;
+      border-radius: 0.32rem;
       border: 2px solid var(--border-color);
       background: var(--bg-subtle);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 800;
     }
 
     .diag-check-label.is-checked .custom-box {
@@ -1697,16 +1917,32 @@
       border-color: var(--r-badge);
     }
 
+    .diag-check-label.eval-hit .custom-box {
+      background: var(--s-badge);
+      border-color: var(--s-badge);
+    }
+
+    .diag-check-label.eval-extra .custom-box {
+      background: #e11d48;
+      border-color: #e11d48;
+    }
+
     .diag-part-title {
-      font-weight: 700;
-      font-size: 0.88rem;
+      font-weight: 800;
+      font-size: 0.9rem;
       color: var(--text-primary);
     }
 
     .diag-part-sub {
-      font-size: 0.74rem;
+      font-size: 0.75rem;
+      font-weight: 700;
       color: var(--text-muted);
+      line-height: 1.3;
     }
+
+    .diag-check-label.eval-hit .diag-part-sub { color: var(--strong-text); }
+    .diag-check-label.eval-missed .diag-part-sub { color: var(--r-text); }
+    .diag-check-label.eval-extra .diag-part-sub { color: var(--weak-text); }
 
     .challenge-action-row {
       display: flex;
@@ -1716,10 +1952,11 @@
     }
 
     .btn-check-diag {
+      min-height: 2.75rem;
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.65rem 1.15rem;
+      padding: 0.65rem 1.2rem;
       border-radius: var(--radius-md);
       border: none;
       background: var(--btn-primary-bg);
@@ -1733,11 +1970,11 @@
     }
 
     .diagnostic-result {
-      margin-top: 1.15rem;
+      margin-top: 1.2rem;
       background: var(--bg-surface);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      padding: 1.1rem;
+      padding: 1.15rem;
     }
 
     .diagnostic-result[hidden] {
@@ -1745,17 +1982,20 @@
     }
 
     .diag-summary-banner {
-      font-weight: 700;
-      font-size: 0.92rem;
-      margin: 0 0 0.75rem;
+      font-weight: 800;
+      font-size: 0.94rem;
+      margin: 0 0 0.8rem;
       color: var(--text-primary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
 
     .diag-breakdown-list {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 0.45rem;
-      margin: 0 0 1rem;
+      gap: 0.5rem;
+      margin: 0 0 1.05rem;
       padding: 0;
       list-style: none;
     }
@@ -1767,19 +2007,35 @@
     }
 
     .diag-breakdown-item {
-      font-size: 0.8rem;
-      padding: 0.5rem 0.7rem;
+      font-size: 0.81rem;
+      padding: 0.58rem 0.78rem;
       border-radius: 0.45rem;
       background: var(--bg-subtle);
       border: 1px solid var(--border-color);
       color: var(--text-secondary);
+      line-height: 1.45;
     }
+
+    .diag-status-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.1rem 0.42rem;
+      border-radius: 999px;
+      margin-right: 0.35rem;
+      border: 1px solid transparent;
+    }
+
+    .diag-status-badge.hit { background: var(--strong-bg); color: var(--strong-text); border-color: var(--strong-border); }
+    .diag-status-badge.missed { background: var(--r-bg); color: var(--r-text); border-color: var(--r-border); }
+    .diag-status-badge.extra { background: var(--weak-bg); color: var(--weak-text); border-color: var(--weak-border); }
+    .diag-status-badge.present { background: var(--bg-surface); color: var(--text-secondary); border-color: var(--border-color); }
 
     .upgraded-box {
       background: var(--strong-surface);
       border: 1px solid var(--strong-border);
       border-radius: var(--radius-md);
-      padding: 0.95rem 1rem;
+      padding: 1rem 1.1rem;
     }
 
     .upgraded-header {
@@ -1787,8 +2043,8 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 0.5rem;
-      margin-bottom: 0.55rem;
+      gap: 0.6rem;
+      margin-bottom: 0.65rem;
     }
 
     .upgraded-label {
@@ -1797,6 +2053,24 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--strong-text);
+    }
+
+    .upgraded-prose {
+      margin: 0 0 0.85rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      border: 1px solid var(--strong-border);
+      border-radius: 0.5rem;
+      padding: 0.8rem 0.9rem;
+    }
+
+    .upgraded-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem;
     }
 
     /* ==========================================================================
@@ -2343,7 +2617,7 @@
                 <button type="button" class="field-clear-btn" data-clear="P" aria-label="Clear Persona field">Clear</button>
               </div>
               <textarea id="input-P" rows="2" class="builder-textarea" placeholder="e.g., Act as an experienced Scottish BGE Science teacher..."></textarea>
-              <div class="chips-row" data-chips-for="P" aria-label="Quick suggestions for Persona"></div>
+              <div class="chips-row builder-chips-row" data-chips-for="P" data-chip-field="persona" role="group" aria-label="Persona suggestion chips" hidden></div>
             </div>
 
             <!-- A: Act -->
@@ -2356,7 +2630,7 @@
                 <button type="button" class="field-clear-btn" data-clear="A" aria-label="Clear Act field">Clear</button>
               </div>
               <textarea id="input-A" rows="2" class="builder-textarea" placeholder="e.g., Create a 50-minute lesson plan on renewable energy in Scotland (SOC 3-08a)..."></textarea>
-              <div class="chips-row" data-chips-for="A" aria-label="Quick suggestions for Act"></div>
+              <div class="chips-row builder-chips-row" data-chips-for="A" data-chip-field="act" role="group" aria-label="Act suggestion chips" hidden></div>
             </div>
 
             <!-- R: Recipient -->
@@ -2369,7 +2643,7 @@
                 <button type="button" class="field-clear-btn" data-clear="R" aria-label="Clear Recipient field">Clear</button>
               </div>
               <textarea id="input-R" rows="2" class="builder-textarea" placeholder="e.g., Design for a mixed-ability S2 class with a key vocabulary support box..."></textarea>
-              <div class="chips-row" data-chips-for="R" aria-label="Quick suggestions for Recipient"></div>
+              <div class="chips-row builder-chips-row" data-chips-for="R" data-chip-field="recipient" role="group" aria-label="Recipient suggestion chips" hidden></div>
             </div>
 
             <!-- T: Theme -->
@@ -2382,7 +2656,7 @@
                 <button type="button" class="field-clear-btn" data-clear="T" aria-label="Clear Theme field">Clear</button>
               </div>
               <textarea id="input-T" rows="2" class="builder-textarea" placeholder="e.g., Keep the tone encouraging and inquiry-led, using local Scottish examples..."></textarea>
-              <div class="chips-row" data-chips-for="T" aria-label="Quick suggestions for Theme"></div>
+              <div class="chips-row builder-chips-row" data-chips-for="T" data-chip-field="theme" role="group" aria-label="Theme suggestion chips" hidden></div>
             </div>
 
             <!-- S: Structure -->
@@ -2395,7 +2669,7 @@
                 <button type="button" class="field-clear-btn" data-clear="S" aria-label="Clear Structure field">Clear</button>
               </div>
               <textarea id="input-S" rows="2" class="builder-textarea" placeholder="e.g., Format as a 4-column table with timings, pupil tasks, and a 3-question exit pass..."></textarea>
-              <div class="chips-row" data-chips-for="S" aria-label="Quick suggestions for Structure"></div>
+              <div class="chips-row builder-chips-row" data-chips-for="S" data-chip-field="structure" role="group" aria-label="Structure suggestion chips" hidden></div>
             </div>
 
           </div>
@@ -2523,44 +2797,86 @@
       <section id="section-challenge" class="no-print" aria-labelledby="challenge-heading">
         <div class="section-header">
           <div>
-            <p class="section-kicker">Step 4 • Quick Practice Activity</p>
+            <p class="section-kicker">Step 4 • Interactive Practice Activity</p>
             <h2 id="challenge-heading" class="section-title">Prompt Diagnostic Challenge: "Fix the Prompt"</h2>
             <p class="section-desc">
-              Inspect three real-world vague prompts. Tick the P.A.R.T.S. elements that are <strong>missing</strong>, then check your diagnosis to reveal an upgraded classroom-ready version.
+              Step through real-world flawed teacher prompts. Identify which P.A.R.T.S. elements are <strong>missing</strong>, check your answer, and load the upgraded prompt straight into the Builder.
             </p>
           </div>
         </div>
 
-        <div class="challenge-shell">
-          <div class="challenge-tabs-row">
-            <div class="challenge-tab-list" role="tablist" aria-label="Diagnostic prompt challenges">
-              <button type="button" role="tab" id="ch-tab-0" aria-selected="true" aria-controls="ch-panel" tabindex="0" data-challenge-idx="0" class="challenge-tab">
-                Challenge 1: Fractions Worksheet
-              </button>
-              <button type="button" role="tab" id="ch-tab-1" aria-selected="false" aria-controls="ch-panel" tabindex="-1" data-challenge-idx="1" class="challenge-tab">
-                Challenge 2: DNA Revision
-              </button>
-              <button type="button" role="tab" id="ch-tab-2" aria-selected="false" aria-controls="ch-panel" tabindex="-1" data-challenge-idx="2" class="challenge-tab">
-                Challenge 3: Jacobite Mystery
-              </button>
-            </div>
-            <span id="challenge-progress-badge" class="challenge-score-pill">0 / 3 Diagnosed</span>
+        <!-- Resilient Inline Notice if opened directly via file:// or offline -->
+        <div id="diagnostics-fallback-banner" class="exemplar-fallback-banner" role="status" aria-live="polite" hidden>
+          <div class="exemplar-fallback-content">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:0.15rem;" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <div id="diagnostics-fallback-text"></div>
+          </div>
+          <button type="button" id="diagnostics-retry-btn" class="btn-utility" style="padding:0.4rem 0.75rem; font-size:0.78rem;">
+            Retry Fetch
+          </button>
+        </div>
+
+        <div id="ch-shell" class="challenge-shell" aria-busy="true">
+          <!-- Loading Indicator while fetching ./diagnostics.json -->
+          <div id="ch-loading-state" class="exemplar-loading" role="status">
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span>Loading diagnostic challenges...</span>
           </div>
 
-          <div id="ch-panel" role="tabpanel" aria-labelledby="ch-tab-0">
-            <div class="vague-prompt-banner">
+          <!-- Stepped Challenge Card Content -->
+          <div id="ch-card-body" hidden>
+            <div class="challenge-stepper-bar">
+              <div class="stepper-left">
+                <span id="ch-step-counter" class="stepper-count-label">Challenge 1 of 5</span>
+                <span id="challenge-progress-badge" class="challenge-score-pill">0 / 5 Diagnosed</span>
+              </div>
+
+              <div id="ch-progress-pills" class="progress-pills-row" role="group" aria-label="Jump to diagnostic challenge"></div>
+
+              <div class="stepper-nav-btns">
+                <button type="button" id="ch-prev-btn" class="btn-step-nav" aria-label="Previous challenge">
+                  <span aria-hidden="true">&larr;</span>
+                  <span>Previous</span>
+                </button>
+                <button type="button" id="ch-next-btn" class="btn-step-nav" aria-label="Next challenge">
+                  <span>Next</span>
+                  <span aria-hidden="true">&rarr;</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="challenge-meta-header">
+              <span id="ch-phase-badge" class="stage-pill primary">Primary</span>
+              <h3 id="ch-title" class="challenge-card-title"></h3>
+            </div>
+
+            <blockquote class="vague-prompt-banner">
               <div class="vague-prompt-label">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
                 </svg>
-                <span>Vague Teacher Prompt</span>
+                <span>Flawed Teacher Prompt</span>
               </div>
               <p id="ch-vague-text" class="vague-prompt-quote font-mono-code"></p>
+            </blockquote>
+
+            <!-- Optional Gentle Hint Toggle -->
+            <div class="hint-toggle-wrap">
+              <button type="button" id="ch-hint-btn" class="btn-hint-toggle" aria-expanded="false" aria-controls="ch-hint-panel">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M9 18h6"/><path d="M10 22h4"/>
+                  <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/>
+                </svg>
+                <span>Need a Hint?</span>
+              </button>
+              <div id="ch-hint-panel" class="hint-callout-box" hidden></div>
             </div>
 
             <fieldset style="border: none; padding: 0; margin: 0;">
               <legend class="diagnostic-instruction">
-                Which P.A.R.T.S. elements are <strong>MISSING</strong> from this prompt? (Select all that apply)
+                Which P.A.R.T.S. elements are <strong>MISSING</strong> from this prompt?
               </legend>
               <div id="ch-checkbox-grid" class="checkbox-cards-grid"></div>
             </fieldset>
@@ -2570,30 +2886,33 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <span>Check Diagnosis &amp; Reveal Upgrade</span>
+                <span>Check Answer</span>
               </button>
-              <button type="button" id="ch-reveal-btn" class="btn-reset">
-                Skip &amp; Show Upgraded Prompt
+              <button type="button" id="ch-reset-sel-btn" class="btn-reset">
+                Clear Selection
               </button>
             </div>
 
-            <div id="ch-result-panel" class="diagnostic-result" hidden aria-live="polite">
+            <!-- Polite Screen-Reader Announcement + Visual Diagnostic Reveal -->
+            <div id="ch-live-announcer" class="sr-only" aria-live="polite"></div>
+
+            <div id="ch-result-panel" class="diagnostic-result" hidden>
               <p id="ch-result-summary" class="diag-summary-banner"></p>
               <ul id="ch-breakdown-list" class="diag-breakdown-list"></ul>
 
               <div class="upgraded-box">
                 <div class="upgraded-header">
                   <span class="upgraded-label">Upgraded Classroom-Ready P.A.R.T.S. Prompt</span>
-                  <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
-                    <button type="button" id="ch-load-builder-btn" class="explorer-try-btn">
-                      Load Upgrade into Builder
-                    </button>
-                    <button type="button" id="ch-copy-upgrade-btn" class="explorer-try-btn">
-                      Copy Prompt
-                    </button>
-                  </div>
                 </div>
-                <div id="ch-upgraded-preview" class="font-mono-code" style="font-size: 0.86rem; line-height: 1.7;"></div>
+                <p id="ch-upgraded-prompt" class="upgraded-prose font-mono-code"></p>
+                <div class="upgraded-actions">
+                  <button type="button" id="ch-load-builder-btn" class="btn-load-builder" style="flex: 0 1 auto;">
+                    <span>Load Upgraded Prompt into Builder</span>
+                  </button>
+                  <button type="button" id="ch-copy-upgrade-btn" class="btn-icon-copy">
+                    Copy Upgraded Prompt
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -2756,41 +3075,14 @@
       };
 
       /* ----------------------------------------------------------------------
-         2. QUICK-INSERT SUGGESTION CHIPS FOR BUSY TEACHERS
+         2. SUGGESTION CHIPS FIELD MAPPING (Loaded dynamically via ./chips.json)
          ---------------------------------------------------------------------- */
-      const BUILDER_CHIPS = {
-        P: [
-          { label: 'Primary Teacher', text: 'Act as an experienced Scottish Primary teacher.' },
-          { label: 'BGE Secondary Teacher', text: 'Act as an experienced Scottish BGE secondary teacher.' },
-          { label: 'Nat 5 Specialist', text: 'Act as a specialist teacher preparing learners for Qualifications Scotland National 5.' },
-          { label: 'Higher Specialist', text: 'Act as an experienced Scottish Higher subject specialist.' },
-          { label: 'ASN Support Teacher', text: 'Act as a supportive Scottish Support for Learning (ASN) specialist.' }
-        ],
-        A: [
-          { label: '50-min Lesson Plan', text: 'Create a 50-minute lesson plan on [insert topic] with clear learning intentions and success criteria.' },
-          { label: '8-Q Retrieval Starter', text: 'Write an 8-question retrieval practice starter quiz on [insert topic], mixing recall and problem-solving.' },
-          { label: '3-Level Differentiated Task', text: 'Design a 3-level differentiated pupil task (Mild, Spicy, Extra Hot) on [insert topic].' },
-          { label: 'Success Criteria Rubric', text: 'Create a clear 4-column success criteria rubric for [insert assessment task].' }
-        ],
-        R: [
-          { label: 'Primary (First/Second Level)', text: 'Pitch for a mixed-ability Primary class working within Curriculum for Excellence First/Second Level.' },
-          { label: 'Mixed-Ability S1–S3 BGE', text: 'Pitch for a mixed-ability S2 Broad General Education class.' },
-          { label: 'S4 National 5 Class', text: 'Tailor for S4 learners working towards Qualifications Scotland National 5.' },
-          { label: 'S5/S6 Higher Class', text: 'Design for S5/S6 learners studying at Qualifications Scotland Higher level.' },
-          { label: '+ ASN / Dyslexia Scaffolds', text: 'Design for a mixed-ability class including chunked instructions and a key vocabulary box for learners with dyslexia or literacy barriers.' }
-        ],
-        T: [
-          { label: 'Active & Scottish Context', text: 'Use an engaging, inquiry-led tone with authentic Scottish examples and £GBP currency where relevant.' },
-          { label: 'Exam Command Precision', text: 'Use clear academic language aligned to Qualifications Scotland command words (Explain, Analyse, Evaluate).' },
-          { label: 'Encouraging Coaching Tone', text: 'Keep the tone warm, growth-oriented, and confidence-building without giving away full answers.' },
-          { label: 'Real-World Career Hook', text: 'Connect the topic to real-world Scottish workplaces and Developing the Young Workforce (DYW) skills.' }
-        ],
-        S: [
-          { label: 'Lesson Table + Exit Pass', text: 'Format as a table (Timing, Teacher Input, Pupil Activity, Support/Challenge) plus a 3-question exit pass.' },
-          { label: 'Quiz + Marking Key', text: 'Present as numbered pupil questions first, followed by a separate concise marking key.' },
-          { label: 'Student "I Can..." Table', text: 'Format as a clean student-facing table using clear "I can..." statements.' },
-          { label: 'Worked Example + Practice', text: 'Start with 1 annotated worked example, followed by 5 graduated practice questions and answers.' }
-        ]
+      const PART_FIELD_KEYS = {
+        P: 'persona',
+        A: 'act',
+        R: 'recipient',
+        T: 'theme',
+        S: 'structure'
       };
 
       /* ----------------------------------------------------------------------
@@ -2942,64 +3234,116 @@
       ];
 
       /* ----------------------------------------------------------------------
-         4. PROMPT DIAGNOSTIC CHALLENGES ("FIX THE PROMPT")
+         4. OFFLINE / FILE:// FALLBACK DIAGNOSTIC CHALLENGES
+         Primary source is fetched dynamically via fetch('./diagnostics.json').
          ---------------------------------------------------------------------- */
-      const CHALLENGES = [
+      const FALLBACK_DIAGNOSTICS = [
         {
-          id: 'fractions',
-          vaguePrompt: '"Make a worksheet on fractions."',
-          missing: ['P', 'R', 'T', 'S'],
-          explanations: {
-            P: 'Missing — No teacher role or Scottish curriculum expertise is set.',
-            A: 'Present (just!) — It asks for a worksheet on fractions, though learning outcomes would sharpen it.',
-            R: 'Missing — Could be P4, S1 BGE, or National 5! No stage, ability, or ASN support mentioned.',
-            T: 'Missing — No tone, real-world Scottish context, or pedagogical style specified.',
-            S: 'Missing — No question count, difficulty tiers, layout, or answer key requested.'
+          id: 'diag-01',
+          title: 'The One-Line Worksheet Request',
+          phase: 'Primary',
+          flawedPrompt: 'Make a worksheet on fractions.',
+          presentElements: ['act', 'theme'],
+          missingElements: ['persona', 'recipient', 'structure'],
+          diagnosticHint: 'It names an action (make a worksheet) and a broad topic (fractions), but the AI has no idea if this is for Primary 2 halves or Higher algebraic fractions, nor how the page should be laid out.',
+          explanation: {
+            persona: 'Missing: No pedagogical perspective or teaching style is set.',
+            recipient: 'Missing: No stage, Curriculum for Excellence level, or learner support needs are mentioned.',
+            structure: "Missing: 'A worksheet' is too vague—specifying sections, visual scaffolds, and an answer key transforms the output."
           },
+          upgradedPrompt: 'Act as an experienced Scottish Primary teacher specialising in concrete-pictorial-abstract numeracy. Create a classroom practice activity on equivalent halves, quarters, and eighths using everyday food-sharing examples for a mixed-ability Primary 4 class working at CfE First Level. Structure it into three progressive sections (Mild, Spicy, Extra Hot) with child-friendly instructions, plus a quick teacher answer key at the bottom.',
           upgradedParts: {
-            P: 'Act as a supportive Scottish BGE Mathematics teacher.',
-            A: 'Create a differentiated worksheet on adding and subtracting fractions with different denominators (MNU 3-07a).',
-            R: 'Pitch for a mixed-attainment S1 class, using clear dyslexia-friendly instructions.',
-            T: 'Include relatable real-life Scottish cooking and measurement problems.',
-            S: 'Organise into 1 worked example, 6 graduated questions (Mild to Spicy), and a teacher answer key.'
+            persona: 'Act as an experienced Scottish Primary teacher specialising in concrete-pictorial-abstract numeracy.',
+            act: 'Create a classroom practice activity',
+            recipient: 'for a mixed-ability Primary 4 class working at CfE First Level',
+            theme: 'on equivalent halves, quarters, and eighths using everyday food-sharing examples.',
+            structure: 'Structure it into three progressive sections (Mild, Spicy, Extra Hot) with child-friendly instructions, plus a quick teacher answer key at the bottom.'
           }
         },
         {
-          id: 'dna-higher',
-          vaguePrompt: '"Act as a Scottish Higher Biology teacher and explain DNA replication in bullet points."',
-          missing: ['R', 'T'],
-          explanations: {
-            P: 'Present — Clearly sets the role as a Scottish Higher Biology teacher.',
-            A: 'Present — Clearly asks to explain DNA replication.',
-            R: 'Missing — Doesn\'t state who is reading it (e.g., S5 pupils revising, EAL learners needing a glossary).',
-            T: 'Missing — Doesn\'t specify tone, depth, or alignment to Qualifications Scotland Higher command words.',
-            S: 'Present — Requests bullet points (though specifying step order and a quick check improves it further).'
+          id: 'diag-02',
+          title: 'The Actionless Topic Dump',
+          phase: 'BGE (S1-S3)',
+          flawedPrompt: 'S2 Computing Science cyber security and phishing emails.',
+          presentElements: ['recipient', 'theme'],
+          missingElements: ['persona', 'act', 'structure'],
+          diagnosticHint: 'This prompt reads like a search engine query—it mentions the year group and topic, but never actually tells the AI who to act as, what classroom resource to build, or how to format it.',
+          explanation: {
+            persona: 'Missing: No Scottish Computing Science educator role or pedagogical approach is specified.',
+            act: 'Missing: There is no verb or task—should the AI write a lesson plan, scenario cards, or a quiz?',
+            structure: 'Missing: Without an output format, the AI will return a generic wall of explanatory paragraphs.'
           },
+          upgradedPrompt: 'Act as a Scottish secondary Computing Science teacher focused on cyber resilience. Create four fictional message scenarios (two genuine, two phishing scams) for S2 pupils working at CfE Third Level exploring cyber security and phishing emails. Present as numbered detective cards with a subtle pupil hint on each card and a concise teacher debrief key underneath.',
           upgradedParts: {
-            P: 'Act as an experienced Scottish Higher Biology teacher.',
-            A: 'Explain the stages of PCR and semi-conservative DNA replication, highlighting primer, DNA polymerase, and leading vs lagging strands.',
-            R: 'Write for S5/S6 learners revising for Qualifications Scotland Higher Biology assessments.',
-            T: 'Use precise exam-ready scientific terminology paired with a brief memory hook for strand directionality.',
-            S: 'Format as 6 sequential numbered bullet points followed by 3 quick self-test questions and answers.'
+            persona: 'Act as a Scottish secondary Computing Science teacher focused on cyber resilience.',
+            act: 'Create four fictional message scenarios (two genuine, two phishing scams)',
+            recipient: 'for S2 pupils working at CfE Third Level',
+            theme: 'exploring cyber security and phishing emails.',
+            structure: 'Present as numbered detective cards with a subtle pupil hint on each card and a concise teacher debrief key underneath.'
           }
         },
         {
-          id: 'jacobites',
-          vaguePrompt: '"For my mixed-ability S2 BGE class, use an engaging detective mystery tone about the Jacobites."',
-          missing: ['P', 'A', 'S'],
-          explanations: {
-            P: 'Missing — No Scottish History educator persona set.',
-            A: 'Missing — Never actually tells the AI what to create (a lesson plan, starter clue card, or quiz?).',
-            R: 'Present — Specifies a mixed-ability S2 BGE class.',
-            T: 'Present — Gives a vivid detective mystery tone and Jacobites context.',
-            S: 'Missing — No output structure, timing, or teacher answer guide defined.'
+          id: 'diag-03',
+          title: 'The Audience-Free Revision Quiz',
+          phase: 'National 5',
+          flawedPrompt: 'Act as a Biology teacher and write 6 multiple-choice questions in a numbered list.',
+          presentElements: ['persona', 'act', 'structure'],
+          missingElements: ['recipient', 'theme'],
+          diagnosticHint: 'Look closely: it sets a teacher role, an action, and a numbered format—but what Biology topic or tone is it covering, and which exam level are the pupils sitting?',
+          explanation: {
+            recipient: "Missing: Doesn't specify S4 National 5 learners or the reading/assessment pitch required.",
+            theme: 'Missing: Fails to name the Biology topic (e.g., cell transport and osmosis) or align to Qualifications Scotland exam style.'
           },
+          upgradedPrompt: 'Act as an experienced Scottish Biology teacher. Write 6 diagnostic multiple-choice retrieval questions for S4 pupils revising for Qualifications Scotland National 5 Biology focusing on diffusion, osmosis, and active transport across cell membranes. Format as a numbered list with options A–D, followed by an answer key explaining why common distractors are incorrect.',
           upgradedParts: {
-            P: 'Act as a creative Scottish BGE History teacher.',
-            A: 'Create a 20-minute historical mystery starter investigating why Highland and Lowland Scots held divided loyalties in 1745 (SOC 3-06a).',
-            R: 'Design for a mixed-ability S2 BGE class, including a 5-word glossary for unfamiliar 18th-century terms.',
-            T: 'Use an engaging detective mystery tone where pupils weigh up witness clues.',
-            S: 'Format as 3 short clue cards, a pupil verdict question, and brief teacher discussion notes.'
+            persona: 'Act as an experienced Scottish Biology teacher.',
+            act: 'Write 6 diagnostic multiple-choice retrieval questions',
+            recipient: 'for S4 pupils revising for Qualifications Scotland National 5 Biology',
+            theme: 'focusing on diffusion, osmosis, and active transport across cell membranes.',
+            structure: 'Format as a numbered list with options A–D, followed by an answer key explaining why common distractors are incorrect.'
+          }
+        },
+        {
+          id: 'diag-04',
+          title: 'The Unstructured Higher Essay Request',
+          phase: 'Higher',
+          flawedPrompt: 'Create essay planning notes for S5 Higher History pupils evaluating why women won the vote in Britain in 1918.',
+          presentElements: ['act', 'recipient', 'theme'],
+          missingElements: ['persona', 'structure'],
+          diagnosticHint: 'This is already a solid mid-confidence prompt with a task, S5 Higher audience, and clear historical focus—only two framing blocks are missing to make it immediately classroom-ready.',
+          explanation: {
+            persona: 'Missing: Setting a Qualifications Scotland Higher History specialist persona sharpens historiographical and evaluative depth.',
+            structure: "Missing: 'Planning notes' could return sprawling prose instead of a structured factor-evaluation organiser."
+          },
+          upgradedPrompt: 'Act as a Scottish Higher History specialist focusing on analytical essay skills. Create structured essay planning notes for S5 Higher History pupils evaluating why women won the vote in Britain in 1918 (Suffragists, Suffragettes, wartime work, and changing attitudes). Format as a 4-column table (Factor, Key Knowledge, Analytical Argument, Historiography/Evaluation) plus three model linking sentences.',
+          upgradedParts: {
+            persona: 'Act as a Scottish Higher History specialist focusing on analytical essay skills.',
+            act: 'Create structured essay planning notes',
+            recipient: 'for S5 Higher History pupils',
+            theme: 'evaluating why women won the vote in Britain in 1918 (Suffragists, Suffragettes, wartime work, and changing attitudes).',
+            structure: 'Format as a 4-column table (Factor, Key Knowledge, Analytical Argument, Historiography/Evaluation) plus three model linking sentences.'
+          }
+        },
+        {
+          id: 'diag-05',
+          title: 'The Vague Differentiation Plea',
+          phase: 'BGE (S1-S3)',
+          flawedPrompt: 'Simplify this text about Scottish weather.',
+          presentElements: ['act', 'theme'],
+          missingElements: ['persona', 'recipient', 'structure'],
+          diagnosticHint: "It asks to simplify a topic, but 'simplify' means very different things for EAL learners, dyslexic readers, or S1 Geography pupils—and there is no layout or glossary guidance.",
+          explanation: {
+            persona: 'Missing: Adding an inclusive Support for Learning (ASN) specialist lens prevents patronising tone while lowering reading barriers.',
+            recipient: "Missing: Doesn't state the learner stage (e.g., S1 BGE), target reading age, or specific literacy barriers.",
+            structure: "Missing: Doesn't request chunked paragraphs, bolded key terms, a vocabulary box, or comprehension check questions."
+          },
+          upgradedPrompt: 'Act as a supportive Scottish Support for Learning (ASN) and BGE Geography teacher. Rewrite an introductory passage explaining relief rainfall in the Scottish Highlands for S1 pupils who benefit from dyslexia-friendly scaffolding and a reading age of 9. Keep the tone age-appropriate and engaging, and structure it as three short numbered paragraphs preceded by a 5-word key vocabulary table and followed by two quick check questions.',
+          upgradedParts: {
+            persona: 'Act as a supportive Scottish Support for Learning (ASN) and BGE Geography teacher.',
+            act: 'Rewrite an introductory passage',
+            recipient: 'for S1 pupils who benefit from dyslexia-friendly scaffolding and a reading age of 9',
+            theme: 'explaining relief rainfall in the Scottish Highlands in an age-appropriate, engaging tone.',
+            structure: 'Structure it as three short numbered paragraphs preceded by a 5-word key vocabulary table and followed by two quick check questions.'
           }
         }
       ];
@@ -3010,11 +3354,17 @@
       const state = {
         activeExplorerPart: 'P',
         explorerMode: 'strong', // 'weak' | 'strong'
+        chips: { P: [], A: [], R: [], T: [], S: [] },
+        activeChipIdx: { P: null, A: null, R: null, T: null, S: null },
+        isApplyingChip: false,
         exemplars: [],
         phaseFilter: 'All',
         searchQuery: '',
+        diagnostics: [],
         activeChallengeIdx: 0,
-        challengeSelections: { 0: new Set(), 1: new Set(), 2: new Set() },
+        challengeSelections: {},
+        challengeChecked: {},
+        challengeHintOpen: {},
         completedChallenges: new Set()
       };
 
@@ -3383,15 +3733,24 @@
         const activeKeys = PART_KEYS.filter((k) => values[k].trim().length > 0);
         const missingKeys = PART_KEYS.filter((k) => values[k].trim().length === 0);
 
-        // Sync active chip states
+        // Sync completeness pills & subtle active chip states (cleared automatically on manual edit)
         PART_KEYS.forEach((k) => {
           const currentTrimmed = values[k].trim();
           const pill = document.getElementById('pill-' + k);
           pill.classList.toggle('active', currentTrimmed.length > 0);
 
-          document.querySelectorAll('[data-chips-for="' + k + '"] .chip-btn').forEach((chip) => {
-            const matches = currentTrimmed === chip.getAttribute('data-chip-text');
-            chip.setAttribute('aria-pressed', String(matches));
+          if (!state.isApplyingChip) {
+            const matchedIdx = (state.chips[k] || []).findIndex(
+              (chip) => (chip.text || '').trim() === currentTrimmed && currentTrimmed.length > 0
+            );
+            state.activeChipIdx[k] = matchedIdx >= 0 ? matchedIdx : null;
+          }
+
+          document.querySelectorAll('[data-chips-for="' + k + '"] .chip-btn').forEach((btn) => {
+            const idx = Number(btn.getAttribute('data-chip-idx'));
+            const isActive = state.activeChipIdx[k] === idx;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-pressed', String(isActive));
           });
         });
 
@@ -3490,41 +3849,139 @@
         window.print();
       }
 
-      function initBuilder() {
-        // Render quick-insert chips for each letter
+      /**
+       * Hides all five builder suggestion chip containers cleanly with zero layout gaps
+       * when ./chips.json cannot be loaded (e.g., opened directly via file://).
+       */
+      function hideAllBuilderChipRows() {
         PART_KEYS.forEach((k) => {
+          state.chips[k] = [];
+          state.activeChipIdx[k] = null;
           const container = document.querySelector('[data-chips-for="' + k + '"]');
-          const chipsHTML =
-            '<span class="chips-prefix">Quick insert:</span>' +
-            BUILDER_CHIPS[k]
-              .map(
-                (chip) =>
-                  '<button type="button" class="chip-btn" aria-pressed="false" data-chip-text="' +
-                  escapeHTML(chip.text) +
-                  '">' +
-                  escapeHTML(chip.label) +
-                  '</button>'
-              )
-              .join('');
-          container.innerHTML = chipsHTML;
+          if (container) {
+            container.innerHTML = '';
+            container.hidden = true;
+          }
+        });
+      }
 
-          container.querySelectorAll('.chip-btn').forEach((btn) => {
-            btn.addEventListener('click', () => {
-              const inputEl = document.getElementById('input-' + k);
-              const chipText = btn.getAttribute('data-chip-text');
-              if (inputEl.value.trim() === chipText) {
-                inputEl.value = '';
-              } else {
-                inputEl.value = chipText;
-              }
-              inputEl.dispatchEvent(new Event('input', { bubbles: true }));
-              inputEl.focus();
-            });
+      /**
+       * Renders accessible <button type="button"> pills beneath input-k from state.chips[k],
+       * inserts chip.text (replacing empty or unmodified chip text cleanly), dispatches an
+       * 'input' event, focuses the field, and auto-highlights any [bracketed] placeholder.
+       */
+      function renderBuilderChipRow(k) {
+        const container = document.querySelector('[data-chips-for="' + k + '"]');
+        if (!container) return;
+
+        const chips = state.chips[k] || [];
+        if (chips.length === 0) {
+          container.innerHTML = '';
+          container.hidden = true;
+          return;
+        }
+
+        const partName = PART_NAMES[k];
+        container.innerHTML = chips
+          .map((chip, idx) => {
+            const ariaDesc = 'Insert ' + partName + ': ' + chip.label;
+            return (
+              '<button type="button" class="chip-btn" data-chip-idx="' +
+              idx +
+              '" aria-pressed="false" aria-label="' +
+              escapeHTML(ariaDesc) +
+              '">' +
+              escapeHTML(chip.label) +
+              '</button>'
+            );
+          })
+          .join('');
+        container.hidden = false;
+
+        container.querySelectorAll('.chip-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const idx = Number(btn.getAttribute('data-chip-idx'));
+            const chip = chips[idx];
+            if (!chip) return;
+
+            const inputEl = document.getElementById('input-' + k);
+            const rawVal = inputEl.value;
+            const currentTrimmed = rawVal.trim();
+            const isUnmodifiedChip = chips.some(
+              (c) => (c.text || '').trim() === currentTrimmed
+            );
+
+            let insertOffset = 0;
+            if (currentTrimmed === '' || isUnmodifiedChip) {
+              inputEl.value = chip.text;
+              insertOffset = 0;
+            } else {
+              const sep = /\s$/.test(rawVal) ? '' : ' ';
+              insertOffset = rawVal.length + sep.length;
+              inputEl.value = rawVal + sep + chip.text;
+            }
+
+            state.activeChipIdx[k] = idx;
+            state.isApplyingChip = true;
+            inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+            state.isApplyingChip = false;
+
+            inputEl.focus();
+
+            // Auto-highlight first square-bracketed placeholder matching /\[[^\]]+\]/
+            const placeholderMatch = /\[[^\]]+\]/.exec(chip.text);
+            if (placeholderMatch && typeof inputEl.setSelectionRange === 'function') {
+              const startIndex = insertOffset + placeholderMatch.index;
+              const endIndex = startIndex + placeholderMatch[0].length;
+              inputEl.setSelectionRange(startIndex, endIndex);
+            } else if (typeof inputEl.setSelectionRange === 'function') {
+              const endPos = inputEl.value.length;
+              inputEl.setSelectionRange(endPos, endPos);
+            }
+          });
+        });
+      }
+
+      /**
+       * Fetches ./chips.json asynchronously via relative path; hides empty chip rows
+       * cleanly on failure (such as file:// protocol) so no layout gaps appear.
+       */
+      async function loadBuilderChipsAsync() {
+        try {
+          const response = await fetch('./chips.json');
+          if (!response.ok) {
+            throw new Error('HTTP status ' + response.status);
+          }
+          const payload = await response.json();
+          const source = payload && typeof payload === 'object' && payload.chips ? payload.chips : payload;
+          if (!source || typeof source !== 'object') {
+            throw new Error('Invalid chips.json payload');
+          }
+
+          PART_KEYS.forEach((k) => {
+            const fieldName = PART_FIELD_KEYS[k];
+            const rawList = source[fieldName] || source[k] || [];
+            state.chips[k] = Array.isArray(rawList)
+              ? rawList.filter((item) => item && item.label && item.text)
+              : [];
+            renderBuilderChipRow(k);
           });
 
-          // Live input listener preserves manual typing behaviour
+          updateLiveBuilder();
+        } catch (err) {
+          console.warn('Could not load ./chips.json; hiding builder chip containers:', err);
+          hideAllBuilderChipRows();
+        }
+      }
+
+      function initBuilder() {
+        // Attach live input listeners immediately so manual typing always works
+        PART_KEYS.forEach((k) => {
           document.getElementById('input-' + k).addEventListener('input', updateLiveBuilder);
         });
+
+        // Load single-click suggestion chips asynchronously from ./chips.json
+        loadBuilderChipsAsync();
 
         // Individual Clear buttons
         document.querySelectorAll('[data-clear]').forEach((btn) => {
@@ -3785,144 +4242,369 @@
 
       /* ----------------------------------------------------------------------
          11. FEATURE 4 CONTROLLER: PROMPT DIAGNOSTIC CHALLENGE ("FIX THE PROMPT")
+         Fetches ./diagnostics.json asynchronously with resilient file:// fallback
          ---------------------------------------------------------------------- */
-      function renderChallenge() {
-        const idx = state.activeChallengeIdx;
-        const challenge = CHALLENGES[idx];
-        const selectedSet = state.challengeSelections[idx];
+      function getChallengeSelectionSet(idx) {
+        if (!state.challengeSelections[idx]) {
+          state.challengeSelections[idx] = new Set();
+        }
+        return state.challengeSelections[idx];
+      }
 
-        document.querySelectorAll('.challenge-tab').forEach((tab, i) => {
-          const isSel = i === idx;
-          tab.setAttribute('aria-selected', String(isSel));
-          tab.setAttribute('tabindex', isSel ? '0' : '-1');
+      function renderProgressPills() {
+        const pillsWrap = document.getElementById('ch-progress-pills');
+        const total = state.diagnostics.length;
+        pillsWrap.innerHTML = state.diagnostics
+          .map((item, i) => {
+            const isCurrent = i === state.activeChallengeIdx;
+            const isDone = state.completedChallenges.has(i);
+            const label =
+              'Challenge ' +
+              (i + 1) +
+              ' of ' +
+              total +
+              ': ' +
+              item.title +
+              (isDone ? ' (completed)' : '');
+            return (
+              '<button type="button" class="step-pill-btn' +
+              (isDone ? ' is-done' : '') +
+              '" data-step-idx="' +
+              i +
+              '"' +
+              (isCurrent ? ' aria-current="step"' : '') +
+              ' aria-label="' +
+              escapeHTML(label) +
+              '">' +
+              (i + 1) +
+              (isDone ? '<span aria-hidden="true">&#10003;</span>' : '') +
+              '</button>'
+            );
+          })
+          .join('');
+
+        pillsWrap.querySelectorAll('[data-step-idx]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            state.activeChallengeIdx = Number(btn.getAttribute('data-step-idx'));
+            renderChallenge(null);
+          });
         });
+      }
 
-        const panel = document.getElementById('ch-panel');
-        panel.setAttribute('aria-labelledby', 'ch-tab-' + idx);
+      function renderChallenge(refocusField) {
+        const total = state.diagnostics.length;
+        if (total === 0) return;
 
-        document.getElementById('ch-vague-text').textContent = challenge.vaguePrompt;
+        const idx = state.activeChallengeIdx;
+        const challenge = state.diagnostics[idx];
+        const selectedSet = getChallengeSelectionSet(idx);
+        const isCheckedState = Boolean(state.challengeChecked[idx]);
+        const missingSet = new Set(
+          (challenge.missingElements || []).map((s) => String(s).toLowerCase())
+        );
 
+        document.getElementById('ch-step-counter').textContent =
+          'Challenge ' + (idx + 1) + ' of ' + total;
+        document.getElementById('challenge-progress-badge').textContent =
+          state.completedChallenges.size + ' / ' + total + ' Diagnosed';
+
+        document.getElementById('ch-prev-btn').disabled = idx === 0;
+        document.getElementById('ch-next-btn').disabled = idx === total - 1;
+
+        renderProgressPills();
+
+        const phaseBadge = document.getElementById('ch-phase-badge');
+        phaseBadge.textContent = challenge.phase || 'Classroom';
+        phaseBadge.className = 'stage-pill ' + getPhaseBadgeClass(challenge.phase);
+
+        document.getElementById('ch-title').textContent = challenge.title || '';
+        document.getElementById('ch-vague-text').textContent =
+          '"' + (challenge.flawedPrompt || '') + '"';
+
+        // Sync Optional Hint Toggle
+        const hintOpen = Boolean(state.challengeHintOpen[idx]);
+        const hintBtn = document.getElementById('ch-hint-btn');
+        const hintPanel = document.getElementById('ch-hint-panel');
+        hintBtn.setAttribute('aria-expanded', String(hintOpen));
+        hintPanel.textContent = challenge.diagnosticHint || '';
+        hintPanel.hidden = !hintOpen;
+
+        // Render 5 accessible P.A.R.T.S. toggle checkboxes (persona, act, recipient, theme, structure)
         const grid = document.getElementById('ch-checkbox-grid');
         grid.innerHTML = PART_KEYS.map((k) => {
-          const checked = selectedSet.has(k);
+          const fieldKey = PART_FIELD_KEYS[k]; // 'persona' | 'act' | 'recipient' | 'theme' | 'structure'
+          const checked = selectedSet.has(fieldKey);
+          const actuallyMissing = missingSet.has(fieldKey);
+
+          let stateClass = checked ? ' is-checked' : '';
+          let boxSymbol = checked ? '&#10003;' : '';
+          let subLabel = checked ? 'Marked missing' : 'Select if missing';
+
+          if (isCheckedState) {
+            if (actuallyMissing && checked) {
+              stateClass = ' eval-hit';
+              boxSymbol = '&#10003;';
+              subLabel = '&#10003; Spot on: Missing';
+            } else if (actuallyMissing && !checked) {
+              stateClass = ' eval-missed';
+              boxSymbol = '!';
+              subLabel = '! Missed: Missing';
+            } else if (!actuallyMissing && checked) {
+              stateClass = ' eval-extra';
+              boxSymbol = '&#10005;';
+              subLabel = '&#10005; Extra: Present';
+            } else {
+              stateClass = ' eval-present-ok';
+              boxSymbol = '';
+              subLabel = '&#10003; Present in prompt';
+            }
+          }
+
           return (
-            '<label class="diag-check-label' + (checked ? ' is-checked' : '') + '">' +
-              '<input type="checkbox" class="diag-check-input" value="' + k + '"' + (checked ? ' checked' : '') + '>' +
+            '<label class="diag-check-label' +
+            stateClass +
+            '">' +
+              '<input type="checkbox" class="diag-check-input" value="' +
+              fieldKey +
+              '"' +
+              (checked ? ' checked' : '') +
+              ' aria-label="' +
+              escapeHTML(PART_NAMES[k] + ' — missing from this prompt') +
+              '">' +
               '<span class="diag-check-top">' +
-                '<span class="mini-badge ' + k + '">' + k + '</span>' +
-                '<span class="custom-box" aria-hidden="true">' + (checked ? '&#10003;' : '') + '</span>' +
+                '<span class="mini-badge ' + k + '" aria-hidden="true">' + k + '</span>' +
+                '<span class="custom-box" aria-hidden="true">' + boxSymbol + '</span>' +
               '</span>' +
               '<span class="diag-part-title">' + PART_NAMES[k] + '</span>' +
-              '<span class="diag-part-sub">' + (checked ? 'Marked missing' : 'Click if missing') + '</span>' +
+              '<span class="diag-part-sub">' + subLabel + '</span>' +
             '</label>'
           );
         }).join('');
 
         grid.querySelectorAll('.diag-check-input').forEach((input) => {
           input.addEventListener('change', () => {
-            const key = input.value;
-            if (input.checked) selectedSet.add(key);
-            else selectedSet.delete(key);
-            renderChallenge();
+            const fieldKey = input.value;
+            if (input.checked) selectedSet.add(fieldKey);
+            else selectedSet.delete(fieldKey);
+            // Allow adjusting selection and re-checking cleanly
+            state.challengeChecked[idx] = false;
+            renderChallenge(fieldKey);
           });
         });
 
-        document.getElementById('ch-result-panel').hidden = true;
+        if (refocusField) {
+          const targetInput = grid.querySelector('input[value="' + refocusField + '"]');
+          if (targetInput) {
+            targetInput.focus();
+          }
+        }
+
+        if (isCheckedState) {
+          renderDiagnosticReveal(false);
+        } else {
+          document.getElementById('ch-result-panel').hidden = true;
+        }
       }
 
-      function evaluateChallenge(skipScoring) {
+      function renderDiagnosticReveal(announceLive) {
         const idx = state.activeChallengeIdx;
-        const challenge = CHALLENGES[idx];
-        const selectedSet = state.challengeSelections[idx];
-        const missingSet = new Set(challenge.missing);
+        const challenge = state.diagnostics[idx];
+        if (!challenge) return;
 
-        let exactMatches = 0;
-        const breakdownHTML = PART_KEYS.map((k) => {
-          const actuallyMissing = missingSet.has(k);
-          const userMarkedMissing = selectedSet.has(k);
-          const isRight = actuallyMissing === userMarkedMissing;
-          if (isRight) exactMatches++;
+        const selectedSet = getChallengeSelectionSet(idx);
+        const missingList = (challenge.missingElements || []).map((s) => String(s).toLowerCase());
+        const missingSet = new Set(missingList);
+        const explanationMap = challenge.explanation || {};
 
-          let icon = isRight ? '&#9989;' : '&#128161;';
-          if (skipScoring) {
-            icon = actuallyMissing ? '&#9888;&#65039;' : '&#9989;';
+        let hits = 0;
+        const missedNames = [];
+        const extraNames = [];
+
+        const breakdownItemsHTML = PART_KEYS.map((k) => {
+          const fieldKey = PART_FIELD_KEYS[k];
+          const partName = PART_NAMES[k];
+          const actuallyMissing = missingSet.has(fieldKey);
+          const userSelected = selectedSet.has(fieldKey);
+
+          let badgeHTML = '';
+          if (actuallyMissing && userSelected) {
+            hits++;
+            badgeHTML = '<span class="diag-status-badge hit">&#10003; Spot on (Missing)</span>';
+          } else if (actuallyMissing && !userSelected) {
+            missedNames.push(partName);
+            badgeHTML = '<span class="diag-status-badge missed">! Missed (Missing)</span>';
+          } else if (!actuallyMissing && userSelected) {
+            extraNames.push(partName);
+            badgeHTML = '<span class="diag-status-badge extra">&#10005; Extra (Already Present)</span>';
+          } else {
+            badgeHTML = '<span class="diag-status-badge present">&#10003; Present in Prompt</span>';
           }
+
+          const noteText =
+            explanationMap[fieldKey] ||
+            explanationMap[k] ||
+            (actuallyMissing
+              ? 'Missing from the original prompt.'
+              : 'Already included in the original prompt.');
 
           return (
             '<li class="diag-breakdown-item">' +
-              '<strong>' + icon + ' [' + k + '] ' + PART_NAMES[k] + ':</strong> ' +
-              escapeHTML(challenge.explanations[k]) +
+              badgeHTML +
+              '<strong>[' + k + '] ' + partName + ':</strong> ' +
+              escapeHTML(noteText) +
             '</li>'
           );
         }).join('');
 
-        state.completedChallenges.add(idx);
-        document.getElementById('challenge-progress-badge').textContent =
-          state.completedChallenges.size + ' / ' + CHALLENGES.length + ' Diagnosed';
-
-        const summaryEl = document.getElementById('ch-result-summary');
-        if (skipScoring) {
-          summaryEl.textContent =
-            'Missing elements in this prompt: ' +
-            challenge.missing.map((k) => PART_NAMES[k] + ' (' + k + ')').join(', ') +
-            '. Compare with the upgraded prompt below:';
-        } else if (exactMatches === 5) {
-          summaryEl.textContent =
-            'Spot on! You identified all 5 P.A.R.T.S. elements accurately. Here is how adding the missing blocks transforms the prompt:';
+        let summaryText = '';
+        if (hits === missingList.length && extraNames.length === 0) {
+          summaryText =
+            'Spot on! You identified all ' +
+            missingList.length +
+            ' missing P.A.R.T.S. elements with zero extra selections.';
         } else {
-          summaryEl.textContent =
-            'Good eye — you matched ' +
-            exactMatches +
-            ' out of 5 elements! Check the notes below and explore the upgraded P.A.R.T.S. version:';
+          const parts = [
+            'You spotted ' + hits + ' of ' + missingList.length + ' missing elements'
+          ];
+          if (missedNames.length > 0) {
+            parts.push('missed ' + missedNames.join(', '));
+          }
+          if (extraNames.length > 0) {
+            parts.push('marked ' + extraNames.join(', ') + ' (already present)');
+          }
+          summaryText = parts.join(' — ') + '. Compare the breakdown and upgraded prompt below:';
         }
 
-        document.getElementById('ch-breakdown-list').innerHTML = breakdownHTML;
-        document.getElementById('ch-upgraded-preview').innerHTML = buildColourCodedHTML(challenge.upgradedParts);
+        document.getElementById('ch-result-summary').textContent = summaryText;
+        document.getElementById('ch-breakdown-list').innerHTML = breakdownItemsHTML;
+        document.getElementById('ch-upgraded-prompt').textContent =
+          challenge.upgradedPrompt || buildCleanPromptText(challenge.upgradedParts);
 
         const resultPanel = document.getElementById('ch-result-panel');
         resultPanel.hidden = false;
+
+        if (announceLive) {
+          const liveEl = document.getElementById('ch-live-announcer');
+          liveEl.textContent = '';
+          setTimeout(() => {
+            liveEl.textContent = summaryText + ' Upgraded prompt revealed.';
+          }, 30);
+        }
+      }
+
+      function evaluateChallenge() {
+        const idx = state.activeChallengeIdx;
+        state.challengeChecked[idx] = true;
+        state.completedChallenges.add(idx);
+        renderChallenge(null);
+        renderDiagnosticReveal(true);
+      }
+
+      async function loadDiagnosticsAsync() {
+        const shell = document.getElementById('ch-shell');
+        const loadingEl = document.getElementById('ch-loading-state');
+        const cardBody = document.getElementById('ch-card-body');
+        const fallbackBanner = document.getElementById('diagnostics-fallback-banner');
+        const fallbackText = document.getElementById('diagnostics-fallback-text');
+
+        shell.setAttribute('aria-busy', 'true');
+        loadingEl.hidden = false;
+        cardBody.hidden = true;
+
+        try {
+          const response = await fetch('./diagnostics.json');
+          if (!response.ok) {
+            throw new Error('HTTP status ' + response.status);
+          }
+          const data = await response.json();
+          if (!Array.isArray(data) || data.length === 0) {
+            throw new Error('Invalid or empty diagnostics.json');
+          }
+
+          state.diagnostics = data;
+          fallbackBanner.hidden = true;
+        } catch (err) {
+          console.warn('Live fetch of ./diagnostics.json fell back to built-in copy:', err);
+          state.diagnostics = FALLBACK_DIAGNOSTICS;
+
+          const isFileProtocol = window.location && window.location.protocol === 'file:';
+          if (isFileProtocol) {
+            fallbackText.innerHTML =
+              '<strong>Local file preview detected (<code>file://</code>):</strong> Browsers block direct JSON requests without a web server, so the built-in 5 diagnostic challenges are shown below. On <strong>GitHub Pages</strong> (or a local server), <code>./diagnostics.json</code> loads dynamically.';
+          } else {
+            fallbackText.innerHTML =
+              '<strong>Offline fallback active:</strong> Could not fetch <code>./diagnostics.json</code> right now, so the built-in diagnostic challenges are loaded below.';
+          }
+          fallbackBanner.hidden = false;
+        }
+
+        if (state.activeChallengeIdx >= state.diagnostics.length) {
+          state.activeChallengeIdx = 0;
+        }
+
+        loadingEl.hidden = true;
+        cardBody.hidden = false;
+        shell.setAttribute('aria-busy', 'false');
+        renderChallenge(null);
       }
 
       function initChallenges() {
-        const tabs = Array.from(document.querySelectorAll('.challenge-tab'));
-        tabs.forEach((tab, idx) => {
-          tab.addEventListener('click', () => {
-            state.activeChallengeIdx = idx;
-            renderChallenge();
-          });
+        document.getElementById('ch-prev-btn').addEventListener('click', () => {
+          if (state.activeChallengeIdx > 0) {
+            state.activeChallengeIdx--;
+            renderChallenge(null);
+          }
+        });
 
-          tab.addEventListener('keydown', (e) => {
-            let nextIdx = null;
-            if (e.key === 'ArrowRight') nextIdx = (idx + 1) % tabs.length;
-            else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + tabs.length) % tabs.length;
-            if (nextIdx !== null) {
-              e.preventDefault();
-              tabs[nextIdx].focus();
-              state.activeChallengeIdx = nextIdx;
-              renderChallenge();
-            }
-          });
+        document.getElementById('ch-next-btn').addEventListener('click', () => {
+          if (state.activeChallengeIdx < state.diagnostics.length - 1) {
+            state.activeChallengeIdx++;
+            renderChallenge(null);
+          }
+        });
+
+        document.getElementById('ch-hint-btn').addEventListener('click', () => {
+          const idx = state.activeChallengeIdx;
+          state.challengeHintOpen[idx] = !state.challengeHintOpen[idx];
+          const isOpen = Boolean(state.challengeHintOpen[idx]);
+          document.getElementById('ch-hint-btn').setAttribute('aria-expanded', String(isOpen));
+          document.getElementById('ch-hint-panel').hidden = !isOpen;
         });
 
         document.getElementById('ch-check-btn').addEventListener('click', () => {
-          evaluateChallenge(false);
+          evaluateChallenge();
         });
 
-        document.getElementById('ch-reveal-btn').addEventListener('click', () => {
-          evaluateChallenge(true);
+        document.getElementById('ch-reset-sel-btn').addEventListener('click', () => {
+          const idx = state.activeChallengeIdx;
+          state.challengeSelections[idx] = new Set();
+          state.challengeChecked[idx] = false;
+          renderChallenge(null);
         });
 
         document.getElementById('ch-load-builder-btn').addEventListener('click', () => {
-          const ch = CHALLENGES[state.activeChallengeIdx];
-          populateBuilder(ch.upgradedParts, 'Upgraded prompt loaded into Builder!');
+          const ch = state.diagnostics[state.activeChallengeIdx];
+          if (ch && ch.upgradedParts) {
+            populateBuilder(
+              ch.upgradedParts,
+              'Loaded: ' + ch.title + ' \u2014 ready to customise'
+            );
+          }
         });
 
         document.getElementById('ch-copy-upgrade-btn').addEventListener('click', function () {
-          const ch = CHALLENGES[state.activeChallengeIdx];
-          copyTextToClipboard(buildCleanPromptText(ch.upgradedParts), this, 'Upgraded prompt copied!');
+          const ch = state.diagnostics[state.activeChallengeIdx];
+          if (ch) {
+            const textToCopy = ch.upgradedPrompt || buildCleanPromptText(ch.upgradedParts);
+            copyTextToClipboard(textToCopy, this, 'Upgraded prompt copied to clipboard!');
+          }
         });
 
-        renderChallenge();
+        document.getElementById('diagnostics-retry-btn').addEventListener('click', () => {
+          loadDiagnosticsAsync();
+        });
+
+        loadDiagnosticsAsync();
       }
 
       /* ----------------------------------------------------------------------

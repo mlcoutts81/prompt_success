@@ -1,0 +1,112 @@
+{
+  "persona": [
+    {
+      "label": "Primary Teacher",
+      "text": "Act as an experienced Scottish Primary teacher skilled in Curriculum for Excellence pedagogy."
+    },
+    {
+      "label": "BGE Secondary Teacher",
+      "text": "Act as an experienced Scottish secondary teacher delivering Broad General Education (S1–S3)."
+    },
+    {
+      "label": "Nat 5 Specialist",
+      "text": "Act as a Qualifications Scotland National 5 specialist teacher for [insert subject]."
+    },
+    {
+      "label": "Higher Specialist",
+      "text": "Act as an experienced Scottish Higher teacher specialising in [insert subject]."
+    },
+    {
+      "label": "ASN Support Specialist",
+      "text": "Act as a supportive Scottish Support for Learning (ASN) and inclusive literacy specialist."
+    }
+  ],
+  "act": [
+    {
+      "label": "50-min Lesson Plan",
+      "text": "Create a 50-minute lesson plan on [insert topic] with clear learning intentions and success criteria"
+    },
+    {
+      "label": "Retrieval Starter Quiz",
+      "text": "Write an 8-question retrieval practice starter quiz on [insert topic], mixing recall and problem-solving"
+    },
+    {
+      "label": "3-Tier Differentiated Task",
+      "text": "Design a 3-level differentiated classroom activity (Mild, Spicy, Extra Hot) on [insert topic]"
+    },
+    {
+      "label": "Success Criteria Rubric",
+      "text": "Create a student-friendly success criteria rubric for [insert assessment task]"
+    },
+    {
+      "label": "Two Stars & a Wish",
+      "text": "Provide encouraging Two Stars and a Wish formative feedback on [insert writing focus] without rewriting the pupil's work"
+    }
+  ],
+  "recipient": [
+    {
+      "label": "Primary (First/Second Level)",
+      "text": "for a mixed-ability [insert Primary stage, e.g. P5] class working within Curriculum for Excellence First/Second Level"
+    },
+    {
+      "label": "Mixed-Ability BGE (S1–S3)",
+      "text": "for a mixed-attainment [insert S1, S2, or S3] Broad General Education class"
+    },
+    {
+      "label": "National 5 Candidates",
+      "text": "for S4 and S5 learners preparing for Qualifications Scotland National 5 assessments"
+    },
+    {
+      "label": "Higher Candidates",
+      "text": "for S5 and S6 candidates working at Qualifications Scotland Higher standard"
+    },
+    {
+      "label": "ASN & Dyslexia Scaffolds",
+      "text": "for a mixed-ability class including chunked instructions and a 5-word glossary for learners with dyslexia or literacy barriers"
+    }
+  ],
+  "theme": [
+    {
+      "label": "Scottish Real-World Context",
+      "text": "using authentic Scottish everyday contexts and £GBP currency linked to [insert real-world hook]."
+    },
+    {
+      "label": "Active & Inquiry-Led",
+      "text": "keeping the tone active, curious, and inquiry-led to spark classroom discussion."
+    },
+    {
+      "label": "Exam Command Words",
+      "text": "aligned to Qualifications Scotland command words (Explain, Analyse, Evaluate) with clear academic precision."
+    },
+    {
+      "label": "Warm Coaching Tone",
+      "text": "using a calm, confidence-building coaching tone that scaffolds next steps."
+    },
+    {
+      "label": "DYW Career Link",
+      "text": "connecting the topic to Scottish workplaces and Developing the Young Workforce (DYW) skills."
+    }
+  ],
+  "structure": [
+    {
+      "label": "Lesson Table + Exit Pass",
+      "text": "Format as a clear 4-column table (Timing, Teacher Input, Pupil Activity, Support/Challenge) followed by a 3-question exit pass."
+    },
+    {
+      "label": "Quiz + Marking Key",
+      "text": "Present as numbered pupil questions first, followed by a separate concise marking key."
+    },
+    {
+      "label": "Student 'I Can...' Table",
+      "text": "Format as a clean 3-column pupil checklist using positive 'I can...' statements."
+    },
+    {
+      "label": "Worked Example + Practice",
+      "text": "Begin with 1 step-by-step annotated worked example, followed by 5 graduated practice questions and answers."
+    },
+    {
+      "label": "Printable Station Cards",
+      "text": "Organise into [insert number, e.g. 4] concise printable station cards with pupil instructions and hinge questions."
+    }
+  ]
+}
