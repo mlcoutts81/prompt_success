@@ -1,273 +1,2600 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PARTS Prompting Framework — Teacher Cheat Sheet (Glow)</title>
-  <!-- Load Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Load Inter & JetBrains Mono Fonts -->
+  <meta name="description" content="Interactive P.A.R.T.S. Prompting Framework toolkit for Scottish educators using Microsoft Copilot in Glow, aligned to Curriculum for Excellence (BGE) and Qualifications Scotland (National 5 & Higher).">
+  <title>P.A.R.T.S. Prompting Framework — Interactive Educator Toolkit (Glow)</title>
+
+  <!-- Preserved Google Fonts (Inter & JetBrains Mono) with crisp system fallbacks -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- Font Awesome for clean icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & LIGHT / DARK THEME VARIABLES (WCAG AA VERIFIED)
+       Preserves original Slate Navy + Amber + Sky + Emerald Glow palette
+       ========================================================================== */
+    :root {
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      /* Surfaces & Text (Light Mode Default) */
+      --bg-page: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-muted: #e2e8f0;
+      --bg-elevated: #ffffff;
+
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #475569;
+
+      --border-color: #cbd5e1;
+      --border-subtle: #e2e8f0;
+
+      /* Preserved Header & Brand Colours */
+      --header-bg: #0f172a;
+      --header-border: #f59e0b;
+      --brand-accent: #d97706;
+      --brand-sky: #0369a1;
+      --focus-ring: #0284c7;
+
+      /* Primary Interactive Buttons */
+      --btn-primary-bg: #0f172a;
+      --btn-primary-hover: #1e293b;
+      --btn-primary-text: #ffffff;
+
+      --btn-emerald-bg: #047857;
+      --btn-emerald-hover: #065f46;
+      --btn-emerald-text: #ffffff;
+
+      /* P.A.R.T.S. Colour-Coding Tokens (WCAG AA >= 4.5:1 text contrast) */
+      /* P - Persona (Sky) */
+      --p-badge: #0369a1;
+      --p-bg: #e0f2fe;
+      --p-surface: #f0f9ff;
+      --p-border: #7dd3fc;
+      --p-text: #0c4a6e;
+
+      /* A - Act (Indigo) */
+      --a-badge: #4338ca;
+      --a-bg: #e0e7ff;
+      --a-surface: #eef2ff;
+      --a-border: #a5b4fc;
+      --a-text: #312e81;
+
+      /* R - Recipient (Amber — preserved from original Recipients card) */
+      --r-badge: #b45309;
+      --r-bg: #fef3c7;
+      --r-surface: #fffbeb;
+      --r-border: #fcd34d;
+      --r-text: #78350f;
+
+      /* T - Theme (Teal) */
+      --t-badge: #0f766e;
+      --t-bg: #ccfbf1;
+      --t-surface: #f0fdfa;
+      --t-border: #5eead4;
+      --t-text: #134e4a;
+
+      /* S - Structure (Emerald) */
+      --s-badge: #047857;
+      --s-bg: #d1fae5;
+      --s-surface: #ecfdf5;
+      --s-border: #6ee7b7;
+      --s-text: #064e3b;
+
+      /* Status / Comparison Colours */
+      --weak-bg: #ffe4e6;
+      --weak-surface: #fff1f2;
+      --weak-border: #fda4af;
+      --weak-text: #881337;
+
+      --strong-bg: #d1fae5;
+      --strong-surface: #ecfdf5;
+      --strong-border: #6ee7b7;
+      --strong-text: #064e3b;
+
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.25rem;
+    }
+
+    html[data-theme="dark"] {
+      --bg-page: #0b1120;
+      --bg-surface: #111827;
+      --bg-subtle: #1e293b;
+      --bg-muted: #334155;
+      --bg-elevated: #1f2937;
+
+      --text-primary: #f8fafc;
+      --text-secondary: #e2e8f0;
+      --text-muted: #cbd5e1;
+
+      --border-color: #334155;
+      --border-subtle: #1e293b;
+
+      --header-bg: #090d16;
+      --header-border: #f59e0b;
+      --brand-accent: #fbbf24;
+      --brand-sky: #38bdf8;
+      --focus-ring: #38bdf8;
+
+      --btn-primary-bg: #38bdf8;
+      --btn-primary-hover: #7dd3fc;
+      --btn-primary-text: #0f172a;
+
+      --btn-emerald-bg: #10b981;
+      --btn-emerald-hover: #34d399;
+      --btn-emerald-text: #052e16;
+
+      /* Dark Mode P.A.R.T.S. Tokens (WCAG AA >= 4.5:1 text contrast) */
+      --p-badge: #0284c7;
+      --p-bg: rgba(2, 132, 199, 0.26);
+      --p-surface: rgba(2, 132, 199, 0.14);
+      --p-border: #0284c7;
+      --p-text: #bae6fd;
+
+      --a-badge: #6366f1;
+      --a-bg: rgba(99, 102, 241, 0.28);
+      --a-surface: rgba(99, 102, 241, 0.15);
+      --a-border: #6366f1;
+      --a-text: #e0e7ff;
+
+      --r-badge: #d97706;
+      --r-bg: rgba(217, 119, 6, 0.28);
+      --r-surface: rgba(217, 119, 6, 0.14);
+      --r-border: #d97706;
+      --r-text: #fde68a;
+
+      --t-badge: #0d9488;
+      --t-bg: rgba(13, 148, 136, 0.28);
+      --t-surface: rgba(13, 148, 136, 0.15);
+      --t-border: #0d9488;
+      --t-text: #99f6e4;
+
+      --s-badge: #059669;
+      --s-bg: rgba(5, 150, 105, 0.28);
+      --s-surface: rgba(5, 150, 105, 0.15);
+      --s-border: #059669;
+      --s-text: #a7f3d0;
+
+      --weak-bg: rgba(225, 29, 72, 0.25);
+      --weak-surface: rgba(225, 29, 72, 0.14);
+      --weak-border: #f43f5e;
+      --weak-text: #fecdd3;
+
+      --strong-bg: rgba(5, 150, 105, 0.25);
+      --strong-surface: rgba(5, 150, 105, 0.14);
+      --strong-border: #10b981;
+      --strong-text: #a7f3d0;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ==========================================================================
+       2. RESET, TYPOGRAPHY & ACCESSIBILITY FOUNDATIONS
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
+      margin: 0;
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.55;
+      min-height: 100vh;
+      padding: 1.25rem 0.875rem 3rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
+
+    @media (min-width: 640px) {
+      body {
+        padding: 1.5rem 1.5rem 3.5rem;
+      }
+    }
+
     .font-mono-code {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--font-mono);
     }
-    /* Print optimisation so teachers can print a crisp single A4 page */
+
+    /* Accessible Skip Link */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0.75rem;
+      z-index: 1000;
+      background: var(--header-bg);
+      color: #ffffff;
+      padding: 0.65rem 1.1rem;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      text-decoration: none;
+      border: 2px solid #fbbf24;
+    }
+    .skip-link:focus {
+      left: 1rem;
+    }
+
+    /* Universal Visible Focus Ring */
+    :focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    button, input, textarea, select {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       3. LAYOUT SHELL, TOP UTILITY BAR & PRESERVED GLOW HEADER
+       ========================================================================== */
+    .shell-width {
+      max-width: 72rem;
+      margin: 0 auto;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .top-bar-status {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .sparkle-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 999px;
+      background: var(--p-bg);
+      color: var(--p-text);
+      flex-shrink: 0;
+    }
+
+    .top-bar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-utility {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-utility:hover {
+      background: var(--bg-subtle);
+      border-color: var(--text-muted);
+    }
+
+    .btn-utility-dark {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: transparent;
+    }
+
+    .btn-utility-dark:hover {
+      background: var(--btn-primary-hover);
+      border-color: transparent;
+    }
+
+    /* Main Application Card */
+    .app-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    /* Preserved Header Banner */
+    .hero-header {
+      background: var(--header-bg);
+      color: #ffffff;
+      padding: 1.5rem 1.25rem;
+      border-bottom: 4px solid var(--header-border);
+    }
+
+    @media (min-width: 640px) {
+      .hero-header {
+        padding: 1.75rem 2rem;
+      }
+    }
+
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    @media (min-width: 860px) {
+      .hero-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .hero-eyebrow {
+      margin: 0 0 0.3rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #38bdf8;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(1.45rem, 2.8vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #ffffff;
+    }
+
+    .hero-title .accent {
+      color: #fbbf24;
+    }
+
+    .hero-subtitle {
+      margin: 0.4rem 0 0;
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      max-width: 44rem;
+    }
+
+    /* Preserved Glow Data Safety Badge */
+    .safety-badge {
+      background: rgba(30, 41, 59, 0.92);
+      border: 1px solid #334155;
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .safety-icon {
+      width: 2.35rem;
+      height: 2.35rem;
+      border-radius: 0.6rem;
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .safety-title {
+      margin: 0;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #34d399;
+    }
+
+    .safety-text {
+      margin: 0.15rem 0 0;
+      font-size: 0.775rem;
+      color: #e2e8f0;
+      line-height: 1.35;
+    }
+
+    /* Quick Section Navigation Strip */
+    .section-nav {
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .section-nav {
+        padding: 0.75rem 2rem;
+      }
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+
+    .nav-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 999px;
+      background: var(--bg-muted);
+      color: var(--text-primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .quick-start-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Content Padding & Section Spacing */
+    .app-body {
+      padding: 1.5rem 1.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .app-body {
+        padding: 2rem 2rem 2.5rem;
+        gap: 2.75rem;
+      }
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-kicker {
+      margin: 0 0 0.2rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-sky);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .section-desc {
+      margin: 0.25rem 0 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 46rem;
+    }
+
+    /* ==========================================================================
+       4. FEATURE 1: INTERACTIVE P.A.R.T.S. EXPLORER
+       ========================================================================== */
+    .parts-tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .parts-tabs-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+    }
+
+    .parts-tab-btn {
+      text-align: left;
+      padding: 0.85rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-color);
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      transition: transform 0.12s ease, border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .parts-tab-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .parts-tab-top {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .letter-badge {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.5rem;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .letter-badge.p { background: var(--p-badge); }
+    .letter-badge.a { background: var(--a-badge); }
+    .letter-badge.r { background: var(--r-badge); }
+    .letter-badge.t { background: var(--t-badge); }
+    .letter-badge.s { background: var(--s-badge); }
+
+    .parts-tab-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .parts-tab-tagline {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Active State per Letter */
+    .parts-tab-btn[aria-selected="true"][data-part="P"] { background: var(--p-surface); border-color: var(--p-badge); box-shadow: var(--shadow-md); }
+    .parts-tab-btn[aria-selected="true"][data-part="A"] { background: var(--a-surface); border-color: var(--a-badge); box-shadow: var(--shadow-md); }
+    .parts-tab-btn[aria-selected="true"][data-part="R"] { background: var(--r-surface); border-color: var(--r-badge); box-shadow: var(--shadow-md); }
+    .parts-tab-btn[aria-selected="true"][data-part="T"] { background: var(--t-surface); border-color: var(--t-badge); box-shadow: var(--shadow-md); }
+    .parts-tab-btn[aria-selected="true"][data-part="S"] { background: var(--s-surface); border-color: var(--s-badge); box-shadow: var(--shadow-md); }
+
+    /* Explorer Detail Panel */
+    .explorer-panel {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      background: var(--bg-subtle);
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 900px) {
+      .explorer-panel {
+        grid-template-columns: 1.15fr 1fr;
+        padding: 1.5rem;
+        gap: 1.5rem;
+      }
+    }
+
+    .explorer-heading-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .explorer-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .explorer-question {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin: 0.1rem 0 0;
+    }
+
+    .explorer-def {
+      margin: 0 0 1rem;
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .tips-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+    }
+
+    .tips-box-title {
+      margin: 0 0 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .tips-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    /* Explorer Comparison Toggle Box */
+    .compare-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.9rem;
+    }
+
+    .compare-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .compare-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .toggle-pill-group {
+      display: inline-flex;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 0.2rem;
+      gap: 0.2rem;
+    }
+
+    .toggle-pill-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .toggle-pill-btn[aria-pressed="true"].weak-mode {
+      background: var(--weak-bg);
+      color: var(--weak-text);
+    }
+
+    .toggle-pill-btn[aria-pressed="true"].strong-mode {
+      background: var(--strong-bg);
+      color: var(--strong-text);
+    }
+
+    .compare-prompt-box {
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      border: 1px solid var(--border-color);
+    }
+
+    .compare-prompt-box.is-weak {
+      background: var(--weak-surface);
+      border-color: var(--weak-border);
+      color: var(--text-primary);
+    }
+
+    .compare-prompt-box.is-strong {
+      background: var(--strong-surface);
+      border-color: var(--strong-border);
+      color: var(--text-primary);
+    }
+
+    .compare-status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.45rem;
+    }
+
+    .compare-status-tag.weak { color: var(--weak-text); }
+    .compare-status-tag.strong { color: var(--strong-text); }
+
+    .compare-outcome {
+      margin: 0.65rem 0 0;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      padding-top: 0.55rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .explorer-try-btn {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.45rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .explorer-try-btn:hover {
+      background: var(--bg-muted);
+    }
+
+    /* ==========================================================================
+       5. FEATURE 2: LIVE COLOUR-CODED PROMPT BUILDER
+       ========================================================================== */
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (min-width: 980px) {
+      .builder-grid {
+        grid-template-columns: 1.2fr 0.95fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .builder-inputs-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .field-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-left-width: 4px;
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .field-card:focus-within {
+      box-shadow: var(--shadow-md);
+    }
+
+    .field-card.part-P { border-left-color: var(--p-badge); }
+    .field-card.part-A { border-left-color: var(--a-badge); }
+    .field-card.part-R { border-left-color: var(--r-badge); }
+    .field-card.part-T { border-left-color: var(--t-badge); }
+    .field-card.part-S { border-left-color: var(--s-badge); }
+
+    .field-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .field-label-group {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .mini-badge {
+      width: 1.55rem;
+      height: 1.55rem;
+      border-radius: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mini-badge.P { background: var(--p-badge); }
+    .mini-badge.A { background: var(--a-badge); }
+    .mini-badge.R { background: var(--r-badge); }
+    .mini-badge.T { background: var(--t-badge); }
+    .mini-badge.S { background: var(--s-badge); }
+
+    .field-label {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+    }
+
+    .field-helper {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-left: 0.25rem;
+    }
+
+    .field-clear-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.2rem 0.45rem;
+      border-radius: 0.35rem;
+    }
+
+    .field-clear-btn:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .builder-textarea {
+      width: 100%;
+      min-height: 3.1rem;
+      resize: vertical;
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.55rem;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      transition: border-color 0.15s ease;
+    }
+
+    .builder-textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.78;
+    }
+
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.38rem;
+      margin-top: 0.55rem;
+    }
+
+    .chips-prefix {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-right: 0.15rem;
+    }
+
+    .chip-btn {
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.26rem 0.6rem;
+      border-radius: 999px;
+      transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+    }
+
+    .chip-btn:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .chip-btn[aria-pressed="true"] {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: transparent;
+    }
+
+    /* Sticky Live Preview Column */
+    .preview-panel {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (min-width: 980px) {
+      .preview-panel {
+        position: sticky;
+        top: 1.25rem;
+      }
+    }
+
+    .preview-panel.flash-loaded {
+      animation: highlightPulse 1.1s ease;
+    }
+
+    @keyframes highlightPulse {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.55); }
+      50% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.25); }
+      100% { box-shadow: var(--shadow-md); }
+    }
+
+    .preview-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .preview-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    /* Progress Dots */
+    .completeness-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.6rem 0.8rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .part-pills {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .part-status-pill {
+      width: 1.55rem;
+      height: 1.55rem;
+      border-radius: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      border: 1px dashed var(--border-color);
+      transition: all 0.15s ease;
+    }
+
+    .part-status-pill.active.P { background: var(--p-badge); color: #fff; border-style: solid; border-color: var(--p-badge); }
+    .part-status-pill.active.A { background: var(--a-badge); color: #fff; border-style: solid; border-color: var(--a-badge); }
+    .part-status-pill.active.R { background: var(--r-badge); color: #fff; border-style: solid; border-color: var(--r-badge); }
+    .part-status-pill.active.T { background: var(--t-badge); color: #fff; border-style: solid; border-color: var(--t-badge); }
+    .part-status-pill.active.S { background: var(--s-badge); color: #fff; border-style: solid; border-color: var(--s-badge); }
+
+    .completeness-text {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* Colour-Coded Assembled Output */
+    .live-output-box {
+      min-height: 10.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      margin-bottom: 0.85rem;
+      word-wrap: break-word;
+    }
+
+    .empty-preview-state {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .seg {
+      padding: 0.14rem 0.42rem;
+      border-radius: 0.35rem;
+      margin-right: 0.22rem;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      border: 1px solid transparent;
+    }
+
+    .seg-tag {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 0.72rem;
+      margin-right: 0.25rem;
+      opacity: 0.9;
+    }
+
+    .seg-P { background: var(--p-bg); color: var(--p-text); border-color: var(--p-border); }
+    .seg-A { background: var(--a-bg); color: var(--a-text); border-color: var(--a-border); }
+    .seg-R { background: var(--r-bg); color: var(--r-text); border-color: var(--r-border); }
+    .seg-T { background: var(--t-bg); color: var(--t-text); border-color: var(--t-border); }
+    .seg-S { background: var(--s-bg); color: var(--s-text); border-color: var(--s-border); }
+
+    .missing-hint-bar {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin: 0 0 0.9rem;
+    }
+
+    .preview-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .btn-copy-clean {
+      flex: 1 1 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.72rem 1.1rem;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--btn-emerald-bg);
+      color: var(--btn-emerald-text);
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-copy-clean:hover:not(:disabled) {
+      background: var(--btn-emerald-hover);
+    }
+
+    .btn-copy-clean:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-print-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      min-height: 2.75rem;
+      padding: 0.72rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.86rem;
+      font-weight: 700;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-print-secondary:hover {
+      background: var(--bg-muted);
+      border-color: var(--text-muted);
+    }
+
+    .btn-print-secondary:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 2.75rem;
+      padding: 0.72rem 0.95rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .btn-reset:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .followup-strip {
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .followup-label {
+      margin: 0 0 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       6. FEATURE 3: READY-TO-REMIX EXEMPLAR LIBRARY
+       ========================================================================== */
+    .exemplar-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.1rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.95rem;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      min-height: 2.75rem;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.83rem;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .filter-btn:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .filter-btn:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .filter-btn[aria-pressed="true"] {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: transparent;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1 1 14rem;
+      max-width: 21rem;
+    }
+
+    .exemplar-search {
+      width: 100%;
+      min-height: 2.75rem;
+      padding: 0.5rem 0.85rem 0.5rem 2.2rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.84rem;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Friendly Inline Notice Banner (for file:// or offline fallback) */
+    .exemplar-fallback-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-md);
+      background: var(--r-surface);
+      border: 1px solid var(--r-border);
+      color: var(--r-text);
+      font-size: 0.83rem;
+      line-height: 1.5;
+    }
+
+    .exemplar-fallback-banner[hidden] {
+      display: none;
+    }
+
+    .exemplar-fallback-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      flex: 1 1 18rem;
+    }
+
+    /* Loading Indicator inside Grid */
+    .exemplar-loading {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 2.5rem 1.25rem;
+      background: var(--bg-subtle);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .loading-spinner {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--brand-sky);
+      animation: spinLoader 0.8s linear infinite;
+    }
+
+    @keyframes spinLoader {
+      to { transform: rotate(360deg); }
+    }
+
+    .exemplars-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 720px) {
+      .exemplars-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1060px) {
+      .exemplars-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .exemplar-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.9rem;
+      transition: transform 0.12s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .exemplar-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .exemplar-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .stage-pill {
+      font-size: 0.73rem;
+      font-weight: 800;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .stage-pill.primary { background: var(--s-bg); color: var(--s-text); border-color: var(--s-border); }
+    .stage-pill.bge { background: var(--p-bg); color: var(--p-text); border-color: var(--p-border); }
+    .stage-pill.n5 { background: var(--r-bg); color: var(--r-text); border-color: var(--r-border); }
+    .stage-pill.higher { background: var(--a-bg); color: var(--a-text); border-color: var(--a-border); }
+    .stage-pill.other { background: var(--t-bg); color: var(--t-text); border-color: var(--t-border); }
+
+    .subject-pill {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.22rem 0.58rem;
+      border-radius: 999px;
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .exemplar-title {
+      margin: 0 0 0.22rem;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .exemplar-level {
+      margin: 0 0 0.65rem;
+      font-size: 0.79rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .exemplar-snippet {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 0.55rem;
+      padding: 0.7rem 0.8rem;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      display: flex;
+      flex-direction: column;
+      gap: 0.32rem;
+    }
+
+    .snippet-row {
+      margin: 0;
+    }
+
+    .snippet-tag {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 0.72rem;
+      padding: 0.05rem 0.32rem;
+      border-radius: 0.25rem;
+      margin-right: 0.3rem;
+    }
+
+    .snippet-tag.P { background: var(--p-bg); color: var(--p-text); }
+    .snippet-tag.A { background: var(--a-bg); color: var(--a-text); }
+    .snippet-tag.R { background: var(--r-bg); color: var(--r-text); }
+    .snippet-tag.T { background: var(--t-bg); color: var(--t-text); }
+    .snippet-tag.S { background: var(--s-bg); color: var(--s-text); }
+
+    .exemplar-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-load-builder {
+      flex: 1;
+      min-height: 2.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 0.55rem;
+      border: none;
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      font-size: 0.84rem;
+      font-weight: 700;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-load-builder:hover {
+      background: var(--btn-primary-hover);
+    }
+
+    .btn-icon-copy {
+      min-height: 2.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 0.55rem 0.8rem;
+      border-radius: 0.55rem;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .btn-icon-copy:hover {
+      background: var(--bg-muted);
+      color: var(--text-primary);
+    }
+
+    .empty-exemplars {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--bg-subtle);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       7. FEATURE 4: PROMPT DIAGNOSTIC CHALLENGE ("FIX THE PROMPT")
+       ========================================================================== */
+    .challenge-shell {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .challenge-shell {
+        padding: 1.5rem;
+      }
+    }
+
+    .challenge-tabs-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .challenge-tab-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .challenge-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.48rem 0.9rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+
+    .challenge-tab[aria-selected="true"] {
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      border-color: transparent;
+    }
+
+    .challenge-score-pill {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .vague-prompt-banner {
+      background: var(--weak-surface);
+      border: 1px solid var(--weak-border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .vague-prompt-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--weak-text);
+      margin-bottom: 0.35rem;
+    }
+
+    .vague-prompt-quote {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .diagnostic-instruction {
+      margin: 0 0 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .checkbox-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1.1rem;
+    }
+
+    @media (min-width: 720px) {
+      .checkbox-cards-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+    }
+
+    .diag-check-label {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding: 0.8rem;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-color);
+      background: var(--bg-surface);
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .diag-check-label:hover {
+      border-color: var(--text-muted);
+    }
+
+    .diag-check-input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .diag-check-input:focus-visible + .diag-check-top {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 4px;
+      border-radius: 0.35rem;
+    }
+
+    .diag-check-label.is-checked {
+      border-color: var(--r-badge);
+      background: var(--r-surface);
+    }
+
+    .diag-check-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .custom-box {
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 0.3rem;
+      border: 2px solid var(--border-color);
+      background: var(--bg-subtle);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 0.75rem;
+    }
+
+    .diag-check-label.is-checked .custom-box {
+      background: var(--r-badge);
+      border-color: var(--r-badge);
+    }
+
+    .diag-part-title {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+    }
+
+    .diag-part-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .challenge-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .btn-check-diag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1.15rem;
+      border-radius: var(--radius-md);
+      border: none;
+      background: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .btn-check-diag:hover {
+      background: var(--btn-primary-hover);
+    }
+
+    .diagnostic-result {
+      margin-top: 1.15rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+    }
+
+    .diagnostic-result[hidden] {
+      display: none;
+    }
+
+    .diag-summary-banner {
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin: 0 0 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .diag-breakdown-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.45rem;
+      margin: 0 0 1rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    @media (min-width: 768px) {
+      .diag-breakdown-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .diag-breakdown-item {
+      font-size: 0.8rem;
+      padding: 0.5rem 0.7rem;
+      border-radius: 0.45rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .upgraded-box {
+      background: var(--strong-surface);
+      border: 1px solid var(--strong-border);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1rem;
+    }
+
+    .upgraded-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .upgraded-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--strong-text);
+    }
+
+    /* ==========================================================================
+       8. PRESERVED FOOTER & TOAST NOTIFICATION
+       ========================================================================== */
+    .app-footer {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border-color);
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @media (min-width: 768px) {
+      .app-footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+      }
+    }
+
+    .footer-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .toast-banner {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 999;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid #334155;
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .toast-banner.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       9. DEDICATED ONE-PAGE A4 PRINT / PDF EXPORT STYLESHEET
+       Unclipped dynamic summary block; forces crisp dark-on-white regardless of Dark Mode
+       ========================================================================== */
+    .print-reference-sheet {
+      display: none;
+    }
+
     @media print {
       @page {
         size: A4 portrait;
-        margin: 10mm;
+        margin: 12mm 14mm;
       }
+
+      html,
+      html[data-theme="dark"],
       body {
         background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+        font-size: 10.5pt !important;
+        line-height: 1.45 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      .no-print {
+
+      /* Hide all interactive UI chrome, raw textareas, tabs, chips, library, challenge & toasts */
+      .skip-link,
+      .no-print,
+      .top-bar,
+      .hero-header,
+      .section-nav,
+      .app-body,
+      .app-footer,
+      .toast-banner,
+      #copy-toast {
         display: none !important;
       }
-      .print-container {
-        box-shadow: none !important;
-        border: none !important;
-        padding: 0 !important;
+
+      .shell-width,
+      .app-container {
         max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+        overflow: visible !important;
+      }
+
+      .print-reference-sheet {
+        display: block !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-family: var(--font-sans);
+        font-size: 10.5pt;
+        line-height: 1.45;
+      }
+
+      .print-ref-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12pt;
+        padding-bottom: 8pt;
+        margin-bottom: 11pt;
+        border-bottom: 2pt solid #0f172a;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .print-ref-title {
+        margin: 0;
+        font-size: 16pt;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        color: #0f172a !important;
+      }
+
+      .print-ref-subtitle {
+        margin: 2.5pt 0 0;
+        font-size: 8.5pt;
+        font-weight: 500;
+        color: #475569 !important;
+      }
+
+      .print-ref-meta {
+        text-align: right;
+        font-size: 9pt;
+        font-weight: 600;
+        color: #334155 !important;
+        white-space: nowrap;
+      }
+
+      .print-section-block {
+        margin-bottom: 11pt;
+      }
+
+      .print-section-heading {
+        margin: 0 0 5pt;
+        font-size: 9pt;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #334155 !important;
+      }
+
+      /* 5-Row P.A.R.T.S. Breakdown Table (Unclipped, omits empty fields gracefully) */
+      .print-parts-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1pt solid #94a3b8;
+      }
+
+      .print-part-row {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border-bottom: 0.75pt solid #cbd5e1;
+      }
+
+      .print-part-row:last-child {
+        border-bottom: none;
+      }
+
+      .print-part-label-cell {
+        width: 24%;
+        vertical-align: top;
+        padding: 5.5pt 8pt;
+        background: #f8fafc !important;
+        border-right: 0.75pt solid #cbd5e1;
+        font-weight: 700;
+        font-size: 9.5pt;
+        color: #0f172a !important;
+      }
+
+      .print-part-letter {
+        display: inline-block;
+        width: 15pt;
+        height: 15pt;
+        line-height: 15pt;
+        text-align: center;
+        border-radius: 3pt;
+        border: 1pt solid #0f172a;
+        font-weight: 800;
+        font-size: 8.5pt;
+        margin-right: 5pt;
+        color: #0f172a !important;
+        background: #ffffff !important;
+      }
+
+      .print-part-value-cell {
+        vertical-align: top;
+        padding: 5.5pt 9pt;
+        font-size: 10.5pt;
+        color: #0f172a !important;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      /* Full Assembled Prompt Bordered Callout Box */
+      .print-callout-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .print-assembled-box {
+        border: 1.25pt solid #0f172a;
+        border-left: 4pt solid #0f172a;
+        border-radius: 4pt;
+        background: #f8fafc !important;
+        padding: 8.5pt 10pt;
+        font-family: var(--font-mono);
+        font-size: 9.8pt;
+        line-height: 1.5;
+        color: #0f172a !important;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      /* Compact Lined "Classroom Notes & Tweaks" Box */
+      .print-notes-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 0;
+      }
+
+      .print-notes-box {
+        border: 1pt solid #94a3b8;
+        border-radius: 4pt;
+        padding: 6pt 10pt 8pt;
+        background: #ffffff !important;
+      }
+
+      .print-notes-hint {
+        margin: 0 0 3pt;
+        font-size: 8pt;
+        font-style: italic;
+        color: #475569 !important;
+      }
+
+      .print-note-line {
+        height: 18pt;
+        border-bottom: 0.75pt solid #cbd5e1;
+      }
+
+      .print-ref-footer {
+        margin-top: 7pt;
+        display: flex;
+        justify-content: space-between;
+        font-size: 7.8pt;
+        color: #475569 !important;
       }
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen py-6 px-3 sm:px-6 lg:px-8">
+<body>
 
-  <!-- Top Action Bar (Hidden when printing) -->
-  <div class="max-w-5xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-3 no-print">
-    <div class="flex items-center gap-2 text-sm text-slate-600">
-      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-bold text-xs">
-        <i class="fa-solid fa-sparkles"></i>
+  <!-- Keyboard Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main toolkit</a>
+
+  <!-- Top Utility Bar (Preserves Print action + adds Light/Dark Theme Toggle) -->
+  <div class="shell-width top-bar no-print">
+    <div class="top-bar-status">
+      <span class="sparkle-pill" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/>
+        </svg>
       </span>
-      <span>Ready for classroom use or A4 printing</span>
+      <span>Interactive toolkit • Ready for classroom use, Chromebooks, or A4 printing</span>
     </div>
-    <button onclick="window.print()" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm transition cursor-pointer">
-      <i class="fa-solid fa-print"></i>
-      <span>Print / Save as PDF</span>
-    </button>
+
+    <div class="top-bar-actions">
+      <button type="button" id="theme-toggle-btn" class="btn-utility" aria-label="Switch to dark mode" aria-pressed="false">
+        <span id="theme-icon" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </span>
+        <span id="theme-label">Dark Mode</span>
+      </button>
+
+      <button type="button" id="top-print-btn" class="btn-utility btn-utility-dark" aria-label="Print or save P.A.R.T.S. classroom prompt reference as PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 6 2 18 2 18 9"/>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+          <rect x="6" y="14" width="12" height="8"/>
+        </svg>
+        <span>Print / Save PDF</span>
+      </button>
+    </div>
   </div>
 
-  <!-- Main Single-Page Cheat Sheet Sheet -->
-  <main class="print-container max-w-5xl mx-auto bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-    
-    <!-- Header Banner -->
-    <header class="bg-slate-900 text-white px-6 py-6 sm:px-8 sm:py-7 border-b-4 border-amber-500">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+  <!-- Main Interactive Application Container -->
+  <main id="main-content" class="shell-width app-container">
+
+    <!-- ====================================================================
+         DEDICATED PRINT-READY ONE-PAGE CLASSROOM REFERENCE SHEET
+         Hidden on screen; dynamically populated from Builder state (no raw textareas)
+         ==================================================================== -->
+    <article id="print-reference-sheet" class="print-reference-sheet" aria-label="Printable P.A.R.T.S. Classroom Prompt Reference">
+      <header class="print-ref-header">
         <div>
-          <p class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-1">
-            Microsoft Copilot in Glow • Educator Quick Reference
-          </p>
-          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            The <span class="text-amber-400">PARTS</span> Prompting Framework
-          </h1>
-          <p class="text-sm sm:text-base text-slate-300 mt-1">
-            Structure better prompts to generate Curriculum for Excellence (CfE) &amp; SQA resources in seconds.
+          <h1 class="print-ref-title">P.A.R.T.S. Classroom Prompt Reference</h1>
+          <p class="print-ref-subtitle">
+            Microsoft Copilot in Glow • Educator Prompting Framework (Glow Data Safety: Never enter pupil names or SCNs)
           </p>
         </div>
-        <!-- Glow Safety Badge -->
-        <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 flex items-center gap-3 shrink-0">
-          <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
-            <i class="fa-solid fa-shield-halved"></i>
+        <div class="print-ref-meta">
+          <div>Date: <span id="print-ref-date"></span></div>
+        </div>
+      </header>
+
+      <section class="print-section-block" aria-labelledby="print-breakdown-heading">
+        <h2 id="print-breakdown-heading" class="print-section-heading">1. P.A.R.T.S. Building Blocks</h2>
+        <table class="print-parts-table">
+          <tbody id="print-parts-tbody"></tbody>
+        </table>
+      </section>
+
+      <section class="print-section-block print-callout-section" aria-labelledby="print-assembled-heading">
+        <h2 id="print-assembled-heading" class="print-section-heading">2. Full Assembled, Copy-Ready Prompt</h2>
+        <div id="print-assembled-box" class="print-assembled-box"></div>
+      </section>
+
+      <section class="print-section-block print-notes-section" aria-labelledby="print-notes-heading">
+        <h2 id="print-notes-heading" class="print-section-heading">3. Classroom Notes &amp; Tweaks</h2>
+        <div class="print-notes-box">
+          <p class="print-notes-hint">Handwritten reflections, differentiation adjustments, or follow-up prompts to try:</p>
+          <div class="print-note-line"></div>
+          <div class="print-note-line"></div>
+          <div class="print-note-line"></div>
+          <div class="print-note-line"></div>
+        </div>
+      </section>
+
+      <footer class="print-ref-footer">
+        <span>Always review AI-generated materials before classroom use.</span>
+        <span>Learning with and through AI • Glow</span>
+      </footer>
+    </article>
+
+    <!-- Preserved Glow Branding Header -->
+    <header class="hero-header">
+      <div class="hero-inner">
+        <div>
+          <p class="hero-eyebrow">Microsoft Copilot in Glow • Interactive Educator Toolkit</p>
+          <h1 class="hero-title">
+            The <span class="accent">P.A.R.T.S.</span> Prompting Framework
+          </h1>
+          <p class="hero-subtitle">
+            Build clear, classroom-ready prompts for Primary, Curriculum for Excellence (BGE), &amp; Qualifications Scotland (National 5 &amp; Higher) in under two minutes.
+          </p>
+        </div>
+
+        <!-- Preserved Glow Data Safety Shield Badge -->
+        <div class="safety-badge" role="note" aria-label="Glow Data Safety Reminder">
+          <div class="safety-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
           </div>
-          <div class="text-xs">
-            <p class="font-bold text-emerald-400 uppercase tracking-wide">Glow Data Safety</p>
-            <p class="text-slate-300 leading-snug">Check for the green shield.<br>Never enter pupil names/SCNs.</p>
+          <div>
+            <p class="safety-title">Glow Data Safety</p>
+            <p class="safety-text">Check for the green shield.<br>Never enter pupil names or SCNs.</p>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- Content Body -->
-    <div class="p-6 sm:p-8 space-y-6">
+    <!-- Low-Floor Quick Jump Navigation -->
+    <nav class="section-nav no-print" aria-label="Toolkit sections">
+      <ul class="nav-links">
+        <li><a href="#section-explorer"><span class="nav-step-num">1</span> Explore P.A.R.T.S.</a></li>
+        <li><a href="#section-builder"><span class="nav-step-num">2</span> Live Builder</a></li>
+        <li><a href="#section-exemplars"><span class="nav-step-num">3</span> Exemplar Library</a></li>
+        <li><a href="#section-challenge"><span class="nav-step-num">4</span> Fix the Prompt</a></li>
+      </ul>
+      <div class="quick-start-hint">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span><strong>Short on time?</strong> Pick an exemplar in Step 3 &rarr; tweak &amp; copy!</span>
+      </div>
+    </nav>
 
-      <!-- Section 1: The 5 PARTS Breakdown Grid -->
-      <section aria-labelledby="parts-breakdown-heading">
-        <div class="flex items-center justify-between mb-3">
-          <h2 id="parts-breakdown-heading" class="text-sm font-bold uppercase tracking-wider text-slate-500">
-            1. Build Your Prompt Using All Five Building Blocks
-          </h2>
+    <div class="app-body">
+
+      <!-- ====================================================================
+           SECTION 1: INTERACTIVE P.A.R.T.S. EXPLORER
+           ==================================================================== -->
+      <section id="section-explorer" class="no-print" aria-labelledby="explorer-heading">
+        <div class="section-header">
+          <div>
+            <p class="section-kicker">Step 1 • Understand the Framework</p>
+            <h2 id="explorer-heading" class="section-title">Interactive P.A.R.T.S. Explorer</h2>
+            <p class="section-desc">
+              Select any letter below (or use Left/Right arrow keys) for plain-English definitions, classroom tips, and a Weak vs. Strong prompt comparison.
+            </p>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-          <!-- P - Persona -->
-          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">P</span>
-                <h3 class="font-bold text-slate-900 text-base">Persona</h3>
+        <!-- Accessible Tablist for P, A, R, T, S -->
+        <div class="parts-tabs-grid" role="tablist" aria-label="P.A.R.T.S. framework elements">
+          <button type="button" role="tab" id="tab-P" aria-selected="true" aria-controls="panel-explorer" tabindex="0" data-part="P" class="parts-tab-btn">
+            <span class="parts-tab-top">
+              <span class="letter-badge p">P</span>
+              <span class="parts-tab-name">Persona</span>
+            </span>
+            <span class="parts-tab-tagline">Who the AI acts as</span>
+          </button>
+
+          <button type="button" role="tab" id="tab-A" aria-selected="false" aria-controls="panel-explorer" tabindex="-1" data-part="A" class="parts-tab-btn">
+            <span class="parts-tab-top">
+              <span class="letter-badge a">A</span>
+              <span class="parts-tab-name">Act</span>
+            </span>
+            <span class="parts-tab-tagline">What task to perform</span>
+          </button>
+
+          <button type="button" role="tab" id="tab-R" aria-selected="false" aria-controls="panel-explorer" tabindex="-1" data-part="R" class="parts-tab-btn">
+            <span class="parts-tab-top">
+              <span class="letter-badge r">R</span>
+              <span class="parts-tab-name">Recipient</span>
+            </span>
+            <span class="parts-tab-tagline">Who the resource is for</span>
+          </button>
+
+          <button type="button" role="tab" id="tab-T" aria-selected="false" aria-controls="panel-explorer" tabindex="-1" data-part="T" class="parts-tab-btn">
+            <span class="parts-tab-top">
+              <span class="letter-badge t">T</span>
+              <span class="parts-tab-name">Theme</span>
+            </span>
+            <span class="parts-tab-tagline">Tone, style &amp; context</span>
+          </button>
+
+          <button type="button" role="tab" id="tab-S" aria-selected="false" aria-controls="panel-explorer" tabindex="-1" data-part="S" class="parts-tab-btn">
+            <span class="parts-tab-top">
+              <span class="letter-badge s">S</span>
+              <span class="parts-tab-name">Structure</span>
+            </span>
+            <span class="parts-tab-tagline">Exact output layout</span>
+          </button>
+        </div>
+
+        <!-- Explorer Dynamic Tabpanel -->
+        <div id="panel-explorer" role="tabpanel" aria-labelledby="tab-P" class="explorer-panel" aria-live="polite">
+          <div>
+            <div class="explorer-heading-row">
+              <span id="exp-badge" class="letter-badge p">P</span>
+              <div>
+                <h3 id="exp-title" class="explorer-title">Persona — Give the AI an Educator Role</h3>
+                <p id="exp-question" class="explorer-question">Guiding question: "Who should the AI step into the shoes of?"</p>
               </div>
-              <p class="text-xs text-slate-600 leading-relaxed mb-2">
-                Tell Copilot <strong>who</strong> to act as so it adopts the right pedagogical tone and expertise.
-              </p>
             </div>
-            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
-              "Act as a Scottish P6 primary teacher..."
+
+            <p id="exp-definition" class="explorer-def"></p>
+
+            <div class="tips-box">
+              <h4 class="tips-box-title">Classroom Tips</h4>
+              <ul id="exp-tips" class="tips-list"></ul>
             </div>
           </div>
 
-          <!-- A - Aim -->
-          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
+          <div class="compare-card">
             <div>
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">A</span>
-                <h3 class="font-bold text-slate-900 text-base">Aim</h3>
+              <div class="compare-header">
+                <span class="compare-label">Prompt Impact Toggle</span>
+                <div class="toggle-pill-group" role="group" aria-label="Compare weak and strong prompts">
+                  <button type="button" id="cmp-weak-btn" class="toggle-pill-btn weak-mode" aria-pressed="false">
+                    Weak Generic
+                  </button>
+                  <button type="button" id="cmp-strong-btn" class="toggle-pill-btn strong-mode" aria-pressed="true">
+                    Strong P.A.R.T.S.
+                  </button>
+                </div>
               </div>
-              <p class="text-xs text-slate-600 leading-relaxed mb-2">
-                State clearly <strong>what</strong> you want created, including CfE Experiences &amp; Outcomes.
-              </p>
-            </div>
-            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
-              "Create a 45-min lesson plan on fractions (MNU 2-07a)..."
-            </div>
-          </div>
 
-          <!-- R - Recipients -->
-          <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="w-8 h-8 rounded-lg bg-amber-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">R</span>
-                <h3 class="font-bold text-slate-900 text-base">Recipients</h3>
+              <div id="cmp-box" class="compare-prompt-box is-strong" style="margin-top: 0.75rem;">
+                <div id="cmp-status" class="compare-status-tag strong"></div>
+                <div id="cmp-text" class="font-mono-code"></div>
+                <p id="cmp-outcome" class="compare-outcome"></p>
               </div>
-              <p class="text-xs text-slate-600 leading-relaxed mb-2">
-                Specify <strong>who</strong> the resource is for, including stage, reading age, or ASN scaffolds.
-              </p>
             </div>
-            <div class="bg-white rounded-lg p-2 border border-amber-100 text-[11px] font-mono-code text-amber-900">
-              "For a mixed-ability S2 class with dyslexic-friendly text..."
-            </div>
-          </div>
 
-          <!-- T - Theme -->
-          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">T</span>
-                <h3 class="font-bold text-slate-900 text-base">Theme</h3>
-              </div>
-              <p class="text-xs text-slate-600 leading-relaxed mb-2">
-                Set the <strong>style, context, or tone</strong> (e.g., active, inquiry-led, Scottish context).
-              </p>
-            </div>
-            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
-              "Use an encouraging tone with local Scottish examples..."
-            </div>
-          </div>
-
-          <!-- S - Structure -->
-          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-2.5 mb-2">
-                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">S</span>
-                <h3 class="font-bold text-slate-900 text-base">Structure</h3>
-              </div>
-              <p class="text-xs text-slate-600 leading-relaxed mb-2">
-                Define the exact <strong>output format</strong> so it is ready to copy into Docs, Word, or Teams.
-              </p>
-            </div>
-            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
-              "Format as a 4-column table with an exit pass at the end."
-            </div>
+            <button type="button" id="exp-insert-btn" class="explorer-try-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              <span id="exp-insert-label">Insert sample Persona into Builder</span>
+            </button>
           </div>
         </div>
       </section>
 
-      <!-- Section 2: Before vs After Comparison -->
-      <section aria-labelledby="comparison-heading" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
-        <div class="md:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col justify-between">
+      <!-- ====================================================================
+           SECTION 2: LIVE COLOUR-CODED PROMPT BUILDER
+           ==================================================================== -->
+      <section id="section-builder" aria-labelledby="builder-heading">
+        <div class="section-header no-print">
           <div>
-            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 uppercase tracking-wide mb-1.5">
-              <i class="fa-solid fa-circle-xmark"></i> Weak Prompt (Too Vague)
-            </span>
-            <p class="font-mono-code text-xs sm:text-sm text-slate-700 bg-white p-3 rounded-lg border border-slate-200">
-              "Make a worksheet about Scottish renewable energy."
+            <p class="section-kicker">Step 2 • Craft &amp; Customise</p>
+            <h2 id="builder-heading" class="section-title">Live Colour-Coded Prompt Builder</h2>
+            <p class="section-desc">
+              Type into the five boxes or click the quick-insert chips to assemble a tailored prompt in seconds. Leave any box blank if you don't need it yet.
             </p>
           </div>
-          <p class="text-xs text-slate-500 mt-2">
-            <strong>Result:</strong> Generic US-centric text, wrong reading level, requires heavy editing.
-          </p>
         </div>
 
-        <div class="md:col-span-8 bg-emerald-50/60 border border-emerald-200 rounded-xl p-4 flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-1.5">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 uppercase tracking-wide">
-                <i class="fa-solid fa-circle-check"></i> Strong PARTS Prompt (Classroom Ready)
-              </span>
-              <button onclick="copyPrompt('prompt-featured', this)" class="no-print inline-flex items-center gap-1.5 text-xs font-semibold bg-emerald-700 hover:bg-emerald-800 text-white px-2.5 py-1 rounded-lg transition cursor-pointer">
-                <i class="fa-regular fa-copy"></i>
-                <span>Copy Prompt</span>
+        <div class="builder-grid">
+          <!-- Left: Five Input Fields + Quick-Insert Chips -->
+          <div class="builder-inputs-stack no-print">
+
+            <!-- P: Persona -->
+            <div class="field-card part-P">
+              <div class="field-header">
+                <div class="field-label-group">
+                  <span class="mini-badge P" aria-hidden="true">P</span>
+                  <label for="input-P" class="field-label">Persona <span class="field-helper">— Who is the AI acting as?</span></label>
+                </div>
+                <button type="button" class="field-clear-btn" data-clear="P" aria-label="Clear Persona field">Clear</button>
+              </div>
+              <textarea id="input-P" rows="2" class="builder-textarea" placeholder="e.g., Act as an experienced Scottish BGE Science teacher..."></textarea>
+              <div class="chips-row" data-chips-for="P" aria-label="Quick suggestions for Persona"></div>
+            </div>
+
+            <!-- A: Act -->
+            <div class="field-card part-A">
+              <div class="field-header">
+                <div class="field-label-group">
+                  <span class="mini-badge A" aria-hidden="true">A</span>
+                  <label for="input-A" class="field-label">Act <span class="field-helper">— What action or resource do you want?</span></label>
+                </div>
+                <button type="button" class="field-clear-btn" data-clear="A" aria-label="Clear Act field">Clear</button>
+              </div>
+              <textarea id="input-A" rows="2" class="builder-textarea" placeholder="e.g., Create a 50-minute lesson plan on renewable energy in Scotland (SOC 3-08a)..."></textarea>
+              <div class="chips-row" data-chips-for="A" aria-label="Quick suggestions for Act"></div>
+            </div>
+
+            <!-- R: Recipient -->
+            <div class="field-card part-R">
+              <div class="field-header">
+                <div class="field-label-group">
+                  <span class="mini-badge R" aria-hidden="true">R</span>
+                  <label for="input-R" class="field-label">Recipient <span class="field-helper">— Stage, reading age &amp; ASN scaffolds</span></label>
+                </div>
+                <button type="button" class="field-clear-btn" data-clear="R" aria-label="Clear Recipient field">Clear</button>
+              </div>
+              <textarea id="input-R" rows="2" class="builder-textarea" placeholder="e.g., Design for a mixed-ability S2 class with a key vocabulary support box..."></textarea>
+              <div class="chips-row" data-chips-for="R" aria-label="Quick suggestions for Recipient"></div>
+            </div>
+
+            <!-- T: Theme -->
+            <div class="field-card part-T">
+              <div class="field-header">
+                <div class="field-label-group">
+                  <span class="mini-badge T" aria-hidden="true">T</span>
+                  <label for="input-T" class="field-label">Theme <span class="field-helper">— Tone, pedagogy &amp; real-world context</span></label>
+                </div>
+                <button type="button" class="field-clear-btn" data-clear="T" aria-label="Clear Theme field">Clear</button>
+              </div>
+              <textarea id="input-T" rows="2" class="builder-textarea" placeholder="e.g., Keep the tone encouraging and inquiry-led, using local Scottish examples..."></textarea>
+              <div class="chips-row" data-chips-for="T" aria-label="Quick suggestions for Theme"></div>
+            </div>
+
+            <!-- S: Structure -->
+            <div class="field-card part-S">
+              <div class="field-header">
+                <div class="field-label-group">
+                  <span class="mini-badge S" aria-hidden="true">S</span>
+                  <label for="input-S" class="field-label">Structure <span class="field-helper">— Exact format ready to paste</span></label>
+                </div>
+                <button type="button" class="field-clear-btn" data-clear="S" aria-label="Clear Structure field">Clear</button>
+              </div>
+              <textarea id="input-S" rows="2" class="builder-textarea" placeholder="e.g., Format as a 4-column table with timings, pupil tasks, and a 3-question exit pass..."></textarea>
+              <div class="chips-row" data-chips-for="S" aria-label="Quick suggestions for Structure"></div>
+            </div>
+
+          </div>
+
+          <!-- Right: Sticky Colour-Coded Live Preview -->
+          <div id="preview-card" class="preview-panel">
+            <div class="preview-top">
+              <h3 class="preview-title">Live Colour-Coded Prompt Preview</h3>
+              <span id="word-count-badge" class="subject-pill no-print">0 words</span>
+            </div>
+
+            <div class="completeness-bar no-print" aria-live="polite">
+              <div class="part-pills" aria-label="Completed P.A.R.T.S. indicators">
+                <span id="pill-P" class="part-status-pill P" title="Persona">P</span>
+                <span id="pill-A" class="part-status-pill A" title="Act">A</span>
+                <span id="pill-R" class="part-status-pill R" title="Recipient">R</span>
+                <span id="pill-T" class="part-status-pill T" title="Theme">T</span>
+                <span id="pill-S" class="part-status-pill S" title="Structure">S</span>
+              </div>
+              <span id="completeness-msg" class="completeness-text">0 of 5 blocks active</span>
+            </div>
+
+            <div id="live-preview-output" class="live-output-box font-mono-code" role="region" aria-label="Assembled prompt preview" aria-live="polite">
+              <p class="empty-preview-state">
+                Your colour-coded prompt will assemble here in real time. Click any suggestion chip on the left—or load a classroom exemplar below—to get started!
+              </p>
+            </div>
+
+            <p id="missing-parts-hint" class="missing-hint-bar no-print"></p>
+
+            <div class="preview-actions no-print">
+              <button type="button" id="copy-clean-btn" class="btn-copy-clean" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                <span id="copy-clean-label">Copy Clean Prompt</span>
+              </button>
+
+              <button type="button" id="print-builder-btn" class="btn-print-secondary" aria-label="Print or save P.A.R.T.S. classroom prompt reference as PDF">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 6 2 18 2 18 9"/>
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                  <rect x="6" y="14" width="12" height="8"/>
+                </svg>
+                <span>Print / Save PDF</span>
+              </button>
+
+              <button type="button" id="reset-builder-btn" class="btn-reset">
+                Reset
               </button>
             </div>
-            <p id="prompt-featured" class="font-mono-code text-xs sm:text-sm text-slate-900 bg-white p-3 rounded-lg border border-emerald-200 leading-relaxed">
-              <span class="font-bold text-sky-700">[P]</span> Act as an experienced Scottish secondary geography teacher. <span class="font-bold text-sky-700">[A]</span> Create a 50-minute lesson plan on offshore wind energy in the North Sea, aligned to CfE Third Level (SOC 3-08a). <span class="font-bold text-amber-700">[R]</span> Design for a mixed-ability S2 class with a vocabulary support box for literacy barriers. <span class="font-bold text-sky-700">[T]</span> Keep the tone active and inquiry-led. <span class="font-bold text-sky-700">[S]</span> Format as a table with Timing, Teacher Action, Pupil Activity, and a 3-question exit pass.
-            </p>
+
+            <!-- Quick Follow-Up Prompt Chips (Preserved & upgraded from original Footer Pro Tip) -->
+            <div class="followup-strip no-print">
+              <p class="followup-label">One-click follow-up prompts (copy to use after AI replies):</p>
+              <div class="chips-row" style="margin-top: 0;">
+                <button type="button" class="chip-btn followup-copy-btn" data-followup="Now simplify the reading age to 9 while keeping all key subject terminology in a glossary box.">
+                  Simplify to reading age 9
+                </button>
+                <button type="button" class="chip-btn followup-copy-btn" data-followup="Turn the key points from this resource into 8 retrieval flashcards with concise answers.">
+                  Turn into 8 flashcards
+                </button>
+                <button type="button" class="chip-btn followup-copy-btn" data-followup="Provide a scaffolded version with sentence starters for learners with additional support needs (ASN).">
+                  Add ASN sentence starters
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Section 3: Ready-to-Use Classroom Prompt Bank -->
-      <section aria-labelledby="prompt-bank-heading">
-        <h2 id="prompt-bank-heading" class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">
-          2. Ready-to-Copy Classroom Templates (Click Copy &amp; Swap Bracketed Text)
-        </h2>
+      <!-- ====================================================================
+           SECTION 3: READY-TO-REMIX EXEMPLAR LIBRARY
+           ==================================================================== -->
+      <section id="section-exemplars" class="no-print" aria-labelledby="exemplars-heading">
+        <div class="section-header">
+          <div>
+            <p class="section-kicker">Step 3 • Ready-to-Remix Scenarios</p>
+            <h2 id="exemplars-heading" class="section-title">Ready-to-Remix Exemplar Library</h2>
+            <p class="section-desc">
+              Filter across Primary, Broad General Education (S1–S3), and Senior Phase (National 5 &amp; Higher, aligned to Qualifications Scotland terminology). Click <strong>Load into Builder</strong> to customise immediately.
+            </p>
+          </div>
+        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Template 1: Primary / CfE Rubric -->
-          <div class="border border-slate-200 rounded-xl p-4 bg-white flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-2">
-                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800">Primary / BGE</span>
-                <button onclick="copyPrompt('prompt-1', this)" class="no-print text-xs font-semibold text-slate-600 hover:text-sky-700 inline-flex items-center gap-1 cursor-pointer">
-                  <i class="fa-regular fa-copy"></i> Copy
-                </button>
-              </div>
-              <h3 class="font-bold text-sm text-slate-900 mb-1.5">Success Criteria Rubric</h3>
-              <p id="prompt-1" class="font-mono-code text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed">
-                Act as a Scottish primary teacher. Create a 4-point success criteria rubric for a [P6 persuasive writing piece on plastic waste] aligned to CfE [Second Level LIT 2-24a]. Use encouraging, child-friendly "I can..." statements and format as a clean table.
-              </p>
-            </div>
+        <div class="exemplar-controls">
+          <div id="exemplar-phase-pills" class="filter-pills" role="group" aria-label="Filter exemplars by phase">
+            <button type="button" class="filter-btn" data-phase-filter="All" aria-pressed="true">All</button>
           </div>
 
-          <!-- Template 2: Secondary / SQA Retrieval -->
-          <div class="border border-slate-200 rounded-xl p-4 bg-white flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-2">
-                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">Secondary / SQA</span>
-                <button onclick="copyPrompt('prompt-2', this)" class="no-print text-xs font-semibold text-slate-600 hover:text-sky-700 inline-flex items-center gap-1 cursor-pointer">
-                  <i class="fa-regular fa-copy"></i> Copy
-                </button>
-              </div>
-              <h3 class="font-bold text-sm text-slate-900 mb-1.5">Retrieval Practice Starter</h3>
-              <p id="prompt-2" class="font-mono-code text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed">
-                Act as an SQA [National 5 Biology] teacher. Write an 8-question retrieval practice starter quiz on [cell structure and transport]. Include 4 knowledge recall questions and 4 problem-solving questions for S4 pupils, followed by a concise marking key.
-              </p>
+          <div class="search-input-wrap">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <label for="exemplar-search-input" class="sr-only">Search exemplars by subject, level, or topic</label>
+            <input type="search" id="exemplar-search-input" class="exemplar-search" placeholder="Search subject, level, or topic...">
+          </div>
+        </div>
+
+        <!-- Friendly Inline Fallback Notice (shown if opened directly via file:// or offline) -->
+        <div id="exemplar-fallback-banner" class="exemplar-fallback-banner" role="status" aria-live="polite" hidden>
+          <div class="exemplar-fallback-content">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:0.15rem;" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <div id="exemplar-fallback-text"></div>
+          </div>
+          <button type="button" id="exemplar-retry-btn" class="btn-utility" style="padding:0.4rem 0.75rem; font-size:0.78rem;">
+            Retry Fetch
+          </button>
+        </div>
+
+        <div id="exemplars-grid" class="exemplars-grid" aria-live="polite" aria-busy="true">
+          <div class="exemplar-loading" role="status">
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span>Loading classroom exemplars...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           SECTION 4: PROMPT DIAGNOSTIC CHALLENGE ("FIX THE PROMPT")
+           ==================================================================== -->
+      <section id="section-challenge" class="no-print" aria-labelledby="challenge-heading">
+        <div class="section-header">
+          <div>
+            <p class="section-kicker">Step 4 • Quick Practice Activity</p>
+            <h2 id="challenge-heading" class="section-title">Prompt Diagnostic Challenge: "Fix the Prompt"</h2>
+            <p class="section-desc">
+              Inspect three real-world vague prompts. Tick the P.A.R.T.S. elements that are <strong>missing</strong>, then check your diagnosis to reveal an upgraded classroom-ready version.
+            </p>
+          </div>
+        </div>
+
+        <div class="challenge-shell">
+          <div class="challenge-tabs-row">
+            <div class="challenge-tab-list" role="tablist" aria-label="Diagnostic prompt challenges">
+              <button type="button" role="tab" id="ch-tab-0" aria-selected="true" aria-controls="ch-panel" tabindex="0" data-challenge-idx="0" class="challenge-tab">
+                Challenge 1: Fractions Worksheet
+              </button>
+              <button type="button" role="tab" id="ch-tab-1" aria-selected="false" aria-controls="ch-panel" tabindex="-1" data-challenge-idx="1" class="challenge-tab">
+                Challenge 2: DNA Revision
+              </button>
+              <button type="button" role="tab" id="ch-tab-2" aria-selected="false" aria-controls="ch-panel" tabindex="-1" data-challenge-idx="2" class="challenge-tab">
+                Challenge 3: Jacobite Mystery
+              </button>
             </div>
+            <span id="challenge-progress-badge" class="challenge-score-pill">0 / 3 Diagnosed</span>
           </div>
 
-          <!-- Template 3: ASN Differentiation & Feedback -->
-          <div class="border border-slate-200 rounded-xl p-4 bg-white flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-2 mb-2">
-                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">ASN &amp; Feedback</span>
-                <button onclick="copyPrompt('prompt-3', this)" class="no-print text-xs font-semibold text-slate-600 hover:text-sky-700 inline-flex items-center gap-1 cursor-pointer">
-                  <i class="fa-regular fa-copy"></i> Copy
-                </button>
+          <div id="ch-panel" role="tabpanel" aria-labelledby="ch-tab-0">
+            <div class="vague-prompt-banner">
+              <div class="vague-prompt-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+                <span>Vague Teacher Prompt</span>
               </div>
-              <h3 class="font-bold text-sm text-slate-900 mb-1.5">Two Stars &amp; a Wish Feedback</h3>
-              <p id="prompt-3" class="font-mono-code text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed">
-                Act as a supportive Scottish teacher. Review this anonymised pupil paragraph against these criteria: [1. Clear opening, 2. Descriptive verbs]. Give Two Stars and One Wish in encouraging language without rewriting their work: [Paste anonymised text]
-              </p>
+              <p id="ch-vague-text" class="vague-prompt-quote font-mono-code"></p>
+            </div>
+
+            <fieldset style="border: none; padding: 0; margin: 0;">
+              <legend class="diagnostic-instruction">
+                Which P.A.R.T.S. elements are <strong>MISSING</strong> from this prompt? (Select all that apply)
+              </legend>
+              <div id="ch-checkbox-grid" class="checkbox-cards-grid"></div>
+            </fieldset>
+
+            <div class="challenge-action-row">
+              <button type="button" id="ch-check-btn" class="btn-check-diag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Check Diagnosis &amp; Reveal Upgrade</span>
+              </button>
+              <button type="button" id="ch-reveal-btn" class="btn-reset">
+                Skip &amp; Show Upgraded Prompt
+              </button>
+            </div>
+
+            <div id="ch-result-panel" class="diagnostic-result" hidden aria-live="polite">
+              <p id="ch-result-summary" class="diag-summary-banner"></p>
+              <ul id="ch-breakdown-list" class="diag-breakdown-list"></ul>
+
+              <div class="upgraded-box">
+                <div class="upgraded-header">
+                  <span class="upgraded-label">Upgraded Classroom-Ready P.A.R.T.S. Prompt</span>
+                  <div style="display: flex; gap: 0.45rem; flex-wrap: wrap;">
+                    <button type="button" id="ch-load-builder-btn" class="explorer-try-btn">
+                      Load Upgrade into Builder
+                    </button>
+                    <button type="button" id="ch-copy-upgrade-btn" class="explorer-try-btn">
+                      Copy Prompt
+                    </button>
+                  </div>
+                </div>
+                <div id="ch-upgraded-preview" class="font-mono-code" style="font-size: 0.86rem; line-height: 1.7;"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -275,71 +2602,1338 @@
 
     </div>
 
-    <!-- Footer Bar -->
-    <footer class="bg-slate-50 border-t border-slate-200 px-6 py-3.5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-600">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-lightbulb text-amber-500"></i>
-        <span><strong>Pro Tip:</strong> Follow up with <em>"Now simplify this to a reading age of 9"</em> or <em>"Turn this into 10 flashcards"</em> for Learning Activities.</span>
+    <!-- Preserved Glow Footer Bar -->
+    <footer class="app-footer">
+      <div class="footer-tip">
+        <span style="color: #f59e0b; flex-shrink: 0; margin-top: 0.1rem;" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6"/><path d="M10 22h4"/>
+            <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/>
+          </svg>
+        </span>
+        <span><strong>Pro Tip:</strong> Treat AI like a teaching assistant—after your first P.A.R.T.S. prompt, follow up conversationally with <em>"Shorten question 3"</em> or <em>"Add a Scottish real-life example"</em>. Always review outputs before classroom use.</span>
       </div>
-      <span class="font-semibold text-slate-500 shrink-0">Learning with and through AI • Glow</span>
+      <span style="font-weight: 700; white-space: nowrap;">Learning with and through AI • Glow</span>
     </footer>
+
   </main>
 
-  <!-- Toast Notification for Copy Confirmation -->
-  <div id="copy-toast" class="fixed bottom-5 right-5 bg-slate-900 text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg opacity-0 pointer-events-none transition-opacity duration-200 flex items-center gap-2 no-print">
-    <i class="fa-solid fa-check text-emerald-400"></i>
-    <span>Prompt copied to clipboard!</span>
+  <!-- Accessible Toast Confirmation -->
+  <div id="copy-toast" class="toast-banner no-print" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+    <span id="toast-message">Clean prompt copied to clipboard!</span>
   </div>
 
+  <!-- ========================================================================
+       MODULAR VANILLA JAVASCRIPT APPLICATION
+       Zero external dependencies; GitHub Pages & Glow iframe ready
+       ======================================================================== -->
   <script>
-    /**
-     * Copies prompt text to clipboard using document.execCommand('copy')
-     * for reliable execution inside sandboxed iframes, and updates button feedback.
-     */
-    function copyPrompt(elementId, buttonEl) {
-      const targetEl = document.getElementById(elementId);
-      if (!targetEl) return;
+    (function () {
+      'use strict';
 
-      const textToCopy = targetEl.innerText.trim();
+      const PART_KEYS = ['P', 'A', 'R', 'T', 'S'];
 
-      // Create temporary textarea to execute copy safely
-      const tempInput = document.createElement('textarea');
-      tempInput.value = textToCopy;
-      tempInput.setAttribute('readonly', '');
-      tempInput.style.position = 'absolute';
-      tempInput.style.left = '-9999px';
-      document.body.appendChild(tempInput);
-      tempInput.select();
+      const PART_NAMES = {
+        P: 'Persona',
+        A: 'Act',
+        R: 'Recipient',
+        T: 'Theme',
+        S: 'Structure'
+      };
 
-      try {
-        document.execCommand('copy');
-        showToast();
-
-        // Temporary visual confirmation on the clicked button
-        if (buttonEl) {
-          const originalHTML = buttonEl.innerHTML;
-          buttonEl.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied!</span>';
-          setTimeout(() => {
-            buttonEl.innerHTML = originalHTML;
-          }, 1800);
+      /* ----------------------------------------------------------------------
+         1. P.A.R.T.S. EXPLORER DATA
+         ---------------------------------------------------------------------- */
+      const EXPLORER_DATA = {
+        P: {
+          title: 'Persona — Give the AI an Educator Role',
+          question: 'Guiding question: "Who should the AI step into the shoes of?"',
+          definition: 'Setting a Persona tells the AI what professional expertise, curriculum familiarity, and classroom judgement to adopt before writing a single word. Specifying a Scottish educator role helps steer terminology away from generic US grade levels.',
+          tips: [
+            'Name the phase and subject (e.g., "Act as an experienced Scottish S2 Geography teacher").',
+            'For Senior Phase, anchor expertise in Qualifications Scotland course expectations (National 5 or Higher).',
+            'Add a pedagogical lens such as "supportive literacy specialist" when differentiating texts.'
+          ],
+          sampleBuilderText: 'Act as an experienced Scottish secondary Geography teacher.',
+          weakPrompt: 'Explain offshore wind farms.',
+          weakOutcome: 'Result: Encyclopaedic summary pitched at university level with non-UK terminology.',
+          strongParts: {
+            P: 'Act as an experienced Scottish secondary Geography teacher.',
+            A: 'Create a 10-minute lesson starter explaining how North Sea offshore wind farms generate electricity.',
+            R: 'Pitch it for an S2 Broad General Education class.',
+            T: 'Keep the tone lively and relatable.',
+            S: 'Present as 4 bullet points followed by 2 discussion questions.'
+          },
+          strongOutcome: 'Result: Classroom-pitched explanation with Scottish curriculum context and ready-to-ask questions.'
+        },
+        A: {
+          title: 'Act — State the Clear Action & Learning Focus',
+          question: 'Guiding question: "What exact task or resource should the AI produce?"',
+          definition: 'Act (sometimes called Aim) is the engine of your prompt. Start with a strong verb—create, differentiate, generate, or scaffold—and name the exact topic, skill, or CfE Experience & Outcome / Qualifications Scotland course area.',
+          tips: [
+            'Use specific verbs: "Design a 50-minute lesson plan", "Write an 8-question retrieval quiz", or "Create a 4-level rubric".',
+            'Include CfE E&O codes (e.g., SOC 3-08a, MNU 3-07a) or Qualifications Scotland assessment skills where helpful.',
+            'State what NOT to do if needed (e.g., "Give feedback without rewriting the pupil\'s paragraph").'
+          ],
+          sampleBuilderText: 'Create a 50-minute lesson plan on offshore wind energy in the North Sea, aligned to CfE Third Level (SOC 3-08a).',
+          weakPrompt: 'Help me with a lesson on fractions.',
+          weakOutcome: 'Result: Vague list of generic teaching ideas rather than a usable classroom resource.',
+          strongParts: {
+            P: 'Act as a Scottish BGE Mathematics teacher.',
+            A: 'Create a 3-tier differentiated practice activity converting between fractions, decimals, and percentages (MNU 3-07a).',
+            R: 'Designed for an S1 mixed-attainment class.',
+            T: 'Frame questions around everyday Scottish shopping and sport examples.',
+            S: 'Organise into Mild, Spicy, and Extra Hot sections with a full answer key.'
+          },
+          strongOutcome: 'Result: Focused, curriculum-aligned activity with clear progression and answers ready to project.'
+        },
+        R: {
+          title: 'Recipient — Define Your Learners & Support Needs',
+          question: 'Guiding question: "Who will use this resource, and what scaffolds help them succeed?"',
+          definition: 'Recipient tells the AI the exact stage (S1–S3 BGE, National 5, or Higher), approximate reading age, prior knowledge, and any Additional Support Needs (ASN) adjustments—without ever sharing personal pupil data.',
+          tips: [
+            'Specify stage clearly: "S1 BGE", "S4 National 5", or "S5/S6 Higher".',
+            'Ask for built-in ASN scaffolds such as chunked instructions, dyslexia-friendly short sentences, or vocabulary boxes.',
+            'Glow Data Safety: Describe learning needs generally—never type pupil names, classes, or SCN numbers.'
+          ],
+          sampleBuilderText: 'Design for a mixed-ability S2 class, including a key vocabulary support box for learners with literacy barriers.',
+          weakPrompt: 'Write a reading passage about climate change with comprehension questions.',
+          weakOutcome: 'Result: Dense paragraphs with complex academic vocabulary that overwhelm struggling readers.',
+          strongParts: {
+            P: 'Act as a supportive Scottish S1 Humanities teacher.',
+            A: 'Write a 200-word reading passage on coastal erosion in Scotland with 5 comprehension questions.',
+            R: 'Tailor for S1 learners working at CfE Second/Third Level with a reading age of 10 and EAL vocabulary scaffolds.',
+            T: 'Use clear, encouraging language and short paragraphs.',
+            S: 'Include a bolded 5-word glossary at the top, numbered paragraphs, and sentence starters for each question.'
+          },
+          strongOutcome: 'Result: Accessible, confidence-building text that every learner in the room can engage with.'
+        },
+        T: {
+          title: 'Theme — Set Tone, Pedagogy & Real-World Context',
+          question: 'Guiding question: "What style, mood, or real-world hook brings this to life?"',
+          definition: 'Theme shapes the flavour of the output—whether you want a formal Qualifications Scotland exam-command tone, a supportive "Two Stars and a Wish" coaching voice, or an engaging Scottish real-world scenario.',
+          tips: [
+            'Choose a pedagogical style: inquiry-led, retrieval practice, cooperative learning, or worked-example modelling.',
+            'Anchor abstract topics in relatable contexts (e.g., ScotRail timetables, Highland tourism, Scottish renewable energy).',
+            'For Senior Phase, request command-word precision ("Explain", "Evaluate", "Analyse") matching Qualifications Scotland standards.'
+          ],
+          sampleBuilderText: 'Keep the tone active, encouraging, and inquiry-led, using authentic Scottish examples.',
+          weakPrompt: 'Give me 5 percentage word problems for S3.',
+          weakOutcome: 'Result: Dry textbook sums in dollars ($) with zero relevance to learners\' lives.',
+          strongParts: {
+            P: 'Act as a Scottish National 5 Applications of Mathematics teacher.',
+            A: 'Write 5 multi-step percentage and budgeting problems.',
+            R: 'For S4 pupils preparing for Qualifications Scotland National 5 assessments.',
+            T: 'Use realistic Scottish teen contexts in pounds sterling (£), such as festival tickets, ScotRail youth fares, and part-time wages.',
+            S: 'Number each problem clearly and provide step-by-step working marks underneath.'
+          },
+          strongOutcome: 'Result: Authentic £GBP problems pitched at National 5 rigour that immediately feel relevant.'
+        },
+        S: {
+          title: 'Structure — Specify the Classroom-Ready Layout',
+          question: 'Guiding question: "How should the output be formatted so I spend zero time tidying it?"',
+          definition: 'Structure tells the AI how to organise the response—such as a 4-column lesson table, student-friendly "I can..." rubric, numbered hinge questions, or concise teacher answer key—so you can paste straight into Word, Docs, Slides, or Teams.',
+          tips: [
+            'Name exact table columns (e.g., "Timing | Teacher Action | Pupil Activity | Assessment Check").',
+            'Set exact counts and word limits ("6 multiple-choice questions", "max 150 words") to avoid walls of text.',
+            'Always ask for an answer key, marking guidance, or 3-question exit pass at the bottom to save prep time.'
+          ],
+          sampleBuilderText: 'Format as a 4-column table (Timing, Teacher Action, Pupil Activity, Differentiation) followed by a 3-question exit pass.',
+          weakPrompt: 'Create success criteria for persuasive writing in S2 English.',
+          weakOutcome: 'Result: Long prose paragraphs that need 15 minutes of reformatting before pupils can read them.',
+          strongParts: {
+            P: 'Act as a Scottish BGE English teacher.',
+            A: 'Create student-facing success criteria for a persuasive speech on reducing single-use plastics (LIT 3-26a).',
+            R: 'Written directly to S2 learners.',
+            T: 'Use positive, motivating "I can..." statements.',
+            S: 'Format as a clean 3-column table: Skill Focus, Developing ("I am starting to..."), and Secure ("I can confidently...").'
+          },
+          strongOutcome: 'Result: Instant table ready to paste straight onto a slide or printed learning sheet.'
         }
-      } catch (err) {
-        console.error('Copy failed:', err);
-      } finally {
-        document.body.removeChild(tempInput);
-      }
-    }
+      };
 
-    function showToast() {
-      const toast = document.getElementById('copy-toast');
-      if (!toast) return;
-      toast.classList.remove('opacity-0');
-      toast.classList.add('opacity-100');
-      setTimeout(() => {
-        toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0');
-      }, 2200);
-    }
+      /* ----------------------------------------------------------------------
+         2. QUICK-INSERT SUGGESTION CHIPS FOR BUSY TEACHERS
+         ---------------------------------------------------------------------- */
+      const BUILDER_CHIPS = {
+        P: [
+          { label: 'Primary Teacher', text: 'Act as an experienced Scottish Primary teacher.' },
+          { label: 'BGE Secondary Teacher', text: 'Act as an experienced Scottish BGE secondary teacher.' },
+          { label: 'Nat 5 Specialist', text: 'Act as a specialist teacher preparing learners for Qualifications Scotland National 5.' },
+          { label: 'Higher Specialist', text: 'Act as an experienced Scottish Higher subject specialist.' },
+          { label: 'ASN Support Teacher', text: 'Act as a supportive Scottish Support for Learning (ASN) specialist.' }
+        ],
+        A: [
+          { label: '50-min Lesson Plan', text: 'Create a 50-minute lesson plan on [insert topic] with clear learning intentions and success criteria.' },
+          { label: '8-Q Retrieval Starter', text: 'Write an 8-question retrieval practice starter quiz on [insert topic], mixing recall and problem-solving.' },
+          { label: '3-Level Differentiated Task', text: 'Design a 3-level differentiated pupil task (Mild, Spicy, Extra Hot) on [insert topic].' },
+          { label: 'Success Criteria Rubric', text: 'Create a clear 4-column success criteria rubric for [insert assessment task].' }
+        ],
+        R: [
+          { label: 'Primary (First/Second Level)', text: 'Pitch for a mixed-ability Primary class working within Curriculum for Excellence First/Second Level.' },
+          { label: 'Mixed-Ability S1–S3 BGE', text: 'Pitch for a mixed-ability S2 Broad General Education class.' },
+          { label: 'S4 National 5 Class', text: 'Tailor for S4 learners working towards Qualifications Scotland National 5.' },
+          { label: 'S5/S6 Higher Class', text: 'Design for S5/S6 learners studying at Qualifications Scotland Higher level.' },
+          { label: '+ ASN / Dyslexia Scaffolds', text: 'Design for a mixed-ability class including chunked instructions and a key vocabulary box for learners with dyslexia or literacy barriers.' }
+        ],
+        T: [
+          { label: 'Active & Scottish Context', text: 'Use an engaging, inquiry-led tone with authentic Scottish examples and £GBP currency where relevant.' },
+          { label: 'Exam Command Precision', text: 'Use clear academic language aligned to Qualifications Scotland command words (Explain, Analyse, Evaluate).' },
+          { label: 'Encouraging Coaching Tone', text: 'Keep the tone warm, growth-oriented, and confidence-building without giving away full answers.' },
+          { label: 'Real-World Career Hook', text: 'Connect the topic to real-world Scottish workplaces and Developing the Young Workforce (DYW) skills.' }
+        ],
+        S: [
+          { label: 'Lesson Table + Exit Pass', text: 'Format as a table (Timing, Teacher Input, Pupil Activity, Support/Challenge) plus a 3-question exit pass.' },
+          { label: 'Quiz + Marking Key', text: 'Present as numbered pupil questions first, followed by a separate concise marking key.' },
+          { label: 'Student "I Can..." Table', text: 'Format as a clean student-facing table using clear "I can..." statements.' },
+          { label: 'Worked Example + Practice', text: 'Start with 1 annotated worked example, followed by 5 graduated practice questions and answers.' }
+        ]
+      };
+
+      /* ----------------------------------------------------------------------
+         3. OFFLINE / FILE:// FALLBACK EXEMPLAR DATASET
+         Primary source is fetched dynamically via fetch('./exemplars.json').
+         This built-in backup guarantees resilience when opened via file://.
+         ---------------------------------------------------------------------- */
+      const FALLBACK_EXEMPLARS = [
+        {
+          id: 'parts-01',
+          title: 'Visualising Equivalent Fractions',
+          phase: 'Primary',
+          level: 'First Level (P2-P4)',
+          subject: 'Numeracy and Mathematics',
+          parts: {
+            persona: 'Act as an experienced Scottish Primary teacher specialising in concrete-pictorial-abstract numeracy approaches.',
+            act: 'Create three hands-on classroom station activities and a teacher questioning script',
+            recipient: 'for a mixed-ability Primary 4 class working at Curriculum for Excellence First Level, including pupils who benefit from visual scaffolds',
+            theme: 'exploring equivalent halves, quarters, and eighths using everyday classroom and food-sharing contexts.',
+            structure: 'Present the output as a clear table with columns for Station Name, Equipment Needed, Pupil Instructions (in child-friendly language), and two Hinge Questions to check understanding.'
+          }
+        },
+        {
+          id: 'parts-02',
+          title: 'Sensory Story Starters & Vocabulary',
+          phase: 'Primary',
+          level: 'First/Second Level (P4-P5)',
+          subject: 'Literacy and English',
+          parts: {
+            persona: 'Act as a Primary Literacy Coordinator skilled in inclusive writing pedagogy.',
+            act: 'Generate an imaginative story starter alongside a tiered vocabulary word bank',
+            recipient: 'for Primary 5 pupils transitioning from First to Second Level, including reluctant writers who struggle to start a paragraph',
+            theme: 'set around discovering a hidden sea cave along the Scottish coastline during a storm.',
+            structure: 'Provide a 60-word atmospheric opening hook, followed by three bulleted lists of sensory words (Sight, Sound, Movement) and three sentence stems to help pupils write the next paragraph.'
+          }
+        },
+        {
+          id: 'parts-03',
+          title: 'Scottish Renewable Energy Debate Pack',
+          phase: 'Primary',
+          level: 'Second Level (P6-P7)',
+          subject: 'Social Studies & Sciences (IDL)',
+          parts: {
+            persona: 'Act as a Curriculum for Excellence Interdisciplinary Learning (IDL) specialist.',
+            act: 'Design a structured classroom role-play debate resource',
+            recipient: 'for Primary 7 pupils working securely at Second Level',
+            theme: 'evaluating a proposal to build an offshore wind farm near a coastal Scottish fishing and tourism community.',
+            structure: 'Organise into four stakeholder role cards (Local Fisherman, Renewable Engineer, Marine Conservationist, Community Councillor), each containing three key arguments and one question to ask another group.'
+          }
+        },
+        {
+          id: 'parts-04',
+          title: 'Debugging Broken Scratch & Python Logic',
+          phase: 'BGE (S1-S3)',
+          level: 'Third Level (S1-S2)',
+          subject: 'Computing Science',
+          parts: {
+            persona: 'Act as a Scottish secondary Computing Science teacher focused on computational thinking and resilience.',
+            act: 'Write three short pseudocode scenarios containing deliberate logical errors',
+            recipient: 'for S2 pupils working at Third Level who understand basic loops and selection (`if/else`) statements',
+            theme: 'based on score-tracking and collision detection in a simple retro arcade game.',
+            structure: 'For each challenge, display the flawed pseudocode block, a subtle pupil hint that avoids giving away the answer, and a collapsible teacher solution explaining the bug.'
+          }
+        },
+        {
+          id: 'parts-05',
+          title: 'Differentiated Historical Source Passage',
+          phase: 'BGE (S1-S3)',
+          level: 'Third/Fourth Level (S2-S3)',
+          subject: 'Social Studies (History)',
+          parts: {
+            persona: 'Act as a secondary History teacher experienced in literacy differentiation across mixed-attainment classes.',
+            act: 'Write an informative reading passage in two differentiated reading tiers, accompanied by comprehension questions',
+            recipient: 'for an S3 History class spanning Third Level and Fourth Level literacy skills',
+            theme: 'explaining living and working conditions in 19th-century Scottish industrial tenements.',
+            structure: 'Provide Version A (accessible sentences with a 5-word glossary in a two-column table) and Version B (incorporating advanced historical vocabulary), followed by three stepped questions covering literal, inferential, and evaluative skills.'
+          }
+        },
+        {
+          id: 'parts-06',
+          title: 'Enzyme Activity Inquiry & Exit Ticket',
+          phase: 'BGE (S1-S3)',
+          level: 'Fourth Level (S3)',
+          subject: 'Sciences (Biology)',
+          parts: {
+            persona: 'Act as a secondary Biology teacher specialising in practical scientific inquiry.',
+            act: 'Draft a pre-lab prediction starter and a post-lab formative exit ticket',
+            recipient: 'for S3 Biology pupils working at Fourth Level preparing to transition into Senior Phase',
+            theme: 'investigating the effect of temperature on catalase enzyme activity using potato tissue and hydrogen peroxide.',
+            structure: 'Format as a 5-minute starter prompt asking pupils to identify independent, dependent, and control variables, followed by a 3-question Claim-Evidence-Reasoning (CER) exit ticket.'
+          }
+        },
+        {
+          id: 'parts-07',
+          title: 'Personal Finance & Payslip Problem Set',
+          phase: 'National 5',
+          level: 'Qualifications Scotland National 5',
+          subject: 'Applications of Mathematics',
+          parts: {
+            persona: 'Act as a Qualifications Scotland National 5 Applications of Mathematics assessor and classroom practitioner.',
+            act: 'Create three realistic multi-step numeracy context questions with worked marking guidance',
+            recipient: 'for S4 and S5 pupils revising for their National 5 Applications of Mathematics exam',
+            theme: 'calculating gross pay, overtime rates, National Insurance deductions, and monthly savings goals from a part-time retail job.',
+            structure: 'Present each question with realistic data tables, mark allocations in brackets, and a step-by-step worked solution highlighting where method marks are awarded.'
+          }
+        },
+        {
+          id: 'parts-08',
+          title: 'RUAE Word Choice & Imagery Practice',
+          phase: 'National 5',
+          level: 'Qualifications Scotland National 5',
+          subject: 'English',
+          parts: {
+            persona: 'Act as a Scottish secondary English teacher experienced in Senior Phase close reading skills.',
+            act: 'Write an original non-fiction persuasive extract and four analysis questions',
+            recipient: 'for S4 pupils practising National 5 Reading for Understanding, Analysis and Evaluation (RUAE)',
+            theme: 'exploring the impact of smartphone habits on teenage sleep and attention spans.',
+            structure: "Provide a 250-word journalism-style passage with numbered paragraphs, four 'Explain how the writer's language...' questions (2 to 4 marks each), and a bulleted 'Quote + Comment' marking guide."
+          }
+        },
+        {
+          id: 'parts-09',
+          title: 'Software Development Retrieval Quiz',
+          phase: 'Higher',
+          level: 'Qualifications Scotland Higher',
+          subject: 'Computing Science',
+          parts: {
+            persona: 'Act as a Qualifications Scotland Higher Computing Science teacher.',
+            act: 'Develop a low-stakes diagnostic retrieval quiz covering common exam misconceptions',
+            recipient: 'for S5 and S6 Higher Computing Science candidates revising Software Design and Development',
+            theme: 'focusing on parameter passing (by value vs by reference), local and global variables, and standard algorithms (linear search, find minimum/maximum, count occurrences).',
+            structure: 'Create 6 short-answer and code-tracing questions, followed by a concise marking key that explicitly flags typical candidate pitfalls.'
+          }
+        },
+        {
+          id: 'parts-10',
+          title: 'Historiography & Essay Structure Scaffold',
+          phase: 'Higher',
+          level: 'Qualifications Scotland Higher',
+          subject: 'History',
+          parts: {
+            persona: 'Act as a Scottish Higher History specialist focusing on analytical essay writing.',
+            act: 'Produce an essay planning scaffold that contrasts isolated factor descriptions with sustained analytical evaluation',
+            recipient: 'for S5 and S6 pupils aiming to move from descriptive paragraphs to Higher-standard evaluation',
+            theme: 'assessing the relative importance of factors leading to the outbreak of the First World War (alliances, naval rivalry, imperialism, and domestic tensions).',
+            structure: 'Format as a side-by-side comparison showing one weak narrative paragraph versus one high-scoring analytical paragraph, followed by four reusable evaluative linking phrases.'
+          }
+        }
+      ];
+
+      /* ----------------------------------------------------------------------
+         4. PROMPT DIAGNOSTIC CHALLENGES ("FIX THE PROMPT")
+         ---------------------------------------------------------------------- */
+      const CHALLENGES = [
+        {
+          id: 'fractions',
+          vaguePrompt: '"Make a worksheet on fractions."',
+          missing: ['P', 'R', 'T', 'S'],
+          explanations: {
+            P: 'Missing — No teacher role or Scottish curriculum expertise is set.',
+            A: 'Present (just!) — It asks for a worksheet on fractions, though learning outcomes would sharpen it.',
+            R: 'Missing — Could be P4, S1 BGE, or National 5! No stage, ability, or ASN support mentioned.',
+            T: 'Missing — No tone, real-world Scottish context, or pedagogical style specified.',
+            S: 'Missing — No question count, difficulty tiers, layout, or answer key requested.'
+          },
+          upgradedParts: {
+            P: 'Act as a supportive Scottish BGE Mathematics teacher.',
+            A: 'Create a differentiated worksheet on adding and subtracting fractions with different denominators (MNU 3-07a).',
+            R: 'Pitch for a mixed-attainment S1 class, using clear dyslexia-friendly instructions.',
+            T: 'Include relatable real-life Scottish cooking and measurement problems.',
+            S: 'Organise into 1 worked example, 6 graduated questions (Mild to Spicy), and a teacher answer key.'
+          }
+        },
+        {
+          id: 'dna-higher',
+          vaguePrompt: '"Act as a Scottish Higher Biology teacher and explain DNA replication in bullet points."',
+          missing: ['R', 'T'],
+          explanations: {
+            P: 'Present — Clearly sets the role as a Scottish Higher Biology teacher.',
+            A: 'Present — Clearly asks to explain DNA replication.',
+            R: 'Missing — Doesn\'t state who is reading it (e.g., S5 pupils revising, EAL learners needing a glossary).',
+            T: 'Missing — Doesn\'t specify tone, depth, or alignment to Qualifications Scotland Higher command words.',
+            S: 'Present — Requests bullet points (though specifying step order and a quick check improves it further).'
+          },
+          upgradedParts: {
+            P: 'Act as an experienced Scottish Higher Biology teacher.',
+            A: 'Explain the stages of PCR and semi-conservative DNA replication, highlighting primer, DNA polymerase, and leading vs lagging strands.',
+            R: 'Write for S5/S6 learners revising for Qualifications Scotland Higher Biology assessments.',
+            T: 'Use precise exam-ready scientific terminology paired with a brief memory hook for strand directionality.',
+            S: 'Format as 6 sequential numbered bullet points followed by 3 quick self-test questions and answers.'
+          }
+        },
+        {
+          id: 'jacobites',
+          vaguePrompt: '"For my mixed-ability S2 BGE class, use an engaging detective mystery tone about the Jacobites."',
+          missing: ['P', 'A', 'S'],
+          explanations: {
+            P: 'Missing — No Scottish History educator persona set.',
+            A: 'Missing — Never actually tells the AI what to create (a lesson plan, starter clue card, or quiz?).',
+            R: 'Present — Specifies a mixed-ability S2 BGE class.',
+            T: 'Present — Gives a vivid detective mystery tone and Jacobites context.',
+            S: 'Missing — No output structure, timing, or teacher answer guide defined.'
+          },
+          upgradedParts: {
+            P: 'Act as a creative Scottish BGE History teacher.',
+            A: 'Create a 20-minute historical mystery starter investigating why Highland and Lowland Scots held divided loyalties in 1745 (SOC 3-06a).',
+            R: 'Design for a mixed-ability S2 BGE class, including a 5-word glossary for unfamiliar 18th-century terms.',
+            T: 'Use an engaging detective mystery tone where pupils weigh up witness clues.',
+            S: 'Format as 3 short clue cards, a pupil verdict question, and brief teacher discussion notes.'
+          }
+        }
+      ];
+
+      /* ----------------------------------------------------------------------
+         5. APPLICATION STATE
+         ---------------------------------------------------------------------- */
+      const state = {
+        activeExplorerPart: 'P',
+        explorerMode: 'strong', // 'weak' | 'strong'
+        exemplars: [],
+        phaseFilter: 'All',
+        searchQuery: '',
+        activeChallengeIdx: 0,
+        challengeSelections: { 0: new Set(), 1: new Set(), 2: new Set() },
+        completedChallenges: new Set()
+      };
+
+      /* ----------------------------------------------------------------------
+         6. HELPER FUNCTIONS (ESCAPING, SMART CLAUSE ASSEMBLY & CLIPBOARD)
+         ---------------------------------------------------------------------- */
+      function escapeHTML(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      /**
+       * Accepts either { persona, act, recipient, theme, structure } (exemplars.json)
+       * or { P, A, R, T, S } (internal state) and returns { P, A, R, T, S }.
+       */
+      function normalisePartsObject(partsObj) {
+        const src = partsObj || {};
+        return {
+          P: src.P !== undefined ? src.P : (src.persona || ''),
+          A: src.A !== undefined ? src.A : (src.act || ''),
+          R: src.R !== undefined ? src.R : (src.recipient || ''),
+          T: src.T !== undefined ? src.T : (src.theme || ''),
+          S: src.S !== undefined ? src.S : (src.structure || '')
+        };
+      }
+
+      /**
+       * Formats active P.A.R.T.S. segments so both connected clauses
+       * (e.g., Act -> "for..." Recipient -> "exploring..." Theme in exemplars.json)
+       * and standalone sentences assemble smoothly without mid-clause full stops.
+       */
+      function formatPartsSegments(partsObj) {
+        const norm = normalisePartsObject(partsObj);
+        const active = PART_KEYS
+          .map((key) => ({ key, raw: (norm[key] || '').trim().replace(/\s+/g, ' ') }))
+          .filter((item) => item.raw.length > 0);
+
+        const formatted = [];
+        for (let i = 0; i < active.length; i++) {
+          const curr = active[i];
+          const next = active[i + 1];
+          const prevEndedSentence = i === 0 || /[.!?\]"]$/.test(formatted[i - 1].text);
+
+          let text = curr.raw;
+          if (prevEndedSentence && /^[a-z]/.test(text)) {
+            text = text.charAt(0).toUpperCase() + text.slice(1);
+          }
+
+          const hasEndPunct = /[.!?\]"]$/.test(text);
+          if (!hasEndPunct) {
+            const nextContinuesClause = next && /^[a-z]/.test(next.raw) && curr.key !== 'P';
+            if (!nextContinuesClause) {
+              text += '.';
+            }
+          }
+
+          formatted.push({ key: curr.key, text });
+        }
+        return formatted;
+      }
+
+      function buildCleanPromptText(partsObj) {
+        return formatPartsSegments(partsObj)
+          .map((seg) => seg.text)
+          .join(' ');
+      }
+
+      function buildColourCodedHTML(partsObj) {
+        return formatPartsSegments(partsObj)
+          .map((seg) => {
+            return (
+              '<span class="seg seg-' +
+              seg.key +
+              '"><span class="seg-tag">[' +
+              seg.key +
+              ']</span>' +
+              escapeHTML(seg.text) +
+              '</span>'
+            );
+          })
+          .join(' ');
+      }
+
+      let toastTimer = null;
+      function showToast(message) {
+        const toast = document.getElementById('copy-toast');
+        const msgEl = document.getElementById('toast-message');
+        if (!toast || !msgEl) return;
+        msgEl.textContent = message;
+        toast.classList.add('visible');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('visible');
+        }, 2800);
+      }
+
+      /**
+       * Copies plain text using Clipboard API with execCommand fallback
+       * (preserved from original index.html for Glow/iframe compatibility).
+       */
+      function copyTextToClipboard(text, buttonEl, toastMsg) {
+        if (!text) return;
+
+        const onSuccess = () => {
+          showToast(toastMsg || 'Clean prompt copied to clipboard!');
+          if (buttonEl) {
+            const prevHTML = buttonEl.innerHTML;
+            buttonEl.innerHTML = '<span>&#10003; Copied!</span>';
+            setTimeout(() => {
+              buttonEl.innerHTML = prevHTML;
+            }, 1700);
+          }
+        };
+
+        const fallbackCopy = () => {
+          const tempInput = document.createElement('textarea');
+          tempInput.value = text;
+          tempInput.setAttribute('readonly', '');
+          tempInput.style.position = 'fixed';
+          tempInput.style.left = '-9999px';
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          try {
+            document.execCommand('copy');
+            onSuccess();
+          } catch (err) {
+            console.error('Clipboard copy failed:', err);
+          } finally {
+            document.body.removeChild(tempInput);
+          }
+        };
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(onSuccess).catch(fallbackCopy);
+        } else {
+          fallbackCopy();
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         7. THEME TOGGLE (LIGHT / DARK MODE WITH LOCALSTORAGE & SYSTEM DEFAULT)
+         ---------------------------------------------------------------------- */
+      function initTheme() {
+        const htmlEl = document.documentElement;
+        const toggleBtn = document.getElementById('theme-toggle-btn');
+        const labelEl = document.getElementById('theme-label');
+        const iconEl = document.getElementById('theme-icon');
+
+        const moonSVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+        const sunSVG = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+
+        function applyTheme(theme) {
+          const isDark = theme === 'dark';
+          htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          toggleBtn.setAttribute('aria-pressed', String(isDark));
+          toggleBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          labelEl.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+          iconEl.innerHTML = isDark ? sunSVG : moonSVG;
+        }
+
+        let saved = null;
+        try {
+          saved = localStorage.getItem('parts_glow_theme');
+        } catch (_) {}
+
+        if (saved === 'dark' || saved === 'light') {
+          applyTheme(saved);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          applyTheme('dark');
+        } else {
+          applyTheme('light');
+        }
+
+        toggleBtn.addEventListener('click', () => {
+          const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          applyTheme(next);
+          try {
+            localStorage.setItem('parts_glow_theme', next);
+          } catch (_) {}
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         8. FEATURE 1 CONTROLLER: P.A.R.T.S. EXPLORER
+         ---------------------------------------------------------------------- */
+      function renderExplorer() {
+        const part = state.activeExplorerPart;
+        const data = EXPLORER_DATA[part];
+        if (!data) return;
+
+        // Update Tab ARIA states
+        document.querySelectorAll('.parts-tab-btn').forEach((btn) => {
+          const isSelected = btn.getAttribute('data-part') === part;
+          btn.setAttribute('aria-selected', String(isSelected));
+          btn.setAttribute('tabindex', isSelected ? '0' : '-1');
+        });
+
+        const panel = document.getElementById('panel-explorer');
+        panel.setAttribute('aria-labelledby', 'tab-' + part);
+
+        const badge = document.getElementById('exp-badge');
+        badge.textContent = part;
+        badge.className = 'letter-badge ' + part.toLowerCase();
+
+        document.getElementById('exp-title').textContent = data.title;
+        document.getElementById('exp-question').textContent = data.question;
+        document.getElementById('exp-definition').textContent = data.definition;
+
+        const tipsUl = document.getElementById('exp-tips');
+        tipsUl.innerHTML = data.tips.map((tip) => '<li>' + escapeHTML(tip) + '</li>').join('');
+
+        document.getElementById('exp-insert-label').textContent =
+          'Insert sample ' + PART_NAMES[part] + ' into Builder';
+
+        renderExplorerComparison();
+      }
+
+      function renderExplorerComparison() {
+        const part = state.activeExplorerPart;
+        const data = EXPLORER_DATA[part];
+        const isStrong = state.explorerMode === 'strong';
+
+        const weakBtn = document.getElementById('cmp-weak-btn');
+        const strongBtn = document.getElementById('cmp-strong-btn');
+        weakBtn.setAttribute('aria-pressed', String(!isStrong));
+        strongBtn.setAttribute('aria-pressed', String(isStrong));
+
+        const cmpBox = document.getElementById('cmp-box');
+        const cmpStatus = document.getElementById('cmp-status');
+        const cmpText = document.getElementById('cmp-text');
+        const cmpOutcome = document.getElementById('cmp-outcome');
+
+        if (!isStrong) {
+          cmpBox.className = 'compare-prompt-box is-weak';
+          cmpStatus.className = 'compare-status-tag weak';
+          cmpStatus.textContent = 'Weak Generic Prompt (Missing ' + PART_NAMES[part] + ')';
+          cmpText.innerHTML = '"' + escapeHTML(data.weakPrompt) + '"';
+          cmpOutcome.textContent = data.weakOutcome;
+        } else {
+          cmpBox.className = 'compare-prompt-box is-strong';
+          cmpStatus.className = 'compare-status-tag strong';
+          cmpStatus.textContent = 'Strong P.A.R.T.S. Prompt (' + PART_NAMES[part] + ' Highlighted)';
+          cmpText.innerHTML = PART_KEYS.map((k) => {
+            const segText = escapeHTML(data.strongParts[k]);
+            if (k === part) {
+              return '<span class="seg seg-' + k + '"><span class="seg-tag">[' + k + ']</span>' + segText + '</span>';
+            }
+            return '<span>' + segText + '</span>';
+          }).join(' ');
+          cmpOutcome.textContent = data.strongOutcome;
+        }
+      }
+
+      function initExplorer() {
+        const tabs = Array.from(document.querySelectorAll('.parts-tab-btn'));
+
+        tabs.forEach((btn, idx) => {
+          btn.addEventListener('click', () => {
+            state.activeExplorerPart = btn.getAttribute('data-part');
+            renderExplorer();
+          });
+
+          // Full Left / Right / Home / End arrow navigation for accessible tabs
+          btn.addEventListener('keydown', (e) => {
+            let nextIdx = null;
+            if (e.key === 'ArrowRight') nextIdx = (idx + 1) % tabs.length;
+            else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + tabs.length) % tabs.length;
+            else if (e.key === 'Home') nextIdx = 0;
+            else if (e.key === 'End') nextIdx = tabs.length - 1;
+
+            if (nextIdx !== null) {
+              e.preventDefault();
+              tabs[nextIdx].focus();
+              state.activeExplorerPart = tabs[nextIdx].getAttribute('data-part');
+              renderExplorer();
+            }
+          });
+        });
+
+        document.getElementById('cmp-weak-btn').addEventListener('click', () => {
+          state.explorerMode = 'weak';
+          renderExplorerComparison();
+        });
+
+        document.getElementById('cmp-strong-btn').addEventListener('click', () => {
+          state.explorerMode = 'strong';
+          renderExplorerComparison();
+        });
+
+        document.getElementById('exp-insert-btn').addEventListener('click', () => {
+          const part = state.activeExplorerPart;
+          const inputEl = document.getElementById('input-' + part);
+          inputEl.value = EXPLORER_DATA[part].sampleBuilderText;
+          inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+          document.getElementById('section-builder').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          try {
+            inputEl.focus({ preventScroll: true });
+          } catch (_) {
+            inputEl.focus();
+          }
+          showToast('Sample ' + PART_NAMES[part] + ' added to Builder!');
+        });
+
+        renderExplorer();
+      }
+
+      /* ----------------------------------------------------------------------
+         9. FEATURE 2 CONTROLLER: LIVE COLOUR-CODED PROMPT BUILDER
+         ---------------------------------------------------------------------- */
+      function getBuilderValues() {
+        const values = {};
+        PART_KEYS.forEach((k) => {
+          values[k] = document.getElementById('input-' + k).value;
+        });
+        return values;
+      }
+
+      /**
+       * Populates all five P.A.R.T.S. inputs, dispatches 'input' events so live
+       * preview & chip states update immediately, smooth-scrolls to the Builder,
+       * shifts keyboard focus to the Persona input (#input-P), and shows toast.
+       */
+      function populateBuilder(partsInput, toastMessage) {
+        const norm = normalisePartsObject(partsInput);
+
+        PART_KEYS.forEach((k) => {
+          const inputEl = document.getElementById('input-' + k);
+          inputEl.value = norm[k] || '';
+          inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+        updateLiveBuilder();
+
+        const builderSection = document.getElementById('section-builder');
+        const previewCard = document.getElementById('preview-card');
+        const personaInput = document.getElementById('input-P');
+
+        const reduceMotion =
+          window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        builderSection.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          block: 'start'
+        });
+
+        // Shift keyboard focus to Persona input without interrupting smooth scroll
+        try {
+          personaInput.focus({ preventScroll: true });
+        } catch (_) {
+          personaInput.focus();
+        }
+
+        previewCard.classList.remove('flash-loaded');
+        void previewCard.offsetWidth; // trigger reflow for highlight animation
+        previewCard.classList.add('flash-loaded');
+
+        if (toastMessage) {
+          showToast(toastMessage);
+        }
+      }
+
+      function updateLiveBuilder() {
+        const values = getBuilderValues();
+        const activeKeys = PART_KEYS.filter((k) => values[k].trim().length > 0);
+        const missingKeys = PART_KEYS.filter((k) => values[k].trim().length === 0);
+
+        // Sync active chip states
+        PART_KEYS.forEach((k) => {
+          const currentTrimmed = values[k].trim();
+          const pill = document.getElementById('pill-' + k);
+          pill.classList.toggle('active', currentTrimmed.length > 0);
+
+          document.querySelectorAll('[data-chips-for="' + k + '"] .chip-btn').forEach((chip) => {
+            const matches = currentTrimmed === chip.getAttribute('data-chip-text');
+            chip.setAttribute('aria-pressed', String(matches));
+          });
+        });
+
+        // Completeness status message
+        const count = activeKeys.length;
+        const msgEl = document.getElementById('completeness-msg');
+        if (count === 0) {
+          msgEl.textContent = '0 of 5 blocks active';
+        } else if (count < 5) {
+          msgEl.textContent = count + ' of 5 blocks active — looking good!';
+        } else {
+          msgEl.textContent = 'All 5 P.A.R.T.S. blocks complete!';
+        }
+
+        // Render colour-coded preview
+        const outputEl = document.getElementById('live-preview-output');
+        const copyBtn = document.getElementById('copy-clean-btn');
+        const hintEl = document.getElementById('missing-parts-hint');
+        const wordBadge = document.getElementById('word-count-badge');
+
+        const cleanText = buildCleanPromptText(values);
+
+        if (count === 0) {
+          outputEl.innerHTML =
+            '<p class="empty-preview-state">Your colour-coded prompt will assemble here in real time. Click any suggestion chip on the left—or load a classroom exemplar below—to get started!</p>';
+          copyBtn.disabled = true;
+          hintEl.textContent = '';
+          wordBadge.textContent = '0 words';
+        } else {
+          outputEl.innerHTML = buildColourCodedHTML(values);
+          copyBtn.disabled = false;
+          const words = cleanText.split(/\s+/).filter(Boolean).length;
+          wordBadge.textContent = words + (words === 1 ? ' word' : ' words');
+
+          if (missingKeys.length > 0) {
+            hintEl.textContent =
+              'Optional blocks still empty: ' + missingKeys.map((k) => PART_NAMES[k] + ' (' + k + ')').join(', ') + '.';
+          } else {
+            hintEl.textContent = 'Ready to paste straight into Microsoft Copilot in Glow.';
+          }
+        }
+
+        syncPrintReferenceSheet();
+      }
+
+      /**
+       * Populates the unclipped print-only A4 reference block (#print-reference-sheet)
+       * with today's date, active P.A.R.T.S. rows (omitting empty fields gracefully),
+       * and the full assembled copy-ready prompt.
+       */
+      function syncPrintReferenceSheet() {
+        const dateEl = document.getElementById('print-ref-date');
+        const tbodyEl = document.getElementById('print-parts-tbody');
+        const assembledEl = document.getElementById('print-assembled-box');
+        if (!dateEl || !tbodyEl || !assembledEl) return;
+
+        try {
+          dateEl.textContent = new Intl.DateTimeFormat('en-GB', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          }).format(new Date());
+        } catch (_) {
+          dateEl.textContent = new Date().toLocaleDateString();
+        }
+
+        const values = getBuilderValues();
+        const populatedKeys = PART_KEYS.filter((k) => values[k].trim().length > 0);
+
+        if (populatedKeys.length === 0) {
+          tbodyEl.innerHTML = PART_KEYS.map((k) => {
+            return (
+              '<tr class="print-part-row">' +
+                '<td class="print-part-label-cell"><span class="print-part-letter">' + k + '</span>' + PART_NAMES[k] + '</td>' +
+                '<td class="print-part-value-cell" style="color:#64748b !important; font-style:italic;">(Blank — write or plan ' + PART_NAMES[k] + ' here)</td>' +
+              '</tr>'
+            );
+          }).join('');
+          assembledEl.textContent =
+            'No prompt blocks entered on screen — load an exemplar or enter P.A.R.T.S. blocks in the Live Builder to print an assembled prompt.';
+        } else {
+          tbodyEl.innerHTML = populatedKeys.map((k) => {
+            return (
+              '<tr class="print-part-row">' +
+                '<td class="print-part-label-cell"><span class="print-part-letter">' + k + '</span>' + PART_NAMES[k] + '</td>' +
+                '<td class="print-part-value-cell">' + escapeHTML(values[k].trim()) + '</td>' +
+              '</tr>'
+            );
+          }).join('');
+          assembledEl.textContent = buildCleanPromptText(values);
+        }
+      }
+
+      function triggerPrintReference() {
+        syncPrintReferenceSheet();
+        window.print();
+      }
+
+      function initBuilder() {
+        // Render quick-insert chips for each letter
+        PART_KEYS.forEach((k) => {
+          const container = document.querySelector('[data-chips-for="' + k + '"]');
+          const chipsHTML =
+            '<span class="chips-prefix">Quick insert:</span>' +
+            BUILDER_CHIPS[k]
+              .map(
+                (chip) =>
+                  '<button type="button" class="chip-btn" aria-pressed="false" data-chip-text="' +
+                  escapeHTML(chip.text) +
+                  '">' +
+                  escapeHTML(chip.label) +
+                  '</button>'
+              )
+              .join('');
+          container.innerHTML = chipsHTML;
+
+          container.querySelectorAll('.chip-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const inputEl = document.getElementById('input-' + k);
+              const chipText = btn.getAttribute('data-chip-text');
+              if (inputEl.value.trim() === chipText) {
+                inputEl.value = '';
+              } else {
+                inputEl.value = chipText;
+              }
+              inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+              inputEl.focus();
+            });
+          });
+
+          // Live input listener preserves manual typing behaviour
+          document.getElementById('input-' + k).addEventListener('input', updateLiveBuilder);
+        });
+
+        // Individual Clear buttons
+        document.querySelectorAll('[data-clear]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const key = btn.getAttribute('data-clear');
+            const inputEl = document.getElementById('input-' + key);
+            inputEl.value = '';
+            inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+            inputEl.focus();
+          });
+        });
+
+        // Copy Clean Prompt button
+        document.getElementById('copy-clean-btn').addEventListener('click', function () {
+          const cleanText = buildCleanPromptText(getBuilderValues());
+          copyTextToClipboard(cleanText, this, 'Clean prompt copied — ready to paste into Copilot!');
+        });
+
+        // Print / Save PDF buttons (Builder preview & Top utility bar + Ctrl/Cmd+P beforeprint)
+        document.getElementById('print-builder-btn').addEventListener('click', triggerPrintReference);
+        document.getElementById('top-print-btn').addEventListener('click', triggerPrintReference);
+        window.addEventListener('beforeprint', syncPrintReferenceSheet);
+
+        // Reset Builder button
+        document.getElementById('reset-builder-btn').addEventListener('click', () => {
+          PART_KEYS.forEach((k) => {
+            const inputEl = document.getElementById('input-' + k);
+            inputEl.value = '';
+            inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+          });
+          document.getElementById('input-P').focus();
+          showToast('Builder cleared.');
+        });
+
+        // Follow-up prompt quick-copy chips
+        document.querySelectorAll('.followup-copy-btn').forEach((btn) => {
+          btn.addEventListener('click', function () {
+            const text = this.getAttribute('data-followup');
+            copyTextToClipboard(text, null, 'Follow-up prompt copied to clipboard!');
+          });
+        });
+
+        updateLiveBuilder();
+      }
+
+      /* ----------------------------------------------------------------------
+         10. FEATURE 3 CONTROLLER: DYNAMIC READY-TO-REMIX EXEMPLAR LIBRARY
+         Fetches ./exemplars.json asynchronously with resilient file:// fallback
+         ---------------------------------------------------------------------- */
+      function getPhaseBadgeClass(phase) {
+        const p = (phase || '').toLowerCase();
+        if (p.includes('primary')) return 'primary';
+        if (p.includes('bge')) return 'bge';
+        if (p.includes('national 5') || p.includes('nat 5')) return 'n5';
+        if (p.includes('higher')) return 'higher';
+        return 'other';
+      }
+
+      /**
+       * Dynamically builds accessible filter pills for "All" plus every unique
+       * phase value discovered in the loaded JSON array.
+       */
+      function renderPhaseFilterPills() {
+        const container = document.getElementById('exemplar-phase-pills');
+        const uniquePhases = [];
+        state.exemplars.forEach((item) => {
+          if (item.phase && !uniquePhases.includes(item.phase)) {
+            uniquePhases.push(item.phase);
+          }
+        });
+
+        if (state.phaseFilter !== 'All' && !uniquePhases.includes(state.phaseFilter)) {
+          state.phaseFilter = 'All';
+        }
+
+        const allOptions = ['All'].concat(uniquePhases);
+        container.innerHTML = allOptions
+          .map((phase) => {
+            const isPressed = state.phaseFilter === phase;
+            return (
+              '<button type="button" class="filter-btn" data-phase-filter="' +
+              escapeHTML(phase) +
+              '" aria-pressed="' +
+              String(isPressed) +
+              '">' +
+              escapeHTML(phase) +
+              '</button>'
+            );
+          })
+          .join('');
+
+        container.querySelectorAll('[data-phase-filter]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            state.phaseFilter = btn.getAttribute('data-phase-filter');
+            container.querySelectorAll('[data-phase-filter]').forEach((b) => {
+              b.setAttribute('aria-pressed', String(b === btn));
+            });
+            renderExemplars();
+          });
+        });
+      }
+
+      /**
+       * Renders responsive exemplar cards displaying title, subject, level,
+       * colour-coded phase badge, scannable P.A.R.T.S. preview, and Load action.
+       */
+      function renderExemplars() {
+        const grid = document.getElementById('exemplars-grid');
+        grid.setAttribute('aria-busy', 'false');
+        const query = state.searchQuery.trim().toLowerCase();
+
+        const filtered = state.exemplars.filter((item) => {
+          const phaseMatch = state.phaseFilter === 'All' || item.phase === state.phaseFilter;
+          if (!phaseMatch) return false;
+          if (!query) return true;
+
+          const norm = normalisePartsObject(item.parts);
+          const haystack = [
+            item.title,
+            item.subject,
+            item.phase,
+            item.level,
+            norm.P,
+            norm.A,
+            norm.R,
+            norm.T,
+            norm.S
+          ]
+            .join(' ')
+            .toLowerCase();
+          return haystack.includes(query);
+        });
+
+        if (filtered.length === 0) {
+          grid.innerHTML =
+            '<div class="empty-exemplars"><p style="margin:0; font-weight:700;">No exemplars match that filter.</p><p style="margin:0.35rem 0 0; font-size:0.84rem;">Try clearing the search box or selecting the "All" phase filter.</p></div>';
+          return;
+        }
+
+        grid.innerHTML = filtered
+          .map((item) => {
+            const phaseCls = getPhaseBadgeClass(item.phase);
+            const segments = formatPartsSegments(item.parts);
+            const previewRows = segments
+              .map(
+                (seg) =>
+                  '<p class="snippet-row"><span class="snippet-tag ' +
+                  seg.key +
+                  '">' +
+                  seg.key +
+                  '</span>' +
+                  escapeHTML(seg.text) +
+                  '</p>'
+              )
+              .join('');
+
+            return (
+              '<article class="exemplar-card">' +
+                '<div>' +
+                  '<div class="exemplar-badges">' +
+                    '<span class="stage-pill ' + phaseCls + '">' + escapeHTML(item.phase) + '</span>' +
+                    '<span class="subject-pill">' + escapeHTML(item.subject) + '</span>' +
+                  '</div>' +
+                  '<h3 class="exemplar-title">' + escapeHTML(item.title) + '</h3>' +
+                  '<p class="exemplar-level">' + escapeHTML(item.level) + '</p>' +
+                  '<div class="exemplar-snippet" aria-label="P.A.R.T.S. prompt breakdown preview">' +
+                    previewRows +
+                  '</div>' +
+                '</div>' +
+                '<div class="exemplar-card-actions">' +
+                  '<button type="button" class="btn-load-builder" data-load-id="' + escapeHTML(item.id) + '">' +
+                    '<span>Load into Builder</span>' +
+                  '</button>' +
+                  '<button type="button" class="btn-icon-copy" data-copy-id="' + escapeHTML(item.id) + '" aria-label="Copy clean prompt for ' + escapeHTML(item.title) + '">' +
+                    'Copy' +
+                  '</button>' +
+                '</div>' +
+              '</article>'
+            );
+          })
+          .join('');
+
+        grid.querySelectorAll('[data-load-id]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const ex = state.exemplars.find((item) => item.id === btn.getAttribute('data-load-id'));
+            if (ex) {
+              populateBuilder(ex.parts, 'Loaded: ' + ex.title + ' \u2014 ready to customise');
+            }
+          });
+        });
+
+        grid.querySelectorAll('[data-copy-id]').forEach((btn) => {
+          btn.addEventListener('click', function () {
+            const ex = state.exemplars.find((item) => item.id === this.getAttribute('data-copy-id'));
+            if (ex) {
+              copyTextToClipboard(buildCleanPromptText(ex.parts), this, 'Copied: ' + ex.title);
+            }
+          });
+        });
+      }
+
+      async function loadExemplarsAsync() {
+        const grid = document.getElementById('exemplars-grid');
+        const fallbackBanner = document.getElementById('exemplar-fallback-banner');
+        const fallbackText = document.getElementById('exemplar-fallback-text');
+
+        grid.setAttribute('aria-busy', 'true');
+        grid.innerHTML =
+          '<div class="exemplar-loading" role="status">' +
+            '<span class="loading-spinner" aria-hidden="true"></span>' +
+            '<span>Loading classroom exemplars from ./exemplars.json...</span>' +
+          '</div>';
+
+        try {
+          const response = await fetch('./exemplars.json');
+          if (!response.ok) {
+            throw new Error('HTTP status ' + response.status);
+          }
+          const data = await response.json();
+          if (!Array.isArray(data) || data.length === 0) {
+            throw new Error('Exemplar JSON was empty or invalid');
+          }
+
+          state.exemplars = data;
+          fallbackBanner.hidden = true;
+          renderPhaseFilterPills();
+          renderExemplars();
+        } catch (err) {
+          console.warn('Live fetch of ./exemplars.json fell back to built-in copy:', err);
+          state.exemplars = FALLBACK_EXEMPLARS;
+
+          const isFileProtocol = window.location && window.location.protocol === 'file:';
+          if (isFileProtocol) {
+            fallbackText.innerHTML =
+              '<strong>Local file preview detected (<code>file://</code>):</strong> Browsers block direct JSON requests without a web server, so the built-in offline copy is shown below. On <strong>GitHub Pages</strong> (or a local server such as <code>python3 -m http.server</code>), <code>./exemplars.json</code> loads dynamically.';
+          } else {
+            fallbackText.innerHTML =
+              '<strong>Offline fallback active:</strong> Could not fetch <code>./exemplars.json</code> right now, so the built-in classroom exemplars are shown below so you can keep working.';
+          }
+          fallbackBanner.hidden = false;
+          renderPhaseFilterPills();
+          renderExemplars();
+        }
+      }
+
+      function initExemplars() {
+        document.getElementById('exemplar-search-input').addEventListener('input', (e) => {
+          state.searchQuery = e.target.value;
+          renderExemplars();
+        });
+
+        document.getElementById('exemplar-retry-btn').addEventListener('click', () => {
+          loadExemplarsAsync();
+        });
+
+        loadExemplarsAsync();
+      }
+
+      /* ----------------------------------------------------------------------
+         11. FEATURE 4 CONTROLLER: PROMPT DIAGNOSTIC CHALLENGE ("FIX THE PROMPT")
+         ---------------------------------------------------------------------- */
+      function renderChallenge() {
+        const idx = state.activeChallengeIdx;
+        const challenge = CHALLENGES[idx];
+        const selectedSet = state.challengeSelections[idx];
+
+        document.querySelectorAll('.challenge-tab').forEach((tab, i) => {
+          const isSel = i === idx;
+          tab.setAttribute('aria-selected', String(isSel));
+          tab.setAttribute('tabindex', isSel ? '0' : '-1');
+        });
+
+        const panel = document.getElementById('ch-panel');
+        panel.setAttribute('aria-labelledby', 'ch-tab-' + idx);
+
+        document.getElementById('ch-vague-text').textContent = challenge.vaguePrompt;
+
+        const grid = document.getElementById('ch-checkbox-grid');
+        grid.innerHTML = PART_KEYS.map((k) => {
+          const checked = selectedSet.has(k);
+          return (
+            '<label class="diag-check-label' + (checked ? ' is-checked' : '') + '">' +
+              '<input type="checkbox" class="diag-check-input" value="' + k + '"' + (checked ? ' checked' : '') + '>' +
+              '<span class="diag-check-top">' +
+                '<span class="mini-badge ' + k + '">' + k + '</span>' +
+                '<span class="custom-box" aria-hidden="true">' + (checked ? '&#10003;' : '') + '</span>' +
+              '</span>' +
+              '<span class="diag-part-title">' + PART_NAMES[k] + '</span>' +
+              '<span class="diag-part-sub">' + (checked ? 'Marked missing' : 'Click if missing') + '</span>' +
+            '</label>'
+          );
+        }).join('');
+
+        grid.querySelectorAll('.diag-check-input').forEach((input) => {
+          input.addEventListener('change', () => {
+            const key = input.value;
+            if (input.checked) selectedSet.add(key);
+            else selectedSet.delete(key);
+            renderChallenge();
+          });
+        });
+
+        document.getElementById('ch-result-panel').hidden = true;
+      }
+
+      function evaluateChallenge(skipScoring) {
+        const idx = state.activeChallengeIdx;
+        const challenge = CHALLENGES[idx];
+        const selectedSet = state.challengeSelections[idx];
+        const missingSet = new Set(challenge.missing);
+
+        let exactMatches = 0;
+        const breakdownHTML = PART_KEYS.map((k) => {
+          const actuallyMissing = missingSet.has(k);
+          const userMarkedMissing = selectedSet.has(k);
+          const isRight = actuallyMissing === userMarkedMissing;
+          if (isRight) exactMatches++;
+
+          let icon = isRight ? '&#9989;' : '&#128161;';
+          if (skipScoring) {
+            icon = actuallyMissing ? '&#9888;&#65039;' : '&#9989;';
+          }
+
+          return (
+            '<li class="diag-breakdown-item">' +
+              '<strong>' + icon + ' [' + k + '] ' + PART_NAMES[k] + ':</strong> ' +
+              escapeHTML(challenge.explanations[k]) +
+            '</li>'
+          );
+        }).join('');
+
+        state.completedChallenges.add(idx);
+        document.getElementById('challenge-progress-badge').textContent =
+          state.completedChallenges.size + ' / ' + CHALLENGES.length + ' Diagnosed';
+
+        const summaryEl = document.getElementById('ch-result-summary');
+        if (skipScoring) {
+          summaryEl.textContent =
+            'Missing elements in this prompt: ' +
+            challenge.missing.map((k) => PART_NAMES[k] + ' (' + k + ')').join(', ') +
+            '. Compare with the upgraded prompt below:';
+        } else if (exactMatches === 5) {
+          summaryEl.textContent =
+            'Spot on! You identified all 5 P.A.R.T.S. elements accurately. Here is how adding the missing blocks transforms the prompt:';
+        } else {
+          summaryEl.textContent =
+            'Good eye — you matched ' +
+            exactMatches +
+            ' out of 5 elements! Check the notes below and explore the upgraded P.A.R.T.S. version:';
+        }
+
+        document.getElementById('ch-breakdown-list').innerHTML = breakdownHTML;
+        document.getElementById('ch-upgraded-preview').innerHTML = buildColourCodedHTML(challenge.upgradedParts);
+
+        const resultPanel = document.getElementById('ch-result-panel');
+        resultPanel.hidden = false;
+      }
+
+      function initChallenges() {
+        const tabs = Array.from(document.querySelectorAll('.challenge-tab'));
+        tabs.forEach((tab, idx) => {
+          tab.addEventListener('click', () => {
+            state.activeChallengeIdx = idx;
+            renderChallenge();
+          });
+
+          tab.addEventListener('keydown', (e) => {
+            let nextIdx = null;
+            if (e.key === 'ArrowRight') nextIdx = (idx + 1) % tabs.length;
+            else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + tabs.length) % tabs.length;
+            if (nextIdx !== null) {
+              e.preventDefault();
+              tabs[nextIdx].focus();
+              state.activeChallengeIdx = nextIdx;
+              renderChallenge();
+            }
+          });
+        });
+
+        document.getElementById('ch-check-btn').addEventListener('click', () => {
+          evaluateChallenge(false);
+        });
+
+        document.getElementById('ch-reveal-btn').addEventListener('click', () => {
+          evaluateChallenge(true);
+        });
+
+        document.getElementById('ch-load-builder-btn').addEventListener('click', () => {
+          const ch = CHALLENGES[state.activeChallengeIdx];
+          populateBuilder(ch.upgradedParts, 'Upgraded prompt loaded into Builder!');
+        });
+
+        document.getElementById('ch-copy-upgrade-btn').addEventListener('click', function () {
+          const ch = CHALLENGES[state.activeChallengeIdx];
+          copyTextToClipboard(buildCleanPromptText(ch.upgradedParts), this, 'Upgraded prompt copied!');
+        });
+
+        renderChallenge();
+      }
+
+      /* ----------------------------------------------------------------------
+         12. INITIALISE ALL MODULES ON DOM READY
+         ---------------------------------------------------------------------- */
+      initTheme();
+      initExplorer();
+      initBuilder();
+      initExemplars();
+      initChallenges();
+    })();
   </script>
 </body>
 </html>
