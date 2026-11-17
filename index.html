@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PARTS Prompting Framework — Teacher Cheat Sheet (Glow)</title>
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Load Inter & JetBrains Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Font Awesome for clean icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Print optimisation so teachers can print a crisp single A4 page */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+      body {
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-container {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen py-6 px-3 sm:px-6 lg:px-8">
+
+  <!-- Top Action Bar (Hidden when printing) -->
+  <div class="max-w-5xl mx-auto mb-4 flex flex-wrap items-center justify-between gap-3 no-print">
+    <div class="flex items-center gap-2 text-sm text-slate-600">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-bold text-xs">
+        <i class="fa-solid fa-sparkles"></i>
+      </span>
+      <span>Ready for classroom use or A4 printing</span>
+    </div>
+    <button onclick="window.print()" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm transition cursor-pointer">
+      <i class="fa-solid fa-print"></i>
+      <span>Print / Save as PDF</span>
+    </button>
+  </div>
+
+  <!-- Main Single-Page Cheat Sheet Sheet -->
+  <main class="print-container max-w-5xl mx-auto bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+    
+    <!-- Header Banner -->
+    <header class="bg-slate-900 text-white px-6 py-6 sm:px-8 sm:py-7 border-b-4 border-amber-500">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-1">
+            Microsoft Copilot in Glow • Educator Quick Reference
+          </p>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            The <span class="text-amber-400">PARTS</span> Prompting Framework
+          </h1>
+          <p class="text-sm sm:text-base text-slate-300 mt-1">
+            Structure better prompts to generate Curriculum for Excellence (CfE) &amp; SQA resources in seconds.
+          </p>
+        </div>
+        <!-- Glow Safety Badge -->
+        <div class="bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 flex items-center gap-3 shrink-0">
+          <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="text-xs">
+            <p class="font-bold text-emerald-400 uppercase tracking-wide">Glow Data Safety</p>
+            <p class="text-slate-300 leading-snug">Check for the green shield.<br>Never enter pupil names/SCNs.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Body -->
+    <div class="p-6 sm:p-8 space-y-6">
+
+      <!-- Section 1: The 5 PARTS Breakdown Grid -->
+      <section aria-labelledby="parts-breakdown-heading">
+        <div class="flex items-center justify-between mb-3">
+          <h2 id="parts-breakdown-heading" class="text-sm font-bold uppercase tracking-wider text-slate-500">
+            1. Build Your Prompt Using All Five Building Blocks
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+          <!-- P - Persona -->
+          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">P</span>
+                <h3 class="font-bold text-slate-900 text-base">Persona</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                Tell Copilot <strong>who</strong> to act as so it adopts the right pedagogical tone and expertise.
+              </p>
+            </div>
+            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
+              "Act as a Scottish P6 primary teacher..."
+            </div>
+          </div>
+
+          <!-- A - Aim -->
+          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">A</span>
+                <h3 class="font-bold text-slate-900 text-base">Aim</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                State clearly <strong>what</strong> you want created, including CfE Experiences &amp; Outcomes.
+              </p>
+            </div>
+            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
+              "Create a 45-min lesson plan on fractions (MNU 2-07a)..."
+            </div>
+          </div>
+
+          <!-- R - Recipients -->
+          <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <span class="w-8 h-8 rounded-lg bg-amber-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">R</span>
+                <h3 class="font-bold text-slate-900 text-base">Recipients</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                Specify <strong>who</strong> the resource is for, including stage, reading age, or ASN scaffolds.
+              </p>
+            </div>
+            <div class="bg-white rounded-lg p-2 border border-amber-100 text-[11px] font-mono-code text-amber-900">
+              "For a mixed-ability S2 class with dyslexic-friendly text..."
+            </div>
+          </div>
+
+          <!-- T - Theme -->
+          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">T</span>
+                <h3 class="font-bold text-slate-900 text-base">Theme</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                Set the <strong>style, context, or tone</strong> (e.g., active, inquiry-led, Scottish context).
+              </p>
+            </div>
+            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
+              "Use an encouraging tone with local Scottish examples..."
+            </div>
+          </div>
+
+          <!-- S - Structure -->
+          <div class="bg-sky-50/70 border border-sky-200 rounded-xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <span class="w-8 h-8 rounded-lg bg-sky-600 text-white font-extrabold text-base flex items-center justify-center shrink-0">S</span>
+                <h3 class="font-bold text-slate-900 text-base">Structure</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                Define the exact <strong>output format</strong> so it is ready to copy into Docs, Word, or Teams.
+              </p>
+            </div>
+            <div class="bg-white rounded-lg p-2 border border-sky-100 text-[11px] font-mono-code text-sky-900">
+              "Format as a 4-column table with an exit pass at the end."
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Before vs After Comparison -->
+      <section aria-labelledby="comparison-heading" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+        <div class="md:col-span-4 bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col justify-between">
+          <div>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 uppercase tracking-wide mb-1.5">
+              <i class="fa-solid fa-circle-xmark"></i> Weak Prompt (Too Vague)
+            </span>
+            <p class="font-mono-code text-xs sm:text-sm text-slate-700 bg-white p-3 rounded-lg border border-slate-200">
+              "Make a worksheet about Scottish renewable energy."
+            </p>
+          </div>
+          <p class="text-xs text-slate-500 mt-2">
+            <strong>Result:</strong> Generic US-centric text, wrong reading level, requires heavy editing.
+          </p>
+        </div>
+
+        <div class="md:col-span-8 bg-emerald-50/60 border border-emerald-200 rounded-xl p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 uppercase tracking-wide">
+                <i class="fa-solid fa-circle-check"></i> Strong PARTS Prompt (Classroom Ready)
+              </span>
+              <button onclick="copyPrompt('prompt-featured', this)" class="no-print inline-flex items-center gap-1.5 text-xs font-semibold bg-emerald-700 hover:bg-emerald-800 text-white px-2.5 py-1 rounded-lg transition cursor-pointer">
+                <i class="fa-regular fa-copy"></i>
+                <span>Copy Prompt</span>
+              </button>
+            </div>
+            <p id="prompt-featured" class="font-mono-code text-xs sm:text-sm text-slate-900 bg-white p-3 rounded-lg border border-emerald-200 leading-relaxed">
+              <span class="font-bold text-sky-700">[P]</span> Act as an experienced Scottish secondary geography teacher. <span class="font-bold text-sky-700">[A]</span> Create a 50-minute lesson plan on offshore wind energy in the North Sea, aligned to CfE Third Level (SOC 3-08a). <span class="font-bold text-amber-700">[R]</span> Design for a mixed-ability S2 class with a vocabulary support box for literacy barriers. <span class="font-bold text-sky-700">[T]</span> Keep the tone active and inquiry-led. <span class="font-bold text-sky-700">[S]</span> Format as a table with Timing, Teacher Action, Pupil Activity, and a 3-question exit pass.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Ready-to-Use Classroom Prompt Bank -->
+      <section aria-labelledby="prompt-bank-heading">
+        <h2 id="prompt-bank-heading" class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">
+          2. Ready-to-Copy Classroom Templates (Click Copy &amp; Swap Bracketed Text)
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Template 1: Primary / CfE Rubric -->
+          <div class="border border-slate-200 rounded-xl p-4 bg-white flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800">Primary / BGE</span>
+                <button onclick="copyPrompt('prompt-1', this)" class="no-print text-xs font-semibold text-slate-600 hover:text-sky-700 inline-flex items-center gap-1 cursor-pointer">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1.5">Success Criteria Rubric</h3>
+              <p id="prompt-1" class="font-mono-code text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed">
+                Act as a Scottish primary teacher. Create a 4-point success criteria rubric for a [P6 persuasive writing piece on plastic waste] aligned to CfE [Second Level LIT 2-24a]. Use encouraging, child-friendly "I can..." statements and format as a clean table.
+              </p>
+            </div>
+          </div>
+
+          <!-- Template 2: Secondary / SQA Retrieval -->
+          <div class="border border-slate-200 rounded-xl p-4 bg-white flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">Secondary / SQA</span>
+                <button onclick="copyPrompt('prompt-2', this)" class="no-print text-xs font-semibold text-slate-600 hover:text-sky-700 inline-flex items-center gap-1 cursor-pointer">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1.5">Retrieval Practice Starter</h3>
+              <p id="prompt-2" class="font-mono-code text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed">
+                Act as an SQA [National 5 Biology] teacher. Write an 8-question retrieval practice starter quiz on [cell structure and transport]. Include 4 knowledge recall questions and 4 problem-solving questions for S4 pupils, followed by a concise marking key.
+              </p>
+            </div>
+          </div>
+
+          <!-- Template 3: ASN Differentiation & Feedback -->
+          <div class="border border-slate-200 rounded-xl p-4 bg-white flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800">ASN &amp; Feedback</span>
+                <button onclick="copyPrompt('prompt-3', this)" class="no-print text-xs font-semibold text-slate-600 hover:text-sky-700 inline-flex items-center gap-1 cursor-pointer">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+              <h3 class="font-bold text-sm text-slate-900 mb-1.5">Two Stars &amp; a Wish Feedback</h3>
+              <p id="prompt-3" class="font-mono-code text-xs text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed">
+                Act as a supportive Scottish teacher. Review this anonymised pupil paragraph against these criteria: [1. Clear opening, 2. Descriptive verbs]. Give Two Stars and One Wish in encouraging language without rewriting their work: [Paste anonymised text]
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer Bar -->
+    <footer class="bg-slate-50 border-t border-slate-200 px-6 py-3.5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-600">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+        <span><strong>Pro Tip:</strong> Follow up with <em>"Now simplify this to a reading age of 9"</em> or <em>"Turn this into 10 flashcards"</em> for Learning Activities.</span>
+      </div>
+      <span class="font-semibold text-slate-500 shrink-0">Learning with and through AI • Glow</span>
+    </footer>
+  </main>
+
+  <!-- Toast Notification for Copy Confirmation -->
+  <div id="copy-toast" class="fixed bottom-5 right-5 bg-slate-900 text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg opacity-0 pointer-events-none transition-opacity duration-200 flex items-center gap-2 no-print">
+    <i class="fa-solid fa-check text-emerald-400"></i>
+    <span>Prompt copied to clipboard!</span>
+  </div>
+
+  <script>
+    /**
+     * Copies prompt text to clipboard using document.execCommand('copy')
+     * for reliable execution inside sandboxed iframes, and updates button feedback.
+     */
+    function copyPrompt(elementId, buttonEl) {
+      const targetEl = document.getElementById(elementId);
+      if (!targetEl) return;
+
+      const textToCopy = targetEl.innerText.trim();
+
+      // Create temporary textarea to execute copy safely
+      const tempInput = document.createElement('textarea');
+      tempInput.value = textToCopy;
+      tempInput.setAttribute('readonly', '');
+      tempInput.style.position = 'absolute';
+      tempInput.style.left = '-9999px';
+      document.body.appendChild(tempInput);
+      tempInput.select();
+
+      try {
+        document.execCommand('copy');
+        showToast();
+
+        // Temporary visual confirmation on the clicked button
+        if (buttonEl) {
+          const originalHTML = buttonEl.innerHTML;
+          buttonEl.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied!</span>';
+          setTimeout(() => {
+            buttonEl.innerHTML = originalHTML;
+          }, 1800);
+        }
+      } catch (err) {
+        console.error('Copy failed:', err);
+      } finally {
+        document.body.removeChild(tempInput);
+      }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('copy-toast');
+      if (!toast) return;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2200);
+    }
+  </script>
+</body>
+</html>
